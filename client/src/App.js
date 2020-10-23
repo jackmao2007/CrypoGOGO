@@ -16,7 +16,7 @@ class App extends Component {
 
   checkLoginStatus() {
     // Check login on server with credentials
-    let serverloggedIn = false; // hard coded
+    let serverloggedIn = true; // hard coded
     if (serverloggedIn && this.state.loginStatus === false){
       this.setState({
         loginStatus: true
@@ -35,19 +35,18 @@ class App extends Component {
     // Logout user on server
   }
 
-
   render() { 
     return ( 
       <BrowserRouter>
       <Switch>
         <Route exact path='/' render={() =>
-                         (this.state.loginStatus? <Dashboard/> : <Login/>)}/>
+                        (this.state.loginStatus? <Dashboard/> : <Login/>)}/>
         <Route exact path='/profile' render={() => 
-                        (<Profile />)}/>
+                        (this.state.loginStatus? <Profile/> : <Login/>)}/>
         <Route exact path='/trading' render={() => 
-                        (<Trading />)}/>
+                        (this.state.loginStatus? <Trading/> : <Login/>)}/>
         <Route exact path='/community' render={() => 
-                        (<Community />)}/>
+                        (this.state.loginStatus? <Community/> : <Login/>)}/>
       </Switch>
       </BrowserRouter>
      );
