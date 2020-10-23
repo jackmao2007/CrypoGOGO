@@ -7,7 +7,7 @@ class Community extends Component {
         return (
             <div>
                 <Navbar />                
-                <p> hello Community!!! </p>
+                <p> hello Community! </p>
             </div>
             );
     }
