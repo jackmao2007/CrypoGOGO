@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Post from "../Post/index"
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -19,7 +20,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={3}>
-          <Typography>{children}</Typography>
+          {children}
         </Box>
       )}
     </div>
@@ -76,15 +77,27 @@ export default function PostList() {
         <Tab label="Item Five" {...a11yProps(4)} />
         <Tab label="Item Six" {...a11yProps(5)} />
         <Tab label="Item Seven" {...a11yProps(6)} />
+        <Tab label="Item Two" {...a11yProps(1)} />
+        <Tab label="Item Three" {...a11yProps(2)} />
+        <Tab label="Item Four" {...a11yProps(3)} />
+        <Tab label="Item Five" {...a11yProps(4)} />
+        <Tab label="Item Six" {...a11yProps(5)} />
+        <Tab label="Item Seven" {...a11yProps(6)} />
+        <Tab label="Item Two" {...a11yProps(1)} />
+        <Tab label="Item Three" {...a11yProps(2)} />
+        <Tab label="Item Four" {...a11yProps(3)} />
+        <Tab label="Item Five" {...a11yProps(4)} />
+        <Tab label="Item Six" {...a11yProps(5)} />
+        <Tab label="Item Seven" {...a11yProps(6)} />
       </Tabs>
       <TabPanel value={value} index={0}>
-        post components
+        <Post title = "Post Title Temp1" content = "Post Content Temp1"/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+      <Post title = "Post Title Temp2" content = "Post Content Temp3"/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+      <Post title = "Post Title Temp2" content = "Post Content Temp3"/>
       </TabPanel>
       <TabPanel value={value} index={3}>
         Item Four
