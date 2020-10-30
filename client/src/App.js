@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import { Route, Switch, BrowserRouter, useHistory} from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 
@@ -8,6 +8,7 @@ import Dashboard from './components/Dashboard';
 import Login from './components/Login';
 import Profile from './components/Profile';
 import Trading from './components/Trading';
+import Signup from'./components/Signup';
 
 class App extends Component {
   state = { 
@@ -47,6 +48,10 @@ class App extends Component {
                         (this.state.loginStatus? <Trading/> : <Login/>)}/>
         <Route exact path='/community' render={() => 
                         (this.state.loginStatus? <Community/> : <Login/>)}/>
+        <Route exact path='/sign-in' render={() => 
+                        (this.state.loginStatus? <Login/> : <Login/>)}/>
+        <Route exact path='/sign-up' render={() => 
+                        (this.state.loginStatus? <Signup/> : <Login/>)}/>                         
       </Switch>
       </BrowserRouter>
      );

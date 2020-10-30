@@ -22,6 +22,12 @@ class Navbar extends Component {
                     <Link to="/profile">
                         <button className='main-nav-button'> My Profile </button>
                     </Link>
+                    <Link to="/sign-in">
+                        <button className='main-nav-button'> Log In </button>
+                    </Link>
+                    <Link to="/sign-up">
+                        <button className='main-nav-button'> Sign Up </button>
+                    </Link>
                 </nav>
             </div>
          );
