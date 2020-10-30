@@ -3,7 +3,8 @@ import Navbar from "../Navbar/index";
 import "./styles.css";
 import NewsSection from './NewsSection';
 import Chart from './Chart';
-
+import Summary from './Summary';
+import Activities from './Activities';
 
 class Dashboard extends Component {
     state = {  }
@@ -13,6 +14,8 @@ class Dashboard extends Component {
                 <Navbar/>
                 <Chart/>
                 <NewsSection />
+                <Summary/>
+                <Activities/>
             </div>
          );
     }

@@ -11,6 +11,7 @@ class Chart extends Component {
                     <TradingViewWidget className='dashboard-main-chart'
                         symbol={this.state.symbol}
                         width = '1000'
+                        height = '400'
                     />
                 </div>
                  );
