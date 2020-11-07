@@ -1,8 +1,11 @@
 
 :root{
-    --page-left-margin: 100px
+    --page-left-margin: 50px
 }
 
+a:link {
+    text-decoration: none;
+  }
 
 .news-list-container {
     width: 500px;
@@ -101,32 +104,116 @@
 
 .summary-activities {
     float: left;
-    width: 520px;
+    width: 450px;
     display: block;
     margin-top: 25px;
     background-color: rgb(220, 241, 248);
-    height: 600px;    
+    height: 500px;
+    margin-left:  var(--page-left-margin);
+    margin-bottom: 100px;
+    overflow: hidden;
 }
 
 .activities-title {
-    margin-left: var(--page-left-margin);
+    margin-left: 20px;
 }
 
 .activities-container {
     border-style: solid;
     border-width: 1px;
-    margin-left: var(--page-left-margin);
+    margin-left: 20px;
     width: 400px;
+    height: 400px;
+    overflow: scroll;
 }
 
 .activity-type-community {
-    margin-left: 20px;
+    margin: 10px;
     background-color: lightcyan;
-    max-width: 350px;
+    width: 350px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5px;
+    border-color: rgb(136, 155, 155);
 }
 
 .activity-type-trading {
-    margin-left: 20px; 
+    margin: 10px;
     background-color: rgb(205, 167, 255);
-    max-width: 350px;
+    width: 350px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5px;
+    border-color: rgb(137, 112, 170);
+
 }
+
+.activity-content{
+    margin-left: 20px;
+    display: block;
+}
+
+.activity-time{
+    margin-left: 20px;
+}
+
+.summary-account {
+    margin-left: 50px;
+    float: left;
+    width: 700px;
+    display: block;
+    margin-top: 25px;
+    background-color: rgb(220, 241, 248);
+    min-height: 500px;
+    margin-bottom: 100px;
+    overflow: auto;
+
+}
+
+.account-title {
+    margin-left: 20px;
+    display: inline-block;
+}
+
+.selected-account-chart {
+    width: 200px;
+    height: 250px;
+    float: left;
+    margin-left: 25px;
+    display: block;
+}
+
+.account-list-container {
+    margin-left: 250px;
+    display: inline-block;
+}
+
+#account-list {
+    margin-left: 10px;
+    width: 150px;
+}
+
+select { text-align-last: right; }
+option { direction: rtl; }
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 425px;
+    float: right;
+    margin-right: 25px;
+  }
+  
+  td, th {
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:last-child {
+    background-color: rgb(178, 216, 216);
+  }
+
+  tr:first-child {
+    background-color: rgb(178, 216, 216);
+  }
+

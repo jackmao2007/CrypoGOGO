@@ -42,7 +42,7 @@ class NewsSection extends Component {
                 {this.state.newsList.map(
                     (news) => <News site={news.site} title={news.title} url={news.url} text={news.text} published={news.published} image={news.image}/>)}
 
-                <a className="news-read-more-btn" href="www.google.com"> read more </a>
+                <a className="news-read-more-btn" href="https://www.google.com" target="_blank"> read more </a>
             </div>
         );
     }

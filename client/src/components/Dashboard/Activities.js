@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import { Redirect } from "react-router";
 
 class Activities extends Component {
     state = { 
         activities: [
-            {activityType: "community", content: "Elliot commented on your post", time: "25 min ago"},
-            {activityType: "trading", content: "Your order of 0.02 BTC has been executed", time: "30 min ago"},
-            {activityType: "community", content: "Nancy like your post", time: "35 min ago"}
+            {activityType: "community", content: "Elliot commented on your post", time: "25 min ago", link: "community"},
+            {activityType: "trading", content: "Your order of 0.02 BTC has been executed", time: "30 min ago", link: "community"},
+            {activityType: "community", content: "Nancy likes your post", time: "35 min ago", link: "community"}
         ]
     }
 
@@ -18,11 +19,19 @@ class Activities extends Component {
         this.getActivities();
     }
 
+    routeToActivity = (path) => {
+        
+        return <Redirect to={path} />
+    } 
+
     renderActivity = (activity) => {
         return <div className={"activity-type-" + activity.activityType}>
+                    <a href={activity.link}>                   
                     <p className="activity-content"> {activity.content} </p>
-                    <span className="activity-time"> {activity.time} </span>
-            </div>
+                    <p className="activity-time"> {activity.time} </p>
+                    </a>
+ 
+                </div>
     }
 
     render() { 

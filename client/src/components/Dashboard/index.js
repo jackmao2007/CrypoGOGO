@@ -5,17 +5,19 @@ import NewsSection from './NewsSection';
 import Chart from './Chart';
 import Summary from './Summary';
 import Activities from './Activities';
+import Account from './Account';
 
 class Dashboard extends Component {
     state = {  }
     render() { 
         return ( 
-            <div>
+            <div className="dashboard">
                 <Navbar/>
                 <Chart/>
                 <NewsSection />
                 <Summary/>
                 <Activities/>
+                <Account/>
             </div>
          );
     }
