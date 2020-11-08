@@ -1,26 +1,18 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import React, { Component } from 'react';
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-      '& > *': {
-        margin: theme.spacing(1),
-      },
-    },
-  }));
 
-  export default function NewPostButton() {
-    const classes = useStyles();
 
-    // handleNewPost() {};
-  
+class NewPostButton extends Component{
+  render() {
+    const {addPost} = this.props;
+
     return (
-      <div className={classes.root}>
-        <Button variant="contained" color="primary" >
-          New Post Temp
-        </Button>
-
-      </div>
-    );
+      <button onClick={addPost}>NEW POST</button>
+    )
   }
+
+
+
+}
+
+export default NewPostButton;
