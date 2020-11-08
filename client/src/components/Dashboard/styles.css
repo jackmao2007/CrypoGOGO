@@ -89,7 +89,7 @@ a:link {
 }
 
 .pos-PL-val {
-    color: lightgreen;
+    color: rgb(0, 199, 0);
     margin-left: 25px;
     margin-bottom: 25px;
     margin-right: 20px;
@@ -124,7 +124,7 @@ a:link {
     margin-left: 20px;
     width: 400px;
     height: 400px;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 .activity-type-community {
@@ -196,7 +196,7 @@ a:link {
 select { text-align-last: right; }
 option { direction: rtl; }
 
-table {
+table.dashboard-account-table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 425px;
@@ -204,16 +204,16 @@ table {
     margin-right: 25px;
   }
   
-  td, th {
-    text-align: left;
-    padding: 8px;
-  }
-  
-  tr:last-child {
-    background-color: rgb(178, 216, 216);
-  }
+    table.dashboard-account-table td, th {
+        text-align: left;
+        padding: 8px;
+    }
+    
+    table.dashboard-account-table tr:last-child {
+        background-color: rgb(178, 216, 216);
+    }
 
-  tr:first-child {
-    background-color: rgb(178, 216, 216);
-  }
+    table.dashboard-account-table tr:first-child {
+        background-color: rgb(178, 216, 216);
+    }
 
