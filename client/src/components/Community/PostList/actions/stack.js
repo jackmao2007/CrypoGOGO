@@ -1,8 +1,10 @@
 export const addPost = stack => {
     const postList = stack.state.posts;
+    const newPostID = postList.length
 
     const post = {
-        title: "ahhNEW", author: "sbNEW", content: "ahhhhhhhhhhNEW", date: "20201111"
+        postID: newPostID, title: "ahh"+`${newPostID}`, 
+        author: "sbNEW", content: "ahhhhhhhhhhNEW", date: "20201111"
     };
     
     postList.push(post);

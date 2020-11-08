@@ -12,9 +12,9 @@ class Community extends Component {
         postContent: "",
         postDate: "",
         posts: [
-            {title: "ahh1", author: "sb1", content: "ahhhhhhhhhh1", date: "20201111"},
-            {title: "ahh2", author: "sb2", content: "ahhhhhhhhhh2", date: "20201111"},
-            {title: "ahh3", author: "sb3", content: "ahhhhhhhhhh3", date: "20201111"},
+            {postID: 0, title: "ahh0", author: "sb0", content: "ahhhhhhhhhh0", date: "20201111"},
+            {postID: 1, title: "ahh1", author: "sb1", content: "ahhhhhhhhhh1", date: "20201111"},
+            {postID: 2, title: "ahh2", author: "sb2", content: "ahhhhhhhhhh2", date: "20201111"},
         ]
      }
 
