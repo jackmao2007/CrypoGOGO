@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Navbar from "../Navbar/index";
+import Sidebar from "./Sidebar"
 
 class Trading extends Component {
     state = {  }
@@ -7,7 +8,7 @@ class Trading extends Component {
         return ( 
                 <div>
                     <Navbar/>
-                    <p> "Hello Trading" </p>
+                    <Sidebar/>
                 </div>
                 );
     }
