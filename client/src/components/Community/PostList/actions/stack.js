@@ -3,8 +3,8 @@ export const addPost = stack => {
     const newPostID = postList.length
 
     const post = {
-        postID: newPostID, title: "ahh"+`${newPostID}`, 
-        author: "sbNEW", content: "ahhhhhhhhhhNEW", date: "date: 20201111"
+        postID: newPostID, title: stack.state.topic, 
+        author: "sbNEW", content: stack.state.content, date: "date: 20201111"
     };
     
     postList.push(post);
@@ -14,6 +14,8 @@ export const addPost = stack => {
     stack.setState({
         posts: postList
     });
+    stack.handleClose()
+    
 };
 
 
@@ -28,4 +30,12 @@ export const removePost = (stack, post) => {
     })
     
 
+}
+
+export const addComment = stack => {
+    const commentList = stack.state.value
+
+    const comment = {
+        
+    }
 }
