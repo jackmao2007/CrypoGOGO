@@ -11,8 +11,6 @@ class Profile extends Component {
         return (
             <div>
                 <Navbar/>
-                <Header/>
-                <Information/>
                 <Sidebar/>
             </div>
          );

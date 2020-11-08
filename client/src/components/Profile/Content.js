@@ -1,25 +1,62 @@
-import React, { Component } from 'react';
-import './Profile.css';
+ import React, { Component } from 'react';
+import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Information from './Information'
 import Header from './Header'
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import MyWallet from './MyWallet'
+import './Profile.css';
+
+
+const routes = [
+  {
+    path: "/home",
+    exact: true,
+    main: () => <div>
+                    <Header/>
+                    <Information/>
+                </div>
+  },
+  {
+    path: "/MyWallet",
+    main: () => <div>
+                    <MyWallet/>
+                </div>
+  }
+];
 
 class Sidebar extends Component {
-    state = { 
-       
-    }
     render() { 
-        return (      
-            <div class="sidebar">
-                <a class="active" href="#My Wallet">My Wallet</a>
-                <a class="active" href="#My Posts">My post</a>
-                <a class="active" href="Add adminstrator">Add adminstrator</a>
-                <a class="active" href="Delete User">Delete User</a>
-                <a class="active" href="Lock Post">Lock Post</a>
-                <a class="active" href="Highlight Post">Highlight Post</a>
-                <a class="active" href="delete Post">delete Post</a>
-            </div>
-         );
+        return ( 
+    <Router>
+      <div style={{ display: "flex" }}>
+        <div className="sidebar">
+          <ul>
+            <li>
+              <Link to="/home">Home</Link>
+            </li>
+            <li>
+              <Link to="/MyWallet">My Wallet</Link>
+            </li>
+            <a class="active" href="/Community">My Posts</a>
+          </ul>
+
+        </div>
+        <div style={{ flex: 1, padding: "10px" }}>
+          <Switch>
+            {routes.map((route, index) => (
+              <Route
+                key={index}
+                path={route.path}
+                exact={route.exact}
+                children={<route.main />}
+              />
+            ))}
+          </Switch>
+        </div>
+      </div>
+    </Router>
+  );    
     }
 }
  
-export default Sidebar;
+ export default Sidebar;
