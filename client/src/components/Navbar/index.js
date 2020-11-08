@@ -20,7 +20,10 @@ class Navbar extends Component {
                         <button className='main-nav-button'> Community </button>
                     </Link>
                     <Link to="/profile">
-                        <button className='main-nav-button'> My Profile </button>
+                        <button className='main-nav-button'> UserProfile</button>
+                    </Link>
+                    <Link to="/adminprofile">
+                        <button className='main-nav-button'> AdminProfile </button>
                     </Link>
                     <Link to="/sign-in">
                         <button className='main-nav-button'> Log In </button>

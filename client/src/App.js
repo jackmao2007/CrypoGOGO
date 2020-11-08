@@ -8,6 +8,7 @@ import Dashboard from './components/Dashboard';
 import Login from './components/Login';
 import Profile from './components/Profile';
 import Trading from './components/Trading';
+import Admin from './components/Adminprofile'
 import Signup from'./components/Signup';
 
 class App extends Component {
@@ -48,6 +49,8 @@ class App extends Component {
                         (this.state.loginStatus? <Trading/> : <Login/>)}/>
         <Route exact path='/community' render={() => 
                         (this.state.loginStatus? <Community/> : <Login/>)}/>
+        <Route exact path='/adminprofile' render={() => 
+                        (this.state.loginStatus? <Admin/> : <Login/>)}/>
         <Route exact path='/sign-in' render={() => 
                         (this.state.loginStatus? <Login/> : <Login/>)}/>
         <Route exact path='/sign-up' render={() => 
