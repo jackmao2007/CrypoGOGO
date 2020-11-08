@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { Formik } from 'formik'
 import Navbar from "../Navbar/index";
-import User from "./users"
 import './styles.css'
 
 const users = {'user': 'user', 'admin': 'admin'}
