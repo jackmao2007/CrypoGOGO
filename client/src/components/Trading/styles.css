@@ -1,0 +1,82 @@
+.trading-account-balance {
+    float: left;
+}
+
+.trading-current-balance-container{
+    float: left;
+    margin-bottom: 15px;
+}
+
+.trading-positions-container{
+    float: left;
+    margin-bottom: 15px;
+    
+}
+
+.trading-account-orders-container {
+    float: left;
+    margin-bottom: 15px;
+}
+
+.trading-account-info-section-container {
+    float: right;
+    width: 775px;
+    height: 100%;
+    min-height: 825px;
+    overflow: clip;
+    border-left-style: solid;
+    padding-left: 15px;
+    border-left-color: lightgrey;
+}
+
+#trading-account-info-section-header {
+    display: inline-block;
+    padding-top: 15px;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.trading-account-list-container{
+    display: inline-block;
+    margin-left: 200px;
+}
+
+#trading-account-list {
+    width: 150px;
+    margin-left: 10px;
+}
+
+.trading-asset-info-section-container{
+    float: left;
+}
+
+.balance-label {
+    font-weight: 500;
+}
+
+
+table.trading-account-balance-table-current td {
+    display: table-cell;
+    border-bottom: 1px solid #e5e5e5;
+    text-align: left;
+    width: 400px;
+
+}
+
+.trading-account-balance-table {
+    overflow: auto;
+    display: inline-block;
+    height: 125px;
+}
+
+    table.trading-account-balance-table td, th {            
+            padding: 3px; 
+            border-bottom: 1px solid #e5e5e5;
+            text-align: left;
+
+    }
+
+    table.trading-account-balance-table th{
+        padding-right: 15px;
+        background-color: lightcyan;
+    }
