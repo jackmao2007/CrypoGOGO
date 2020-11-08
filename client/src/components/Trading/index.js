@@ -3,7 +3,7 @@ import Navbar from "../Navbar/index";
 import AccountBalance from './AccountBalance';
 import AccountOrders from './AccountOrders';
 import "./styles.css";
-
+import Sidebar from "./Sidebar"
 
 class Trading extends Component {
     state = { 
@@ -28,6 +28,7 @@ class Trading extends Component {
         return ( 
                 <div>
                     <Navbar/>
+                    <Sidebar/>
                     <div className="trading-asset-info-section-container">
                         
                     </div>

@@ -80,3 +80,84 @@ table.trading-account-balance-table-current td {
         padding-right: 15px;
         background-color: lightcyan;
     }
+
+.sidebar {
+  width: 200px;
+  background-color: #f1f1f1;
+  height: 100%;
+  position: fixed;
+  top: 150px;
+  margin-right: 0px;
+  font-size: 18px;
+}
+
+#mySearch {
+    width: 190px;
+    height: 30px;
+}
+
+.header{
+	fontsize: 26px;
+}
+
+.subheader{
+	fontsize: 14px;
+}
+
+.chart-container {
+    float: left;
+    margin-top: 30px;
+    margin-left: 200px; 
+}
+
+.account-container{
+    width: 300px;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: lightgray;
+    border-width: 2px;
+    margin: 10px;
+    margin-top: 30px;
+    margin-left: 800px;
+    overflow: hidden;
+}
+
+.position-container{
+    width: 300px;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: lightgray;
+    border-width: 2px;
+    margin-left: 800px;
+    overflow: hidden;
+}
+
+.currorder-container{
+	width: 300px;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: lightgray;
+    border-width: 2px;
+    margin-left: 800px;
+    overflow: hidden;
+}
+
+.makeorder-container{
+	width: 300px;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: lightgray;
+    border-width: 2px;
+    margin-left: 800px;
+    overflow: hidden;
+}
+
+.info-container{
+	width: 300px;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: lightgray;
+    border-width: 2px;
+    margin-left: 800px;
+    overflow: hidden;
+}
