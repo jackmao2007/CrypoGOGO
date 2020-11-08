@@ -11,10 +11,11 @@ class Community extends Component {
         postAuthor: "",
         postContent: "",
         postDate: "",
+        //hard-coded data, will be replaced in phase2
         posts: [
-            {postID: 0, title: "ahh0", author: "sb0", content: "ahhhhhhhhhh0", date: "20201111"},
-            {postID: 1, title: "ahh1", author: "sb1", content: "ahhhhhhhhhh1", date: "20201111"},
-            {postID: 2, title: "ahh2", author: "sb2", content: "ahhhhhhhhhh2", date: "20201111"},
+            {postID: 0, title: "ahh0", author: "sb0", content: "ahhhhhhhhhh0", date: "date: 20201111"},
+            {postID: 1, title: "ahh1", author: "sb1", content: "ahhhhhhhhhh1", date: "date: 20201111"},
+            {postID: 2, title: "ahh2", author: "sb2", content: "ahhhhhhhhhh2", date: "date: 20201111"},
         ]
      }
 

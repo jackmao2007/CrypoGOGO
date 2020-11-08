@@ -4,7 +4,7 @@ export const addPost = stack => {
 
     const post = {
         postID: newPostID, title: "ahh"+`${newPostID}`, 
-        author: "sbNEW", content: "ahhhhhhhhhhNEW", date: "20201111"
+        author: "sbNEW", content: "ahhhhhhhhhhNEW", date: "date: 20201111"
     };
     
     postList.push(post);
