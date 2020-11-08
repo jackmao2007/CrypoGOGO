@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
-import Post from "../Post/index"
+import Post from "./Post/index"
 
 
 function TabPanel(props) {
@@ -31,6 +31,14 @@ TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
   value: PropTypes.any.isRequired,
+};
+
+const width = 900;
+const height = 100;
+
+const sizeModifier = {
+  width: `${width}px`,
+  height: `${height}px`,
 };
 
 function a11yProps(index) {
@@ -70,46 +78,18 @@ export default function PostList() {
         aria-label="Vertical tabs example"
         className={classes.tabs}
       >
-        <Tab label="Post TiTle" {...a11yProps(0)} />
+        <Tab label="Post TiTle" style= {sizeModifier} {...a11yProps(2)} />
         <Tab label="Item Two" {...a11yProps(1)} />
-        <Tab label="Item Three" {...a11yProps(2)} />
-        <Tab label="Item Four" {...a11yProps(3)} />
-        <Tab label="Item Five" {...a11yProps(4)} />
-        <Tab label="Item Six" {...a11yProps(5)} />
-        <Tab label="Item Seven" {...a11yProps(6)} />
-        <Tab label="Item Two" {...a11yProps(1)} />
-        <Tab label="Item Three" {...a11yProps(2)} />
-        <Tab label="Item Four" {...a11yProps(3)} />
-        <Tab label="Item Five" {...a11yProps(4)} />
-        <Tab label="Item Six" {...a11yProps(5)} />
-        <Tab label="Item Seven" {...a11yProps(6)} />
-        <Tab label="Item Two" {...a11yProps(1)} />
-        <Tab label="Item Three" {...a11yProps(2)} />
-        <Tab label="Item Four" {...a11yProps(3)} />
-        <Tab label="Item Five" {...a11yProps(4)} />
-        <Tab label="Item Six" {...a11yProps(5)} />
-        <Tab label="Item Seven" {...a11yProps(6)} />
+        <Tab label="Item Three" {...a11yProps(0)} />
       </Tabs>
-      <TabPanel value={value} index={0}>
+      <TabPanel value={value} index={2}>
         <Post title = "Post Title Temp1" content = "Post Content Temp1"/>
       </TabPanel>
       <TabPanel value={value} index={1}>
       <Post title = "Post Title Temp2" content = "Post Content Temp3"/>
       </TabPanel>
-      <TabPanel value={value} index={2}>
+      <TabPanel value={value} index={0}>
       <Post title = "Post Title Temp2" content = "Post Content Temp3"/>
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        Item Four
-      </TabPanel>
-      <TabPanel value={value} index={4}>
-        Item Five
-      </TabPanel>
-      <TabPanel value={value} index={5}>
-        Item Six
-      </TabPanel>
-      <TabPanel value={value} index={6}>
-        Item Seven
       </TabPanel>
     </div>
   );

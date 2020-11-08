@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PostComment from "../PostComment/index"
+import PostComment from "./PostComment/index"
 
 
 class Post extends Component{
