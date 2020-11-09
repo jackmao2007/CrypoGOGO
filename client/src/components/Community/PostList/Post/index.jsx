@@ -16,7 +16,7 @@ class Post extends Component{
                 <h6>{post.date}</h6>
                 <Divider/>
                 <p>{post.content}</p>
-                <Divider variant="middle" />
+                <Divider />
                 <PostComment />
                 <Divider/>
                 <Reply/>

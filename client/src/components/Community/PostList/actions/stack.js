@@ -2,7 +2,6 @@ function updateID(stack) {
     for (let i = 0; i< stack.length; i++){
         stack[i].postID = i;
     }
-    console.log(stack);
 }
 
 
@@ -18,6 +17,7 @@ export const addPost = stack => {
     postList.push(post);
 
     updateID(postList);
+   
 
     stack.setState({
         posts: postList
@@ -28,7 +28,6 @@ export const addPost = stack => {
 
 
 export const removePost = (stack, post) => {
-    const postList = stack.state.posts;
     const notDeletedPosts = stack.state.posts.filter(p => {
         return p !== post;
     })

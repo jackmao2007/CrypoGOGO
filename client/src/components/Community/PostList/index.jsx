@@ -4,7 +4,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -36,15 +36,32 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "none"
   },
   tabs: {
-    borderRight: `1px solid ${theme.palette.divider}`,
+    borderRight: `2px solid #9e9e9e`,    
   },
   tab: {
     textTransform: "none",
     minWidth: 500,
     minHeight: 100,
-    textAlign: "left",
+    borderBottom: `1px solid #9e9e9e`,
+    borderTop: `1px solid #9e9e9e`,
+    backgroundColor: "#e0f2f1",
+  },
+  label: {
+    paddingLeft: '10px',
+    marginBottom: '20px',
   }
 }));
+
+function PostSummary(props) {
+  const { title, author, date } = props;
+
+  return (
+    <div>
+      <h1>{ title }</h1>
+      <h6> { author } posted on { date }</h6>
+    </div>
+  )
+}
 
 export default function PostList(props) {
   const classes = useStyles();
@@ -60,18 +77,24 @@ export default function PostList(props) {
       orientation="vertical"
       variant="scrollable"
       value={value}
+      indicatorColor = 'primary'
       onChange={handleChange}
       className={classes.tabs}
     >
-    {props.posts.map((post) => {
+    {props.posts.slice(0).reverse().map((post, index) => {
         return (
-          <Tab key={post.postID} label={post.title} className={classes.tab}/>
+          <Tab key={index} 
+          label=  { 
+          <PostSummary title={post.title} author={post.author} date={post.date}
+          className = {classes.label}
+          />} 
+          className={classes.tab}/>
         );
       })}
     </Tabs>
-    {props.posts.map((post) => {
+    {props.posts.slice(0).reverse().map((post, index) => {
       return (
-        <TabPanel value={value} index={post.postID}>
+        <TabPanel key={index} value={value} index={index}>
           <Post post={post} stackComponent={props.stackComponent} />
         </TabPanel>
       );
