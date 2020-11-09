@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import Post from "./Post/index";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -24,15 +24,8 @@ function TabPanel(props) {
       )}
     </div>
   );
-}
+};
 
-
-function a11yProps(index) {
-  return {
-    id: `vertical-tab-${index}`,
-    'aria-controls': `vertical-tabpanel-${index}`,
-  };
-}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,10 +33,17 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
     height: 800,
+    textTransform: "none"
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
   },
+  tab: {
+    textTransform: "none",
+    minWidth: 500,
+    minHeight: 100,
+    textAlign: "left",
+  }
 }));
 
 export default function PostList(props) {
@@ -65,7 +65,7 @@ export default function PostList(props) {
     >
     {props.posts.map((post) => {
         return (
-          <Tab key={post.postID} label={post.title} {...a11yProps(post.postID)} />
+          <Tab key={post.postID} label={post.title} className={classes.tab}/>
         );
       })}
     </Tabs>
