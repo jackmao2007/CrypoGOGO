@@ -1,63 +1,63 @@
- import React, { Component } from 'react';
-import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import BTC from "./BTC"
+import React, { Component } from 'react';
+import TradingViewWidget from 'react-tradingview-widget';
+
 import './styles.css'
-import ETC from "./ETC"
-
-
-const routes = [
-  {
-    path: "/ETC",
-    exact: true,
-    main: () => <div>
-                  <ETC/>
-                </div>
-  },
-  {
-    path: "/BTC",
-    main: () => <div>
-                   <BTC/>
-                </div>
-  }
-];
 
 class Sidebar extends Component {
+    state = {
+      assets: [
+        {
+          symbol: "BTC",
+          price: "1134.23",
+          name: "Bitcoin/USD",
+          dayChange: "+123"
+
+        },
+        {
+          symbol: "ETH",
+          price: "534.23",
+          name: "Etherum/USD",
+          dayChange: "+123"
+
+        },
+        {
+          symbol: "LTC",
+          price: "58.23",
+          name: "Litecoin/USD",
+          dayChange: "+123"
+
+        },
+      ],
+      selectedAsset: "BTC"
+
+    }
+
+    updateSelectedAsset = (symbol) => {
+      this.setState({selectedAsset: symbol});
+    }
+
+    generateSideBarLi = () => {
+      return this.state.assets.map((assets) => {
+        return <li className='trading-side-bar-asset' onClick={()=> {this.updateSelectedAsset(assets.symbol)}}>
+              <span className='header'> {assets.symbol} </span> <span className='subheader'> {assets.price} </span>
+              <h6> <span style={{color:"grey"}}> {assets.name}</span> <span style={{color:"green"}}> {this.dayChange} </span> </h6>
+        </li>
+      })
+    }
+
     render() { 
         return ( 
-    <Router>
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "block", float: "left" }}>
         <div className="sidebar">
-            <input type="text" id="mySearch" placeholder="Search.." title="Type in a Bitcoin"/>
-            <ul>
-            <li>
-              <Link to="/ETC">
-              <span className='header'>ETC </span> <span className='subheader'> 1134.23</span>
-              <h6> <span style={{color:"grey"}}> Bitcoin</span> <span style={{color:"green"}}> +123 </span> </h6>
-              </Link>
-            </li>
-            <li>
-              <Link to="/BTC">
-              <span className='header'>BTC </span> <span className='subheader'> 1099.77</span>
-              <h6> <span style={{color:"grey"}}> Bitcoin</span> <span style={{color:"red"}}> -7.9 </span> </h6>
-              </Link>
-            </li>
+          <input type="text" id="mySearch" placeholder="Search.." title="Type in a Bitcoin"/>
+          <ul>
+            {this.generateSideBarLi()}
           </ul>
         </div>
-        <div style={{ flex: 1, padding: "10px" }}>
-          <Switch>
-            {routes.map((route, index) => (
-              <Route
-                key={index}
-                path={route.path}
-                exact={route.exact}
-                children={<route.main />}
-              />
-            ))}
-          </Switch>
+        <div className="trading-current-asset-container">
+          <TradingViewWidget symbol={this.state.selectedAsset} width="850" height="400"/>
         </div>
       </div>
-    </Router>
   );    
     }
 }

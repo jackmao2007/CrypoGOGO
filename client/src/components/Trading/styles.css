@@ -161,3 +161,15 @@ table.trading-account-balance-table-current td {
     margin-left: 800px;
     overflow: hidden;
 }
+
+.trading-current-asset-container {
+    display: block;
+    float: left;
+    margin-left: 200px;
+    padding-left: 20px;
+    padding-top: 20px;
+}
+
+.trading-side-bar-asset {
+    cursor: pointer;
+}
