@@ -1,0 +1,58 @@
+.ProfileCirclecontainer{
+  width: 400px;
+}
+
+.ProfileCircle{
+  margin-left: 300px;
+  margin-top: 50px;
+  border-radius: 50%;
+  float: left;
+  position: fixed;
+  width: 150px;
+  height: 150px;
+}
+
+.sidebar {
+  height: 100%;
+  width: 200px;
+  background-color: #f1f1f1;
+  height: 100%;
+  position: fixed;
+  top: 150px;
+  margin-right: 0px;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+}
+
+.side-button {
+    width: 100px;
+    height: 60px;
+    background-color: navy;
+    color: white;
+    position: relative;
+    top: 90px;
+    left: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-style: none;
+}
+
+.Information {
+  margin-top: 50px;
+  margin-left: 600px;
+  width: 1000px;
+  height: 100px;
+}
+
+.title {
+  margin-top: 50px;
+  margin-left: 400px;
+  width: 1000px;
+  height: 100px;
+}
+
+
