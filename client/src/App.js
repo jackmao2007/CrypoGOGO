@@ -9,7 +9,7 @@ import Login from './components/Login';
 import Profile from './components/Profile';
 import Trading from './components/Trading';
 import Admin from './components/Adminprofile'
-import Signup from'./components/Signup';
+import Signup from'./components/Login/Signup';
 
 class App extends Component {
   state = { 
