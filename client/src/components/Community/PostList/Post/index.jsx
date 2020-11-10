@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PostComment from "../PostComment"
+import PostComment from "./PostComment"
 import Divider from '@material-ui/core/Divider';
 import { removePost } from "../actions/stack"
 import Reply from './Reply'
