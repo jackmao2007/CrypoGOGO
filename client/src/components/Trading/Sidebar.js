@@ -144,6 +144,7 @@ class Sidebar extends Component {
     }
 
     sendOrder(BuySell) {
+      this.props.onOrder();
       // Send server request with information thats is in the input fields
       // grab information from react refs
     }

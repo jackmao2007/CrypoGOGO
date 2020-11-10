@@ -8,7 +8,8 @@ import Sidebar from "./Sidebar"
 class Trading extends Component {
     state = { 
         accounts: ["10000000", "10000001", "10000003"],
-        currentAccount: "10000000"
+        currentAccount: "10000000",
+        updatedTimestamp: "100000"
     }
 
     accountSelector = React.createRef();
@@ -16,6 +17,10 @@ class Trading extends Component {
     componentDidMount() {
         // populate state
         // get account ids
+    }
+
+    updateAccount = () => {
+        this.setState({updatedTimestamp: Date.now()});
     }
 
 
@@ -28,7 +33,7 @@ class Trading extends Component {
         return ( 
                 <div>
                     <Navbar/>
-                    <Sidebar/>
+                    <Sidebar accountNumber={this.state.currentAccount} onOrder={this.updateAccount} />
                     <div className="trading-asset-info-section-container">
                         
                     </div>
@@ -42,8 +47,8 @@ class Trading extends Component {
                                 </select>
                             </div>
                         </div>
-                        <AccountBalance accountNumber={this.state.currentAccount}/>
-                        <AccountOrders accountNumber={this.state.currentAccount}/>
+                        <AccountBalance accountNumber={this.state.currentAccount} updatedTime={this.state.updatedTimestamp}/>
+                        <AccountOrders accountNumber={this.state.currentAccount} updatedTime={this.state.updatedTimestamp}/>
                     </div>
                 </div>
                 );
