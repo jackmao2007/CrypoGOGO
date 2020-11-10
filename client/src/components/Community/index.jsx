@@ -16,9 +16,12 @@ class Community extends Component {
         isAdmin: false,
         //hard-coded data, will be replaced in phase2
         posts: [
-            {postID: 0, title: "ahh0", author: "sb0", content: "ahhhhhhhhhh0", date: "date: 20201111", comments:[{username:"Ming", text:"Good"}]},
-            {postID: 1, title: "ahh1", author: "sb1", content: "ahhhhhhhhhh1", date: "date: 20201111", comments:[{username:"Zhang", text:"Bad"}]},
-            {postID: 2, title: "ahh2", author: "sb2", content: "ahhhhhhhhhh2", date: "date: 20201111", comments:[{username:"Zhao", text:"Perfect"}]},
+            {postID: 0, title: "Bitcoin Intruduction", author: "btc", content: "Bitcoin (BTC) is recognised as the world’s first truly digitalised digital currency (also known as a cryptocurrency). The Bitcoin price is prone to volatile swings; making it historically popular for traders to speculate on. Follow the live Bitcoin price using the real-time chart, and read the latest Bitcoin news and forecasts to plan your trades using fundamental and technical analysis.", 
+                date: "20201111", comments:[{username:"Ming", text:"Good"}]},
+            {postID: 1, title: "ahh1", author: "sb1", content: "ahhhhhhhhhh1", 
+                date: "20201111", comments:[{username:"Zhang", text:"Bad"}]},
+            {postID: 2, title: "ahh2", author: "sb2", content: "ahhhhhhhhhh2", 
+                date: "20201111", comments:[{username:"Zhao", text:"Perfect"}]},
         ]
 
     }

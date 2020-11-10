@@ -1,30 +1,57 @@
 import React, { Component } from 'react';
 import PostComment from "./PostComment"
 import Divider from '@material-ui/core/Divider';
+import Button from "@material-ui/core/Button"
 import { removePost } from "../actions/stack"
 import Reply from './Reply'
+import { Card, withStyles, CardContent } from '@material-ui/core';
+
+const useStyles = theme => ({
+    root: {
+        minWidth: 1300,
+        maxWidth: 1300,
+    },
+    title: {
+        fontSize: 36,
+    },
+    content: {
+        fontSize: 14,
+    }, 
+    author: {
+        fontSize: 12,
+    }
+})
+
+const classes = useStyles();
+
 
 class Post extends Component{
-
+    
     render() {
-        const { post, stackComponent, permission } = this.props;
+        const { post, stackComponent, permission, classes } = this.props;
+
+
 
         return (
             <div>
-                <div>
-                    <h1> {post.title} </h1>
-                </div>
-                <h6>{post.author}</h6>
-                <h6>{post.date}</h6>
-                <Divider/>
-                <div dangerouslySetInnerHTML={{__html: post.content}} />
-                <Divider />
+                <Card className={classes.root} variant="outlined">
+                    <CardContent className={classes.title}>
+                        <div className={classes.author}>
+                            {post.author} posted on {post.date}
+                        </div>
+                        <Divider />
+                        {post.title}
+                        <Divider />
+                        <div className={classes.content}>
+                            {post.content}
+                        </div>
+                    </CardContent>
+                </Card>
                 <PostComment />
                 <Divider/>
-                <Reply/>
                 {/* use state to tell whether current user has permission to delete a post */}
                 {permission && (
-                    <button onClick={()=>removePost(stackComponent, post)}>Delete Post</button>
+                    <Button onClick={()=>removePost(stackComponent, post)}>Delete Post</Button>
                 )}
             </div>
         )
@@ -34,4 +61,4 @@ class Post extends Component{
 
 }
 
-export default Post;
+export default withStyles(useStyles)(Post);
