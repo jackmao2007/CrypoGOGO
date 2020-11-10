@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Navbar from "../Navbar/index";
 import './styles.css'
 
-const users = {'user': 'user', 'admin': 'admin'}
+//harcode users
+const users = [
+    {username: 'user', password: 'user', email: 'user@user.com'},
+    {username: 'admin', password: 'admin', email: 'admin@admin.com'}
+]
 
 
 class Login extends Component {
     constructor(props) {
         super(props);
-        this.state = {username: '', password: '',};
-
+        this.state = {users: users, username: '', password: ''};
     }
 
     handleChange(key,val){
@@ -19,20 +21,21 @@ class Login extends Component {
         })
     }
 
-    clickHandler = () =>{
-        alert('Username is ' + this.state.username + '\nPassword is ' + this.state.password);
-    }
-
     sumbit = () => {
-        if (this.state.username in users) {
-            alert('User exist');
-            if (users[this.state.username] === this.state.password) {
-                alert('Correct Password');
-            } else {
-                alert('Wrong Password');
+        // Will be modified to server call for authentication in Phase2
+        var i = 0;
+        var len = this.state.users.length;
+        var valid = false;
+        for (; i < len; i++) {
+            if (this.state.users[i].username === this.state.username && this.state.users[i].password === this.state.password) {
+                valid = true;
             }
+        }
+        if (valid) {
+            alert("Log in successfully");
+            window.location.pathname = '/'
         } else {
-            alert('No such a user');
+            alert("Wrong username or password")
         }
     }
 
@@ -40,8 +43,6 @@ class Login extends Component {
 
     render() { 
         return (
-        <div>
-            <Navbar />
             <div className="auth-wrapper">
                 <div className="auth-inner">
                     <form>
@@ -60,84 +61,19 @@ class Login extends Component {
                         <div className="form-group">
                             <div className="custom-control custom-checkbox">
                                 <input type="checkbox" className="custom-control-input" id="customCheck1" />
+                                {/* Functionality will be implemented in Phase2 */}
                                 <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
                             </div>
                         </div>
-                        <button onClick={this.clickHandler}>check</button>
-                        <button onClick={this.sumbit} className="btn btn-primary btn-block">Submit</button>
+
+                        <button type="button" onClick={this.sumbit} className="btn btn-primary btn-block">Sign In</button>
                         
-                        <p className="forgot-password text-right">
-                            Forgot <a href="#">password?</a>
-                        </p>
                     </form>
                 </div>
             </div>
-        </div>
         );
     }
 }
 
-// class Login extends Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {username: '', password: '',};
-    
-//     }
-//     render() {
-//         return (
-//             <div>
-//                 <Formik
-//                     initialValues={{ username: '', password: '' }}
-//                     validate={values => {
-//                     const errors = {};
-//                     if (!values.username) {
-//                         errors.username = 'Required';
-//                     }
-//                     return errors;
-//                     }}
-//                     onSubmit={(values, { setSubmitting }) => {
-//                         setTimeout(() => {
-//                         alert(JSON.stringify(values, null, 2));
-//                         setSubmitting(false);
-//                         }, 400);
-//                     }}
-//                 >
-//                     {({
-//                     values,
-//                     errors,
-//                     touched,
-//                     handleChange,
-//                     handleBlur,
-//                     handleSubmit,
-//                     isSubmitting,
-//                     /* and other goodies */
-//                     }) => (
-//                     <form onSubmit={handleSubmit}>
-//                         <input
-//                         type="txt"
-//                         name="username"
-//                         onChange={handleChange}
-//                         onBlur={handleBlur}
-//                         value={values.username}
-//                     />
-//                         {errors.username && touched.username && errors.username}
-//                         <input
-//                         type="password"
-//                         name="password"
-//                         onChange={handleChange}
-//                         onBlur={handleBlur}
-//                         value={values.password}
-//                         />
-//                         {errors.password && touched.password && errors.password}
-//                         <button type="submit" disabled={isSubmitting}>
-//                         Submit
-//                         </button>
-//                     </form>
-//                 )}
-//                 </Formik>
-//             </div>
-//         )
-//     }
-// }
  
 export default Login;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Navbar from "../Navbar/index";
 import './styles.css'
+
 
 class Signup extends Component {
     constructor(props) {
@@ -15,39 +15,32 @@ class Signup extends Component {
         })
     }
 
-    check = () =>{
-        if (this.state.password === this.state.passwordrep) {
-            alert('Same password');
-            return true
-        } else {
-            alert('Different password');
-            return false
-        }
-    }
 
     clickHandler = () =>{
-        //alert('Username is ' + this.state.username + '\nPassword is ' + this.state.password);
         if (this.state.password === this.state.passwordrep) {
-            //alert('Sign up successfully');
-            window.location.pathname = '/sign-in'
+            if (this.state.email.indexOf("@") > 0 && this.state.email.indexOf(".com") > 0) {
+                //server call to add new User to backend database
+                window.location.pathname = '/sign-in'
+            } else {
+                alert('Please enter correct email!')
+            }
         } else {
-            alert('Fail to sign up, different password');
-        }
+            alert('Fail to sign up, different password!');
+        };
+
     }
 
     render() { 
         return (
-        <div>
-            <Navbar />
             <div className="auth-wrapper">
                 <div className="auth-inner">
                     <form>
                         <h3>Sign Up</h3>
 
-                        {/* <div className="form-group">
+                        <div className="form-group">
                             <label>Email address</label>
-                            <input type="email" onChange={(v)=>this.handleChange('email',v.target.value)} className="form-control" placeholder="Enter your Email" />
-                        </div> */}
+                            <input type="email" onChange={(v)=>this.handleChange('email',v.target.value)} className="form-control" placeholder="Enter your email" />
+                        </div>
 
                         <div className="form-group">
                             <label>Username</label>
@@ -72,7 +65,6 @@ class Signup extends Component {
                     </form>
                 </div>
             </div>
-        </div>
         );
     }
 }
