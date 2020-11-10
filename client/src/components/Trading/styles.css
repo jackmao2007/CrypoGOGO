@@ -165,11 +165,63 @@ table.trading-account-balance-table-current td {
 .trading-current-asset-container {
     display: block;
     float: left;
-    margin-left: 200px;
     padding-left: 20px;
     padding-top: 20px;
+    width: 850;
+    height: 400;
 }
 
 .trading-side-bar-asset {
     cursor: pointer;
+}
+
+.trading-current-asset-info-conatiner {
+    display: block;
+    width: 450px;
+    padding-left: 75px;
+    padding-top: 50px;
+    float: left;
+    background-color: lightcyan;
+    min-height: 500px;
+}
+
+.trading-order-container {
+    display: block;
+    padding-top: 50px;
+    float: left;
+    width: 450px;
+    background-color: lightcyan;
+    min-height: 500px;
+}
+
+.sidebar-margin {
+    width: 200px;
+    height: 1000px;
+    float: left;
+}
+
+.trading-current-asset-info-field {
+    font-weight: 600;
+    padding: 3px;
+    font-size: 18px;
+}
+
+.order-input-field {
+    padding: 2px;
+}
+
+.order-button-buy {
+    color: white;
+    background-color: green;
+    margin: 2px;
+    border-radius: 5px;
+    width: 75px;
+}
+
+.order-button-sell {
+    color: white;
+    background-color: red;
+    margin: 2px;
+    border-radius: 5px;
+    width: 75px;
 }
