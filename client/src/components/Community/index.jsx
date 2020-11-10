@@ -9,7 +9,7 @@ class Community extends Component {
     state = {
         topic: "",
         postAuthor: "",
-        content: "",
+        content: null,
         postDate: "",
         open: false,
         // permission used to tell whether the current user can delete a post
@@ -52,6 +52,13 @@ class Community extends Component {
         });
     };
 
+    onValueChange = (content) => {
+        console.log(this.state.content);
+        this.setState({
+           content
+        })
+    }
+
 
     render() { 
         return (
@@ -65,6 +72,7 @@ class Community extends Component {
                     handleChange={this.handleInputChange}
                     handleClose={this.handleClose}
                     handleClickOpen={this.handleClickOpen}
+                    onValueChange={this.onValueChange}
                     // position,
                     handleSubmit={this.handleSubmit}
                 /> 
