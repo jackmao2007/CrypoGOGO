@@ -3,7 +3,7 @@
     --page-left-margin: 50px
 }
 
-a {
+a:any-link{
     text-decoration: none;
     color: black;
   }
@@ -33,12 +33,14 @@ a {
     border-width: 2px;
     margin: 20px;
     overflow: hidden;
+    padding-left: 10px;
 }
 
 .news-story-image {
     width: 175px;
     height: 175px;
-    margin: 10px;
+    margin-top: 10px;
+    margin-right: 10px;
     border-radius: 20px;
     float: left;
 }
@@ -61,7 +63,13 @@ a {
     float: left;
     margin-top: 50px;
     margin-left: var(--page-left-margin);
-    
+    display: block;
+    width: 1200px;
+    background-color: lightcyan;
+    border-style: solid;
+    padding: 10px;
+    padding-bottom: 20px;
+    padding-top: 20px;
 }
 
 .dashboard-summary {
@@ -113,6 +121,7 @@ a {
     margin-left:  var(--page-left-margin);
     margin-bottom: 100px;
     overflow: hidden;
+    padding-top: 10px;
 }
 
 .activities-title {
@@ -120,12 +129,13 @@ a {
 }
 
 .activities-container {
+    margin-top: 20px;
     border-style: solid;
     border-width: 1px;
     margin-left: 20px;
     width: 400px;
-    height: 400px;
-    overflow-y: scroll;
+    height: 350px;
+    overflow-y: auto;
 }
 
 .activity-type-community {
@@ -168,6 +178,7 @@ a {
     min-height: 500px;
     margin-bottom: 100px;
     overflow: auto;
+    padding-top: 10px;
 
 }
 
@@ -177,6 +188,7 @@ a {
 }
 
 .selected-account-chart {
+    margin-top: 30px;
     width: 200px;
     height: 250px;
     float: left;
@@ -185,6 +197,7 @@ a {
 }
 
 .account-list-container {
+
     margin-left: 250px;
     display: inline-block;
 }
@@ -198,6 +211,7 @@ select { text-align-last: right; }
 option { direction: rtl; }
 
 table.dashboard-account-table {
+    margin-top: 30px;
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 425px;
