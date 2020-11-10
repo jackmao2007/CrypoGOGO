@@ -13,7 +13,7 @@ class Community extends Component {
         postDate: "",
         open: false,
         // permission used to tell whether the current user can delete a post
-        isAdmin: false,
+        isAdmin: true,
         //hard-coded data, will be replaced in phase2
         posts: [
             {postID: 0, title: "Bitcoin Intruduction", author: "btc", content: "Bitcoin (BTC) is recognised as the world’s first truly digitalised digital currency (also known as a cryptocurrency). The Bitcoin price is prone to volatile swings; making it historically popular for traders to speculate on. Follow the live Bitcoin price using the real-time chart, and read the latest Bitcoin news and forecasts to plan your trades using fundamental and technical analysis.", 
@@ -67,7 +67,6 @@ class Community extends Component {
         return (
             <div>
                 <Navbar /> 
-                <SearchBox />
                 <CreateTopicForm
                     open={this.state.open}
                     topic={this.state.topic}
@@ -79,6 +78,7 @@ class Community extends Component {
                     // position,
                     handleSubmit={this.handleSubmit}
                 /> 
+                <SearchBox />
                 <PostList posts={this.state.posts} stackComponent={this} 
                     permission={this.state.isAdmin}/>
             </div>

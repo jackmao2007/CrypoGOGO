@@ -7,7 +7,14 @@ function updateID(stack) {
 
 export const addPost = stack => {
     const postList = stack.state.posts;
-    const newPostID = postList[postList.length - 1].postID + 1
+    const newPostID = () => {
+        const len = postList.length;
+        if (len == 0) {
+            return 0;
+        } else {
+            return postList[postList.length - 1].postID + 1
+        }
+    }
 
     const post = {
         postID: newPostID, title: stack.state.topic, 

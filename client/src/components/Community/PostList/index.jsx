@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -40,7 +41,8 @@ const useStyles = makeStyles((theme) => ({
   },
   tab: {
     textTransform: "none",
-    minWidth: 500,
+    minWidth: 400,
+    maxWidth: 400,
     minHeight: 100,
     borderBottom: `1px solid #9e9e9e`,
     borderTop: `1px solid #9e9e9e`,
@@ -80,7 +82,7 @@ export default function PostList(props) {
       indicatorColor = 'primary'
       onChange={handleChange}
       className={classes.tabs}
-    >
+    >  
     {props.posts.slice(0).reverse().map((post, index) => {
         return (
           <Tab key={index} 

@@ -43,7 +43,7 @@ class Post extends Component{
                         {post.title}
                         <Divider />
                         <div className={classes.content}>
-                            {post.content}
+                            <div dangerouslySetInnerHTML={{__html: post.content}}/>
                         </div>
                     </CardContent>
                 </Card>
@@ -51,7 +51,8 @@ class Post extends Component{
                 <Divider/>
                 {/* use state to tell whether current user has permission to delete a post */}
                 {permission && (
-                    <Button onClick={()=>removePost(stackComponent, post)}>Delete Post</Button>
+                    <Button variant="contained"
+                        onClick={()=>removePost(stackComponent, post)}>Delete Post</Button>
                 )}
             </div>
         )
