@@ -53,6 +53,7 @@ class Reply extends React.Component {
     handleSubmit = () => {
         //addComment(this)
         console.log(this.state.value);
+        alert("The functionality of this button will be implemented in Phase2 since it add new comment to back-end databse.")
     }
 
     render() {
@@ -60,7 +61,7 @@ class Reply extends React.Component {
         
         return (
             <div>
-                <Form style={{ minWidth: 370, maxWidth: '66%', minHeight:250 }} onSubmit={this.handleSubmit}>
+                <Form style={{ minWidth: 370, maxWidth: '66%'}} onSubmit={this.handleSubmit}>
                 <ReactQuill
                     value={value}
                     theme="snow"
@@ -68,7 +69,7 @@ class Reply extends React.Component {
                     formats={formats}
                     onChange={this.onValueChange} />
                 <FormItem style={{ margin: '10px 0px' }}>
-                <Button type="primary" htmlType="submit" onClick={this.handleSubmit} >Submit</Button>
+                <Button type="primary" htmlType="submit" onClick={this.handleSubmit} >Reply</Button>
                 </FormItem>
                 </Form>
             </div>
