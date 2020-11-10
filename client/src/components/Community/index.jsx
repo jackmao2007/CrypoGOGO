@@ -12,12 +12,15 @@ class Community extends Component {
         content: "",
         postDate: "",
         open: false,
+        // permission used to tell whether the current user can delete a post
+        isAdmin: false,
         //hard-coded data, will be replaced in phase2
         posts: [
             {postID: 0, title: "ahh0", author: "sb0", content: "ahhhhhhhhhh0", date: "date: 20201111", comments:[{username:"Ming", text:"Good"}]},
             {postID: 1, title: "ahh1", author: "sb1", content: "ahhhhhhhhhh1", date: "date: 20201111", comments:[{username:"Zhang", text:"Bad"}]},
             {postID: 2, title: "ahh2", author: "sb2", content: "ahhhhhhhhhh2", date: "date: 20201111", comments:[{username:"Zhao", text:"Perfect"}]},
         ]
+
     }
 
     handleClickOpen = () => {
@@ -65,7 +68,8 @@ class Community extends Component {
                     // position,
                     handleSubmit={this.handleSubmit}
                 /> 
-                <PostList posts={this.state.posts} stackComponent={this}/>
+                <PostList posts={this.state.posts} stackComponent={this} 
+                    permission={this.state.isAdmin}/>
             </div>
             );
     }

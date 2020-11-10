@@ -95,7 +95,7 @@ export default function PostList(props) {
     {props.posts.slice(0).reverse().map((post, index) => {
       return (
         <TabPanel key={index} value={value} index={index}>
-          <Post post={post} stackComponent={props.stackComponent} />
+          <Post post={post} stackComponent={props.stackComponent} permission={props.permission} />
         </TabPanel>
       );
     })}

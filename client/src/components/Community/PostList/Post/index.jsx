@@ -7,11 +7,13 @@ import Reply from './Reply'
 class Post extends Component{
 
     render() {
-        const { post, stackComponent } = this.props;
+        const { post, stackComponent, permission } = this.props;
 
         return (
             <div>
-                <h1>{post.title}</h1>   
+                <div>
+                    <h1> {post.title} </h1>
+                </div>
                 <h6>{post.author}</h6>
                 <h6>{post.date}</h6>
                 <Divider/>
@@ -20,7 +22,10 @@ class Post extends Component{
                 <PostComment />
                 <Divider/>
                 <Reply/>
-                <button onClick={()=>removePost(stackComponent, post)}>Delete Post</button>
+                {/* use state to tell whether current user has permission to delete a post */}
+                {permission && (
+                    <button onClick={()=>removePost(stackComponent, post)}>Delete Post</button>
+                )}
             </div>
         )
     }
