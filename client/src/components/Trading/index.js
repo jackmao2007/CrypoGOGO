@@ -32,7 +32,6 @@ class Trading extends Component {
     render() { 
         return ( 
                 <div>
-                    <Navbar/>
                     <Sidebar accountNumber={this.state.currentAccount} onOrder={this.updateAccount} />
                     <div className="trading-asset-info-section-container">
                         

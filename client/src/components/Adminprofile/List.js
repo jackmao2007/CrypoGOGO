@@ -1,7 +1,5 @@
  import React, { Component } from 'react';
 import './Profile.css';
-import { Redirect } from "react-router";
-import ListActivity from './ListActivity'
 
 class List extends Component {
     constructor(props) {

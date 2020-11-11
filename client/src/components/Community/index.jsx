@@ -80,7 +80,6 @@ class Community extends Component {
     render() { 
         return (
             <div>
-                <Navbar /> 
                 <CreateTopicForm
                     open={this.state.open}
                     topic={this.state.topic}

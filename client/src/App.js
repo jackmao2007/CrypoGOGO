@@ -10,6 +10,7 @@ import Profile from './components/Profile';
 import Trading from './components/Trading';
 import Admin from './components/Adminprofile'
 import Signup from'./components/Login/Signup';
+import Navbar from'./components/Navbar';
 
 class App extends Component {
   state = { 
@@ -40,6 +41,7 @@ class App extends Component {
   render() { 
     return ( 
       <BrowserRouter>
+      <Navbar/>
       <Switch>
         <Route exact path='/' render={() =>
                         (this.state.loginStatus? <Dashboard/> : <Login/>)}/>
