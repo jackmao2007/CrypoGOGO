@@ -9,9 +9,9 @@ Third-Party Libraries: Material-UI, Bootstrap, Antd, React Quill, React, Chart.j
 ### `npm install` and then `npm start`, if there is any modules not resolved, `npm install` the corresponding modules to fix it.
 
 ## Login and Sign up
-In the Login page, you can use (username:user, password:user) as a user or (username:admin, password:admin) as an administrator to log in.
+Enter localhost:3000/sign-in. In the Login page, you can use (username:user, password:user) as a user or (username:admin, password:admin) as an administrator to log in.
 Since we set a flag(loginStatus) in App.js, its default value is true so that it is easier to test, then you will see dashboard directly(it will only be available after you logged in). In Phase 2, we will let it be functional after receiving server's response.
-Also, we have a flag(isAdmin) to see if the user is an admin or not after they logged in. This fucntion will be explained later.
+Also, we have a flag(isAdmin) to see if the user is an admin or not after they logged in. This fucntion will be explained later.\\
 Enter localhost:3000/sign-up to visit Sign up page. In the Sign up page, it requires you enter a correct email address like xxx@xx.com, otherwise you cannot sign up. The functionality of the sign up button has not been implemented yet, since it relates to server call to back-end. The new users' username and password will be stored in server. Once you want to login, it will fetch the data form server for authentication.
 
 ## Community
