@@ -60,7 +60,7 @@ function PostSummary(props) {
 
   return (
     <div>
-      <h1>{ title }</h1>
+      <h2>{ title }</h2>
       <h6> { author } posted on { date }</h6>
     </div>
   )

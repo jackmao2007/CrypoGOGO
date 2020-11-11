@@ -13,11 +13,13 @@ const useStyles = theme => ({
     root: {
         minWidth: 1300,
         maxWidth: 1300,
-        marginTop: -80,
+        marginTop: -110,
         marginBottom: 30,
     },
     title: {
         fontSize: 36,
+        paddingTop: 10,
+        paddingBottom: 10,
     },
     content: {
         fontSize: 14,
@@ -86,7 +88,6 @@ class Post extends Component{
                     </CardContent>
                 </Card>
 
-                <Divider/>
                 <Reply/>
                 {/* use state to tell whether current user has permission to delete a post */}
                 {permission && (
