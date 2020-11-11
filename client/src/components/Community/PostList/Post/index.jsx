@@ -3,7 +3,6 @@ import PostComment from "./PostComment"
 import Divider from '@material-ui/core/Divider';
 import Button from "@material-ui/core/Button"
 import { removePost } from "../actions/stack"
-import Reply from './Reply'
 import { Card, withStyles, CardContent } from '@material-ui/core';
 
 const useStyles = theme => ({
