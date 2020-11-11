@@ -4,17 +4,17 @@
 
 Third-Party Libraries: Material-UI, Bootstrap, Antd, React Quill, React, Chart.js
 
-## Start:
+## Start
 ### First cd into ./client
 ### `npm install` and then `npm start`, if there is any modules not resolved, `npm install` the corresponding modules to fix it.
 
-## Login and Sign up:
+## Login and Sign up
 In the Login page, you can use (username:user, password:user) as a user or (username:admin, password:admin) as an administrator to log in.
 Since we set a flag(loginStatus) in App.js, its default value is true so that it is easier to test, then you will see dashboard directly(it will only be available after you logged in). In Phase 2, we will let it be functional after receiving server's response.
 Also, we have a flag(isAdmin) to see if the user is an admin or not after they logged in. This fucntion will be explained later.
-In the Sign up page, it requires you enter a correct email address like xxx@xx.com, otherwise you cannot sign up. The functionality of the sign up button has not been implemented yet, since it relates to server call to back-end. The new users' username and password will be stored in server. Once you want to login, it will fetch the data for authentication.
+In the Sign up page, it requires you enter a correct email address like xxx@xx.com, otherwise you cannot sign up. The functionality of the sign up button has not been implemented yet, since it relates to server call to back-end. The new users' username and password will be stored in server. Once you want to login, it will fetch the data form server for authentication.
 
-## Community:
+## Community
 We made a community for users to share they ideas, feelings, suggestions, etc. Users can create new post, comment on others posts, like others post and search any posts by keywords. For creating new post and comments, we use the third-party react-quill, this allows users to edit rich content like upload pictures(will be refined in Phase2 for storing images in server). You can also like others posts just by clicking like button. Furthermore, after user enter the community page, the flag(isAdmin as mentioned before) will be passed together, so that it will display the fucntionality that only admins can do like delete a post. The Delete Button will be rendered if isAdmin is true.
 
 ## Dashboard
@@ -27,3 +27,5 @@ Note: to reduce clutter and secure account information, selecting an account on 
 
 ## Profile
 For Profile part of the webpage, we will show AdminProfile as a template. There are two major differences between the UserProfile and the AdminProfile. One is that the admins can use the user lists to delete accounts and set the status of users to be admins using Manage User sidebar. Another one is that admins can manage the posts in community, such as delete posts, highlight posts using Manage Posts sidebar. In the home page(using Home sidebar), web users can see the account information, log out and reset password. In the wallet page, (using My Wallet page), web users can see the wallet summary, bitcoins summary and balance summary. In wallet summary, Web users can deposit and draw money. In bitcoins summary, web users can select the summary from the exact date. In my post summary, web users can see their own posts, check likes, replies and manage collect.
+
+Edited by Siyuan Chen, Gancheng Luo, Zizhuang Fan, Deng Juan
