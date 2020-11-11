@@ -5,6 +5,43 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import ReactQuill from 'react-quill'; 
+import 'react-quill/dist/quill.snow.css'; 
+import { Form } from 'antd';
+import 'antd/dist/antd.css'
+
+const FormItem = Form.Item;
+
+const modules = {
+    toolbar: [
+        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        ['blockquote', 'code-block'],
+        ['link', 'image'],
+
+        [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+        [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+        [{ 'direction': 'rtl' }],                         // text direction
+
+        // [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+        [{ 'font': [] }],
+        [{ 'align': [] }],
+
+        ['clean']                                         // remove formatting button
+    ]
+}
+
+const formats = [
+    'header', 'font', 'background', 'color', 'code', 'size',
+    'bold', 'italic', 'underline', 'strike', 'blockquote',
+    'list', 'bullet', 'indent', 'script', 'align', 'direction',
+    'link', 'image', 'code-block', 'formula', 'video'
+  ]
+
 
 class CreateTopicForm extends React.Component {
     render() {
@@ -15,6 +52,7 @@ class CreateTopicForm extends React.Component {
             handleChange,
             handleClose,
             handleClickOpen,
+            onValueChange,
             // position,
             handleSubmit
         } = this.props;
@@ -43,7 +81,7 @@ class CreateTopicForm extends React.Component {
                         onChange={handleChange}
                         fullWidth
                     />
-                    <TextField
+                    {/* <TextField
                         required
                         name="content"
                         label="Content"
@@ -53,8 +91,15 @@ class CreateTopicForm extends React.Component {
                         onChange={handleChange}
                         variant="outlined"
                         fullWidth
-                    />
-                    {/* <Reply/> */}
+                    /> */}
+                    <Form style={{ minHeight:400 }}>
+                        <ReactQuill style={{height:300}}
+                            value={content}
+                            theme="snow"
+                            modules={modules}
+                            formats={formats}
+                            onChange={onValueChange} />
+                    </Form>
                 </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClose} color="primary">

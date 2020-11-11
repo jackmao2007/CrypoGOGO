@@ -1,10 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 import Post from "./Post/index";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
+import { TextField } from "@material-ui/core";
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -24,15 +26,8 @@ function TabPanel(props) {
       )}
     </div>
   );
-}
+};
 
-
-function a11yProps(index) {
-  return {
-    id: `vertical-tab-${index}`,
-    'aria-controls': `vertical-tabpanel-${index}`,
-  };
-}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,11 +35,36 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
     height: 800,
+    textTransform: "none"
   },
   tabs: {
-    borderRight: `1px solid ${theme.palette.divider}`,
+    borderRight: `2px solid #9e9e9e`,    
+  },
+  tab: {
+    textTransform: "none",
+    minWidth: 400,
+    maxWidth: 400,
+    minHeight: 100,
+    borderBottom: `1px solid #9e9e9e`,
+    borderTop: `1px solid #9e9e9e`,
+    backgroundColor: "#e0f2f1",
+  },
+  label: {
+    paddingLeft: '10px',
+    marginBottom: '20px',
   },
 }));
+
+function PostSummary(props) {
+  const { title, author, date } = props;
+
+  return (
+    <div>
+      <h1>{ title }</h1>
+      <h6> { author } posted on { date }</h6>
+    </div>
+  )
+}
 
 export default function PostList(props) {
   const classes = useStyles();
@@ -55,24 +75,30 @@ export default function PostList(props) {
   };
   
   return (
-    <div className={classes.root}>
+    <div className={classes.root}>           
     <Tabs
       orientation="vertical"
       variant="scrollable"
       value={value}
+      indicatorColor = 'primary'
       onChange={handleChange}
       className={classes.tabs}
-    >
-    {props.posts.map((post) => {
+    > 
+    {props.posts.slice(0).reverse().map((post, index) => {
         return (
-          <Tab key={post.postID} label={post.title} {...a11yProps(post.postID)} />
+          <Tab key={index} 
+          label=  { 
+          <PostSummary title={post.title} author={post.author} date={post.date}
+          className = {classes.label}
+          />} 
+          className={classes.tab}/>
         );
       })}
     </Tabs>
-    {props.posts.map((post) => {
+    {props.posts.slice(0).reverse().map((post, index) => {
       return (
-        <TabPanel value={value} index={post.postID}>
-          <Post post={post} stackComponent={props.stackComponent} />
+        <TabPanel key={index} value={value} index={index}>
+          <Post post={post} stackComponent={props.stackComponent} permission={props.permission} />
         </TabPanel>
       );
     })}
