@@ -41,6 +41,12 @@ class App extends Component {
   render() { 
     return ( 
       <BrowserRouter>
+      <Switch>
+        <Route exact path='/sign-in' render={() => 
+                        (this.state.loginStatus? <Login/> : <Login/>)}/>
+        <Route exact path='/sign-up' render={() => 
+                        (this.state.loginStatus? <Signup/> : <Login/>)}/> 
+      </Switch>
       <Navbar/>
       <Switch>
         <Route exact path='/' render={() =>
@@ -52,11 +58,7 @@ class App extends Component {
         <Route exact path='/community' render={() => 
                         (this.state.loginStatus? <Community/> : <Login/>)}/>
         <Route exact path='/adminprofile' render={() => 
-                        (this.state.loginStatus? <Admin/> : <Login/>)}/>
-        <Route exact path='/sign-in' render={() => 
-                        (this.state.loginStatus? <Login/> : <Login/>)}/>
-        <Route exact path='/sign-up' render={() => 
-                        (this.state.loginStatus? <Signup/> : <Login/>)}/>                         
+                        (this.state.loginStatus? <Admin/> : <Login/>)}/>                
       </Switch>
       </BrowserRouter>
      );
