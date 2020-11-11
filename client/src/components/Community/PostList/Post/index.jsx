@@ -13,7 +13,7 @@ const useStyles = theme => ({
     root: {
         minWidth: 1300,
         maxWidth: 1300,
-        marginTop: -110,
+        marginTop: -120,
         marginBottom: 30,
     },
     title: {

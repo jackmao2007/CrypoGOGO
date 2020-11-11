@@ -47,6 +47,8 @@ const useStyles = theme => ({
     newpost: {
         maxWidth: 400,
         minWidth: 400,
+        marginTop: 5,
+        marginBottom: 5,
     },
 })
 
