@@ -60,3 +60,28 @@
   font-size: 150%;
 }
 
+
+table.user-table {
+    margin-top: 30px;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 600px;
+    float: right;
+    margin-right: 25px;
+  }
+  
+    table.user-table, td, th {
+        text-align: left;
+        padding: 8px;
+    }
+    
+    .Usertable{
+    margin-top: 30px;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 425px;
+    float: right;
+    margin-right: 25px;
+
+    }
+
