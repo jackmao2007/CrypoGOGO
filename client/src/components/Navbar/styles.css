@@ -17,3 +17,18 @@
     margin-right: 20px;
     border-style: none;
 }
+
+.right-nav-button {
+    width: 100px;
+    height: 60px;
+    background-color: navy;
+    color: white;
+    position: relative;
+    top: 90px;
+    left: 50px;
+    right: 50px;
+    float: right;
+    margin-left: 20px;
+    margin-right: 100px;
+    border-style: none;
+}

@@ -5,6 +5,9 @@ import "./styles.css";
 
 
 class Navbar extends Component {
+    constructor(props) {
+        super(props);
+    }
     state = {  }
     render() { 
         return ( 
@@ -25,12 +28,13 @@ class Navbar extends Component {
                     <Link to="/adminprofile">
                         <button className='main-nav-button'> AdminProfile </button>
                     </Link>
-                    <Link to="/sign-in">
-                        <button className='main-nav-button'> Log In </button>
-                    </Link>
-                    <Link to="/sign-up">
-                        <button className='main-nav-button'> Sign Up </button>
-                    </Link>
+                    {
+                        this.props.loginStatus?
+                        null
+                        :<Link to="/sign-in">
+                            <button className='right-nav-button'> Logout </button>
+                        </Link>
+                    }
                 </nav>
             </div>
          );

@@ -3,8 +3,9 @@
     --page-left-margin: 50px
 }
 
-a:link {
+a:any-link{
     text-decoration: none;
+    color: black;
   }
 
 .news-list-container {
@@ -32,12 +33,14 @@ a:link {
     border-width: 2px;
     margin: 20px;
     overflow: hidden;
+    padding-left: 10px;
 }
 
 .news-story-image {
     width: 175px;
     height: 175px;
-    margin: 10px;
+    margin-top: 10px;
+    margin-right: 10px;
     border-radius: 20px;
     float: left;
 }
@@ -60,7 +63,13 @@ a:link {
     float: left;
     margin-top: 50px;
     margin-left: var(--page-left-margin);
-    
+    display: block;
+    width: 1200px;
+    background-color: lightcyan;
+    border-style: solid;
+    padding: 10px;
+    padding-bottom: 20px;
+    padding-top: 20px;
 }
 
 .dashboard-summary {
@@ -89,7 +98,7 @@ a:link {
 }
 
 .pos-PL-val {
-    color: lightgreen;
+    color: rgb(0, 199, 0);
     margin-left: 25px;
     margin-bottom: 25px;
     margin-right: 20px;
@@ -112,6 +121,7 @@ a:link {
     margin-left:  var(--page-left-margin);
     margin-bottom: 100px;
     overflow: hidden;
+    padding-top: 10px;
 }
 
 .activities-title {
@@ -119,12 +129,13 @@ a:link {
 }
 
 .activities-container {
+    margin-top: 20px;
     border-style: solid;
     border-width: 1px;
     margin-left: 20px;
     width: 400px;
-    height: 400px;
-    overflow: scroll;
+    height: 350px;
+    overflow-y: auto;
 }
 
 .activity-type-community {
@@ -167,6 +178,7 @@ a:link {
     min-height: 500px;
     margin-bottom: 100px;
     overflow: auto;
+    padding-top: 10px;
 
 }
 
@@ -176,6 +188,7 @@ a:link {
 }
 
 .selected-account-chart {
+    margin-top: 30px;
     width: 200px;
     height: 250px;
     float: left;
@@ -184,6 +197,7 @@ a:link {
 }
 
 .account-list-container {
+
     margin-left: 250px;
     display: inline-block;
 }
@@ -196,7 +210,8 @@ a:link {
 select { text-align-last: right; }
 option { direction: rtl; }
 
-table {
+table.dashboard-account-table {
+    margin-top: 30px;
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 425px;
@@ -204,16 +219,16 @@ table {
     margin-right: 25px;
   }
   
-  td, th {
-    text-align: left;
-    padding: 8px;
-  }
-  
-  tr:last-child {
-    background-color: rgb(178, 216, 216);
-  }
+    table.dashboard-account-table td, th {
+        text-align: left;
+        padding: 8px;
+    }
+    
+    table.dashboard-account-table tr:last-child {
+        background-color: rgb(178, 216, 216);
+    }
 
-  tr:first-child {
-    background-color: rgb(178, 216, 216);
-  }
+    table.dashboard-account-table tr:first-child {
+        background-color: rgb(178, 216, 216);
+    }
 
