@@ -1,7 +1,6 @@
  import React, { Component } from 'react';
 import './Profile.css';
 import { Redirect } from "react-router";
-import ListActivity from './ListActivity'
 
 class List extends Component {
     constructor(props) {
@@ -12,16 +11,14 @@ class List extends Component {
       {userid: 2, username: 'BB'},
       {userid: 3, username: 'CC'}
       ],
-      totalusers: 3
+      searchid: 7
+      //Will be the Values from the Admins in the backend
       }
+      this.deleteAccount = this.deleteAccount.bind(this);
+      this.searchAccount = this.searchAccount.bind(this);
+
     }
 
-    getActivities() {
-    }
-
-    componentDidMount() {
-        this.getActivities();
-    }
     searchAccount = (id) => {
       const usersinfo = this.state.users
       let found = this.state.users.filter(s => {
@@ -30,9 +27,8 @@ class List extends Component {
     }
 
     deleteAccount = (user)  => {
-      const usersinfo = this.state.users
-      let removed = this.state.users.filter(s => {
-        return s.userid !== user.userid });
+      let removed = this.state.users.filter(user => {
+        return user !== user});
       this.setState({ usersinfo: removed});
     }
 
@@ -52,25 +48,45 @@ class List extends Component {
           <tr> 
             <td> {usersinfo[i].userid} </td>
             <td> {usersinfo[i].username} </td>
-            <td> <button class='AddAdmin'>Add Administrator</button> </td>
-            <td> <button class='Delete'
-            onClick={() =>this.deleteAccount(usersinfo[i])}>Delete Account</button>  </td>
+            <td> {<button className='AddAdmin'>Set Administrator</button>} </td>
+            <td> {<button className='Delete' onClick={() => this.deleteAccount(usersinfo[i])}>Delete Account</button>}  </td>
           </tr>
         );
       }
-      return <table className="dashboard-account-table"> {tableRows.map(tableRows => tableRows)} </table>;
+      return <table className="user-table"> {tableRows.map(tableRows => tableRows)} </table>;
+        }
+
+      generateSearchTableRows = () => {
+      let tableRows = [];
+      tableRows.push(
+       <tr>
+          <th> UserId </th>
+          <th> UserName </th>
+      </tr>
+      );
+        tableRows.push(
+          <tr> 
+            <td> 7 </td>
+            <td> Jane </td>
+          </tr>
+        );
+
+      return <table className="search-table"> {tableRows.map(tableRows => tableRows)} </table>;
     }
 
     render() { 
         return ( 
-                <div className="Usertable">
+                <div className="list">
+                 <div className="search">
                   <p>Search User By ID</p>
                   <input 
                     type="text" 
+                    value={this.state.searchid} 
                     placeholder="Search ID" 
-                    className = "input"
-                    onChange={(e) =>  this.searchAccount(e.target.value)}
-                    />
+                  />
+                  <button onClick={(e) =>  this.searchAccount(e.target.value)}> Search</button>
+                  {this.generateSearchTableRows()}
+                                    </div>
                   {this.generateUserTableRows ()}
                 </div>
         );
