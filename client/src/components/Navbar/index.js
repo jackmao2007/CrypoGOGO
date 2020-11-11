@@ -5,6 +5,9 @@ import "./styles.css";
 
 
 class Navbar extends Component {
+    constructor(props) {
+        super(props);
+    }
     state = {  }
     render() { 
         return ( 
@@ -20,8 +23,18 @@ class Navbar extends Component {
                         <button className='main-nav-button'> Community </button>
                     </Link>
                     <Link to="/profile">
-                        <button className='main-nav-button'> My Profile </button>
+                        <button className='main-nav-button'> UserProfile</button>
                     </Link>
+                    <Link to="/adminprofile">
+                        <button className='main-nav-button'> AdminProfile </button>
+                    </Link>
+                    {
+                        this.props.loginStatus?
+                        null
+                        :<Link to="/sign-in">
+                            <button className='right-nav-button'> Logout </button>
+                        </Link>
+                    }
                 </nav>
             </div>
          );

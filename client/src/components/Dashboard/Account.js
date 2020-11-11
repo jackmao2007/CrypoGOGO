@@ -132,7 +132,7 @@ class Account extends Component {
           <td> {total} </td>
       </tr>
       );
-      return <table> {tableRows.map(tableRows => tableRows)} </table>;
+      return <table className="dashboard-account-table"> {tableRows.map(tableRows => tableRows)} </table>;
     }
 
 
