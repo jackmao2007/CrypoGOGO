@@ -64,7 +64,7 @@ export function searchByKeyWord(stack, keywords) {
         }
         console.log(isInclude);
         if (isInclude.every((i) => i == 0)) {
-            const noResult = {postID: 2, title: "No Result!", author: "xxx", content: "No result", date: "xxx"}
+            const noResult = {postID: 0, title: "No Result!", author: "xxx", content: "No result", date: "xxx", comments:[{username:"xxx", text:"xxx"}]}
             newList.push(noResult);
         } else {
             for (let i = 0; i < postList.length; i++) {

@@ -4,6 +4,7 @@ import Divider from '@material-ui/core/Divider';
 import Button from "@material-ui/core/Button"
 import { removePost } from "../actions/stack"
 import CommentList from './CommentList'
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import Reply from './Reply'
 import { Card, withStyles, CardContent } from '@material-ui/core';
 import PostList from '..';
@@ -12,26 +13,41 @@ const useStyles = theme => ({
     root: {
         minWidth: 1300,
         maxWidth: 1300,
+        marginTop: -80,
+        marginBottom: 30,
     },
     title: {
         fontSize: 36,
     },
     content: {
         fontSize: 14,
+        paddingTop: 20,
+        paddingBottom: 20,
     }, 
     author: {
         fontSize: 12,
-    }
+    },
+    comments: {
+        mariginTop: 10,
+        marginBottom: 20,
+    },
+    likebutton: {
+        marginTop: 5,
+        marginBottom: -35,
+    },
 })
 
 const classes = useStyles();
 
 
 class Post extends Component{
+    state = {likenum: 0}
+    handellike = () => {
+        this.setState({likenum: this.state.likenum + 1})
+    }
     
     render() {
         const { post, stackComponent, permission, classes } = this.props;
-
 
 
         return (
@@ -49,8 +65,19 @@ class Post extends Component{
                         </div>
                         <div className={classes.content}>
                         <Divider />
+                        <div className={classes.likebutton}>
+                        <Button onClick={this.handellike} variant="contained" color="secondary"
+                            startIcon={<FavoriteIcon />}> 
+                            Like! {this.state.likenum} </Button>
+                        </div>
+                        </div>
+                    </CardContent>
+                </Card>
+                <Card className={classes.comments} variant="outlined">
+                    <CardContent>
+                        <div>
                         <p>Comments:</p>
-                        <Divider variant="middle"/>
+                        <Divider/>
                         <CommentList comments={post.comments} stack={this}/>
                         </div>
                     </CardContent>
