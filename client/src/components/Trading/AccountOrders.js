@@ -73,7 +73,7 @@ class AccountOrders extends Component {
         return ( 
             <div className="trading-account-orders-container">
                 <h3> Orders </h3>
-                <table className="trading-account-balance-table">
+                <table className="trading-account-order-balance-table">
                     <tr>
                         <th> Symbol </th>
                         <th> Status </th>

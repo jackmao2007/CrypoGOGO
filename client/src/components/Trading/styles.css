@@ -81,6 +81,28 @@ table.trading-account-balance-table-current td {
         background-color: lightcyan;
     }
 
+.trading-account-order-balance-table{
+    overflow: auto;
+    display: inline-block;
+    height: 225px;
+    width: 750px;
+}
+    
+    table.trading-account-order-balance-table td, th {            
+        padding: 3px; 
+        border-bottom: 1px solid #e5e5e5;
+        text-align: left;
+
+    }
+
+    table.trading-account-order-balance-table th{
+    padding-right: 15px;
+    background-color: lightcyan;
+    }
+
+
+
+
 .sidebar {
   width: 200px;
   background-color: #f1f1f1;
@@ -173,6 +195,10 @@ table.trading-account-balance-table-current td {
 
 .trading-side-bar-asset {
     cursor: pointer;
+    height: 80px;
+    padding: 10px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(194, 194, 194);
 }
 
 .trading-current-asset-info-conatiner {
@@ -224,4 +250,20 @@ table.trading-account-balance-table-current td {
     margin: 2px;
     border-radius: 5px;
     width: 75px;
+}
+
+
+
+.trading-sidebar-asset-info-section {
+    display: block;
+    float: left;
+    width: 1100px;
+}
+
+.sidebar-search-box {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    width: 200px;
+    border-radius: 5px;
 }

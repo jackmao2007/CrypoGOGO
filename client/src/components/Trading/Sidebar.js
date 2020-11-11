@@ -11,6 +11,7 @@ class Sidebar extends Component {
         isStop: false,
         isBracket: false
       },
+      search: "",
       assets: [
         {
           symbol: "BTC",
@@ -59,6 +60,7 @@ class Sidebar extends Component {
       ],
       selectedAsset: "BTC"
     }
+    sidebarSearchBoxRef = React.createRef();
     orderQuantityRef = React.createRef();
     orderTypeRef = React.createRef();
     orderLimitRef = React.createRef();
@@ -78,7 +80,16 @@ class Sidebar extends Component {
     }
 
     generateSideBarLi = () => {
-      return this.state.assets.map((assets) => {
+      let display = this.state.assets;
+      if (this.state.search != ""){
+        display = [];
+        for (let i =0; i < this.state.assets.length; i++){
+          if (this.state.assets[i].symbol.search(this.state.search.toUpperCase()) != -1){
+            display.push(this.state.assets[i]);
+          }
+        }
+      }
+      return display.map((assets) => {
         return <li className='trading-side-bar-asset' onClick={()=> {this.updateSelectedAsset(assets.symbol)}}>
               <span className='header'> {assets.symbol} </span> <span className='subheader'> {assets.price} </span>
               <h6> <span style={{color:"grey"}}> {assets.name}</span> <span style={{color:"green"}}> {this.dayChange} </span> </h6>
@@ -151,9 +162,10 @@ class Sidebar extends Component {
 
     render() { 
         return ( 
-      <div style={{ display: "block", float: "left", width: "1100px" }}>
+      <div className="trading-sidebar-asset-info-section">
         <div className="sidebar">
-          <input type="text" id="mySearch" placeholder="Search.." title="Type in a Bitcoin"/>
+          <input ref={this.sidebarSearchBoxRef} className='sidebar-search-box' type="text" id="mySearch" placeholder="Search.." onChange={
+                                                                         () => this.setState({search: this.sidebarSearchBoxRef.current.value})}/>
           <ul>
             {this.generateSideBarLi()}
           </ul>
