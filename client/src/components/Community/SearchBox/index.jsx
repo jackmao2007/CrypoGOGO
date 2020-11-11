@@ -1,14 +1,30 @@
+import { Input, TextField, withStyles } from '@material-ui/core';
 import React, { Component } from 'react';
-import "./styles.css"
-// just template, will be implemented using MaterialUI
 
+
+const useStyles = theme => ({
+    searchbar: {
+        minWidth: 400,
+        maxWidth: 400,
+    },
+});
+
+const classes = useStyles();
 
 class SearchBox extends Component {
+
     render() {
+        const { classes ,keyword, stackComponent, handleSearchInput} = this.props;
+
         return (
-            <div className="searchBox">
-                Search Post Template
-                { this.props.text }
+            <div>
+                <TextField 
+                className = {classes.searchbar} 
+                id="filled-secondary"
+                label="Search Post"
+                variant="filled"
+                onChange={handleSearchInput}
+                />               
             </div>
         )
     }
@@ -16,4 +32,4 @@ class SearchBox extends Component {
 }
 
 
-export default SearchBox;
+export default withStyles(useStyles)(SearchBox);
