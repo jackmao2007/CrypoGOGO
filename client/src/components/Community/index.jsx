@@ -21,11 +21,11 @@ class Community extends Component {
         //hard-coded data, will be replaced in phase2
         posts: [
             {postID: 0, title: "Bitcoin Intruduction", author: "btc", content: "Bitcoin (BTC) is recognised as the world’s first truly digitalised digital currency (also known as a cryptocurrency). The Bitcoin price is prone to volatile swings; making it historically popular for traders to speculate on. Follow the live Bitcoin price using the real-time chart, and read the latest Bitcoin news and forecasts to plan your trades using fundamental and technical analysis.", 
-                date: "20201111", comments:[{username:"Ming", text:"Good Post!"}, {username:"George", text:"That's not bad!"}]},
+                date: "20201111", comments:[{username:"Ming", text:"Good Post!", time:"19:23, Oct 28, 2020"}, {username:"George", text:"That's not bad!", time:"20:23, Nov 2, 2020"}]},
             {postID: 1, title: "ahh1", author: "sb1", content: "ahhhhhhhhhh1", 
-                date: "20201111", comments:[{username:"Zhang", text:"Bad"}]},
+                date: "20201111", comments:[{username:"Zhang", text:"Bad", time:"19:23, Oct 28, 2020"}]},
             {postID: 2, title: "ahh2", author: "sb2", content: "ahhhhhhhhhh2", 
-                date: "20201111", comments:[{username:"Zhao", text:"Perfect"}]},
+                date: "20201111", comments:[{username:"Zhao", text:"Perfect", time:"19:23, Oct 28, 2020"}]},
         ]
 
     };

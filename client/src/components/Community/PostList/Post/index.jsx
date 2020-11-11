@@ -78,7 +78,10 @@ class Post extends Component{
                         <div>
                         <p>Comments:</p>
                         <Divider/>
-                        <CommentList comments={post.comments} stack={this}/>
+                        {
+                            (post.comments.length>0)? <CommentList comments={post.comments} stack={this}/>: null
+                        }
+                        
                         </div>
                     </CardContent>
                 </Card>

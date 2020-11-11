@@ -18,7 +18,8 @@ export const addPost = stack => {
 
     const post = {
         postID: newPostID, title: stack.state.topic, 
-        author: "sbNEW", content: stack.state.content, date: "date: 20201111"
+        author: "sbNEW", content: stack.state.content, date: "date: 20201111",
+        comments: []
     };
     
     postList.push(post);

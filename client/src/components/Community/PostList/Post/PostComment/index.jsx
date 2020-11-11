@@ -22,7 +22,10 @@ class PostComment extends Component{
             <TableCell component="th" scope="row">
               {comment.text}
             </TableCell>
-    
+
+            <TableCell component="th" scope="row" align="right">
+              {comment.time}
+            </TableCell>
             {/* <TableCell component="th" scope="row">
               <Button
                 variant="contained"
