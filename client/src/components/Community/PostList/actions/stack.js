@@ -58,7 +58,10 @@ export function searchByKeyWord(stack, keywords) {
     } else {
         var isInclude = Array(postList.length).fill(0);
         for (let i = 0; i < postList.length; i++){
-            if ( postList[i].content.toLowerCase().search(keywords) != -1) {
+            if ( postList[i].content.toLowerCase().search(keywords) != -1 ||
+                postList[i].title.toLowerCase().search(keywords) != -1 ||
+                postList[i].author.toLowerCase().search(keywords) != -1
+                ) {
                 isInclude[i] = 1
             }
         }
