@@ -49,6 +49,36 @@ export const removePost = (stack, post) => {
 
 }
 
+export function searchByKeyWord(stack, keywords) {
+    // deep copy the oringinal list in case that will change
+    const postList = Array.from(stack.state.posts);
+    var newList = [];
+    if ( keywords == "") {
+        newList = Array.from(postList);
+    } else {
+        var isInclude = Array(postList.length).fill(0);
+        for (let i = 0; i < postList.length; i++){
+            if ( postList[i].content.toLowerCase().search(keywords) != -1) {
+                isInclude[i] = 1
+            }
+        }
+        console.log(isInclude);
+        if (isInclude.every((i) => i == 0)) {
+            const noResult = {postID: 2, title: "No Result!", author: "xxx", content: "No result", date: "xxx"}
+            newList.push(noResult);
+        } else {
+            for (let i = 0; i < postList.length; i++) {
+                if (isInclude[i] == 1) {
+                    console.log(postList[i])
+                    newList.push(postList[i])
+                }
+            }
+        }
+    }
+    console.log(newList)
+    return newList;
+}
+
 export const addComment = stack => {
     const commentList = stack.state.value
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Navbar from "../Navbar/index";
 import SearchBox from "./SearchBox/index"
 import PostList from"./PostList/index"
-import {addPost} from "./PostList/actions/stack"
+import {addPost, searchByKeyWord} from "./PostList/actions/stack"
 import CreateTopicForm from './CreateTopicForm';
 
 class Community extends Component {
@@ -14,7 +14,10 @@ class Community extends Component {
         comment: "",
         open: false,
         // permission used to tell whether the current user can delete a post
-        isAdmin: true,
+        isAdmin: false,
+        searchKeyWord: "",
+        searched: false,
+        filteredPost: [],
         //hard-coded data, will be replaced in phase2
         posts: [
             {postID: 0, title: "Bitcoin Intruduction", author: "btc", content: "Bitcoin (BTC) is recognised as the world’s first truly digitalised digital currency (also known as a cryptocurrency). The Bitcoin price is prone to volatile swings; making it historically popular for traders to speculate on. Follow the live Bitcoin price using the real-time chart, and read the latest Bitcoin news and forecasts to plan your trades using fundamental and technical analysis.", 
@@ -25,7 +28,16 @@ class Community extends Component {
                 date: "20201111", comments:[{username:"Zhao", text:"Perfect"}]},
         ]
 
-    }
+    };
+
+    handleSearchInput = event => {
+        const kw = event.target.value.toLowerCase();
+        this.setState({searchKeyWord: kw});
+        const filteredPosts = searchByKeyWord(this, kw);
+        this.setState({filteredPost: filteredPosts})
+        this.setState({searched: true})
+        console.log(this.state.posts)
+    };
 
     handleClickOpen = () => {
         this.setState({open: true})
@@ -40,7 +52,8 @@ class Community extends Component {
             addPost(this)
             this.setState({
                 topic:"",
-                content:""
+                content:"",
+                searched:false,
             })
         } else {
             alert('You cannot create a blank post!')
@@ -79,9 +92,14 @@ class Community extends Component {
                     // position,
                     handleSubmit={this.handleSubmit}
                 /> 
-                <SearchBox />
-                <PostList posts={this.state.posts} stackComponent={this} 
-                    permission={this.state.isAdmin}/>
+                <SearchBox keyword={this.state.searchKeyWord} stackComponent={this}
+                handleSearchInput={this.handleSearchInput}/>
+                {!this.state.searched && (<PostList posts={this.state.posts} 
+                    stackComponent={this} 
+                    permission={this.state.isAdmin}/>)}
+                {this.state.searched && (<PostList posts={this.state.filteredPost} 
+                    stackComponent={this} 
+                    permission={this.state.isAdmin}/>)}
             </div>
             );
     }
