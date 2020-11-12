@@ -6,7 +6,6 @@ import './App.css';
 import Community from './components/Community';
 import Dashboard from './components/Dashboard';
 import Login from './components/Login';
-import Profile from './components/Profile';
 import Trading from './components/Trading';
 import Admin from './components/Adminprofile'
 import Signup from'./components/Login/Signup';
@@ -41,22 +40,22 @@ class App extends Component {
   render() { 
     return ( 
       <BrowserRouter>
+      <Switch>
+        <Route exact path='/sign-in' render={() => 
+                        (this.state.loginStatus? <Login/> : <Login/>)}/>
+        <Route exact path='/sign-up' render={() => 
+                        (this.state.loginStatus? <Signup/> : <Login/>)}/> 
+      </Switch>
       <Navbar/>
       <Switch>
         <Route exact path='/' render={() =>
                         (this.state.loginStatus? <Dashboard/> : <Login/>)}/>
-        <Route exact path='/profile' render={() => 
-                        (this.state.loginStatus? <Profile/> : <Login/>)}/>
         <Route exact path='/trading' render={() => 
                         (this.state.loginStatus? <Trading/> : <Login/>)}/>
         <Route exact path='/community' render={() => 
                         (this.state.loginStatus? <Community/> : <Login/>)}/>
         <Route exact path='/adminprofile' render={() => 
-                        (this.state.loginStatus? <Admin/> : <Login/>)}/>
-        <Route exact path='/sign-in' render={() => 
-                        (this.state.loginStatus? <Login/> : <Login/>)}/>
-        <Route exact path='/sign-up' render={() => 
-                        (this.state.loginStatus? <Signup/> : <Login/>)}/>                         
+                        (this.state.loginStatus? <Admin/> : <Login/>)}/>                
       </Switch>
       </BrowserRouter>
      );
