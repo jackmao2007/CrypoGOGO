@@ -22,9 +22,6 @@ class Navbar extends Component {
                     <Link to="/community">
                         <button className='main-nav-button'> Community </button>
                     </Link>
-                    <Link to="/profile">
-                        <button className='main-nav-button'> UserProfile</button>
-                    </Link>
                     <Link to="/adminprofile">
                         <button className='main-nav-button'> AdminProfile </button>
                     </Link>
