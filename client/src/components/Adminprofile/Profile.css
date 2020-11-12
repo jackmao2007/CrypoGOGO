@@ -74,7 +74,7 @@ table.user-table{
 table.search-table{
    margin-top: 30px;
     border-collapse: collapse;
-    width: 250px;
+    width: 400px;
     background-color: lightcyan;
 }
 .search{
@@ -97,24 +97,13 @@ table.wallet-table{
   width: 800px;
     margin-top: 30px;
     border-collapse: collapse;
-    background-color: lightyellow;
+    background-color: lightcyan;
 }
 table.bitcoins-table{
   width: 400px;
     margin-top: 30px;
     border-collapse: collapse;
-    background-color: lightpink;
+    background-color: lightcyan;
 }
 
-
-    
-    .Usertable{
-    margin-top: 30px;
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 425px;
-    float: right;
-    margin-right: 25px;
-
-    }
 
