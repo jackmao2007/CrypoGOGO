@@ -1,0 +1,56 @@
+{
+    users: [
+       {
+            _id: "user IDObject",
+            username: "admin",
+            email: "admin@admin.com",
+            password: "password",
+            recentActivities: [
+                {
+                    timestamp: "2020-12-12",
+                    content: "liked your post"
+                }
+            ]
+            accounts: [
+                {
+                    cash: 123123,
+                    positions: [
+                        {
+                            symbol: "btc",
+                            quantity: 1123,
+                            bookValue: 1231
+                        }
+                    ],
+                    orders: []                    
+                }
+            ],
+            personalInfo: {
+                profession: "Teacher",
+                Address: "40 Willcocks Street",
+            },
+            userPosts: ["post IDObject"],
+            isAdmin: false
+       }
+    ],
+    posts: [
+        {
+            _id: "post IDObject",
+            createdDate: "2020-11-02",
+            author: "user IDObject",
+            title: "Cool Post"
+            content: "rich editor string"
+            comments: [
+                {
+                    _id: "comment IDObject"
+                    createdDate: "2020-11-02",
+                    author: "user IDObject",
+                    content: "rich editor string"
+                }
+            ],
+            likes: 12,
+            tags: []
+        }
+    ]
+
+
+}
