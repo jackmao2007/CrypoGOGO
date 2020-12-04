@@ -21,19 +21,44 @@ class NewsSection extends Component {
                 image: 'https://picsum.photos/300/300',
             }
 
-        ]
+        ],
+        articles: {},
+        maxArticles: 3
+    }
+
+    populateNewsSection = () => {
+        let newArticles = [];
+        const allArticles = this.state.articles.articles;
+        for (let i = 0; i < this.state.maxArticles && i < allArticles.length; i++){
+            let articleObj = {
+                site: allArticles[i].source.name,
+                title:  allArticles[i].title,
+                url:  allArticles[i].url,
+                text:  allArticles[i].content,
+                published:  allArticles[i].publishedAt,
+                image:  allArticles[i].urlToImage
+            };
+            newArticles.push(articleObj);
+        }
+        this.setState({newsList:newArticles, maxArticles: this.state.maxArticles + 2});
     }
 
     getNewsFromGoogleNews() {
-        // access google news api
-        // populate this.state.newsList
+        const apiKey = "b394b31e64e74e78bca68f9d8442cf00";
+        const url = "http://newsapi.org/v2/everything?q=crypto&sortBy=popularity&apiKey=" + apiKey;
+        return fetch(url)
+        .then(response => response.json())
+        .then((data) => 
+            {
+                this.setState({articles: data});
+            });
     }
 
     componentDidMount() {
-        this.getNewsFromGoogleNews();
+        this.getNewsFromGoogleNews().then(() => {
+            this.populateNewsSection();
+        });
     }
-
-
 
     render() { 
         return ( 
@@ -42,9 +67,10 @@ class NewsSection extends Component {
                 {this.state.newsList.map(
                     (news) => <News site={news.site} title={news.title} url={news.url} text={news.text} published={news.published} image={news.image}/>)}
 
-                <a className="news-read-more-btn" href="https://www.google.com" target="_blank"> read more </a>
+                <button className="news-read-more-btn" onClick={this.populateNewsSection}> read more </button>
             </div>
         );
+    
     }
 }
  
