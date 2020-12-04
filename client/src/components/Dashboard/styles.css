@@ -57,6 +57,10 @@ a:any-link{
     float: right;
     margin-right: 20px;
     margin-bottom: 20px;
+    background: none;
+    border: none;
+    font-family: arial, sans-serif;
+    font-size: 18px;    
 }
 
 .dashboard-main-chart-container {
