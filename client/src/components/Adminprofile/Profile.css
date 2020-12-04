@@ -106,4 +106,33 @@ table.bitcoins-table{
     background-color: lightcyan;
 }
 
+.profile-account-summary-header {
+  font-weight: 1800;
+  font-size: 22px;
+}
 
+.profile-add-account-btn {
+  margin-left: 400px;
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  font-family: arial, sans-serif;
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer; 
+}
+
+.profile-delete-account-btn {
+  margin-left: 100px;
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  font-family: arial, sans-serif;
+  color: red;
+  cursor: pointer; 
+}
+
+
+.profile-account-section {
+  margin-top: 50px;
+}

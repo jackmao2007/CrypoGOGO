@@ -9,6 +9,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; 
 import { Form } from 'antd';
 import 'antd/dist/antd.css'
+import { withStyles } from '@material-ui/core';
 
 const FormItem = Form.Item;
 
@@ -42,6 +43,16 @@ const formats = [
     'link', 'image', 'code-block', 'formula', 'video'
   ]
 
+const useStyles = theme => ({
+    newpost: {
+        maxWidth: 400,
+        minWidth: 400,
+        marginTop: 5,
+        marginBottom: 5,
+    },
+})
+
+const classes = useStyles();
 
 class CreateTopicForm extends React.Component {
     render() {
@@ -54,12 +65,14 @@ class CreateTopicForm extends React.Component {
             handleClickOpen,
             onValueChange,
             // position,
-            handleSubmit
+            handleSubmit,
+            classes
         } = this.props;
 
         return (
             <div>
-                <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                <Button variant="contained" color="primary" className={classes.newpost}
+                    onClick={handleClickOpen}>
                     Create New Post
                 </Button>
                 <Dialog 
@@ -115,4 +128,4 @@ class CreateTopicForm extends React.Component {
     }
 }
 
-export default CreateTopicForm;
+export default withStyles(useStyles)(CreateTopicForm);

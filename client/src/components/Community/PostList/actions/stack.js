@@ -18,7 +18,8 @@ export const addPost = stack => {
 
     const post = {
         postID: newPostID, title: stack.state.topic, 
-        author: "sbNEW", content: stack.state.content, date: "date: 20201111"
+        author: "UserNew", content: stack.state.content, date: "date: 20201111",
+        comments: []
     };
     
     postList.push(post);
@@ -58,13 +59,16 @@ export function searchByKeyWord(stack, keywords) {
     } else {
         var isInclude = Array(postList.length).fill(0);
         for (let i = 0; i < postList.length; i++){
-            if ( postList[i].content.toLowerCase().search(keywords) != -1) {
+            if ( postList[i].content.toLowerCase().search(keywords) != -1 ||
+                postList[i].title.toLowerCase().search(keywords) != -1 ||
+                postList[i].author.toLowerCase().search(keywords) != -1
+                ) {
                 isInclude[i] = 1
             }
         }
         console.log(isInclude);
         if (isInclude.every((i) => i == 0)) {
-            const noResult = {postID: 2, title: "No Result!", author: "xxx", content: "No result", date: "xxx"}
+            const noResult = {postID: 0, title: "No Result!", author: "xxx", content: "No result", date: "xxx", comments:[{username:"xxx", text:"xxx"}]}
             newList.push(noResult);
         } else {
             for (let i = 0; i < postList.length; i++) {

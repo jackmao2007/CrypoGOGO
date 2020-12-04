@@ -49,8 +49,8 @@ class Chart extends Component {
     render() { 
         return (
                 <div className='dashboard-main-chart-container'>
-                    <div class="tradingview-widget-container" ref={this._ref}>
-                        <div class="tradingview-widget-container__widget"></div>
+                    <div className="tradingview-widget-container" ref={this._ref}>
+                        <div className="tradingview-widget-container__widget"></div>
                     
                     </div>
                 </div>
