@@ -6,17 +6,17 @@ const express = require('express');
 const router = express.Router(); // Express Router
 
 // import the student mongoose model
-const { Student } = require('./models/student')
+const { Student } = require('../model/userapi')
 
 // helpers/middlewares
-const { mongoChecker, isMongoError } = require("./helper/mongo_helpers");
-const { authenticate } = require("./helper/authentication");
+const { mongoChecker, isMongoError } = require("./helpers/mongo_helpers");
+const { authenticate } = require("./helpers/authentication");
 
 // to validate object IDs
 const { ObjectID } = require('mongodb')
 
 
-/*** Student API Routes  ************************************/
+/*** User API Routes  ************************************/
 // The '/api' indicates that this is a route for a data resource API (in this case, a JSON API).
 //  Routes for webpages or static directories (above) will usually not have this prefix.
 
@@ -25,16 +25,15 @@ router.post('/api/userlists', mongoChecker, authenticate, async (req, res) => {
 	// log(req.body)
 
 	// Create a new student using the Student mongoose model
-	const user = new U({
+	const userapi = new UserApi({
 		name: req.body.name,
 		creator: req.user._id // creator id from the authenticate middleware
 	})
 
-
 	// Save student to the database
 	// async-await version:
 	try {
-		const result = await user.save()	
+		const result = await userapi.save()	
 		res.send(result)
 	} catch(error) {
 		log(error) // log server error to the console, not to the client.
@@ -51,9 +50,9 @@ router.get('/api/userlists', mongoChecker, authenticate, async (req, res) => {
 
 	// Get the students
 	try {
-		const user = await Student.find({creator: req.user._id})
+		const userapi = await UserApi.find({creator: req.user._id})
 		// res.send(students) // just the array
-		res.send({ user}) // can wrap students in object if want to add more properties
+		res.send({ userapi }) // can wrap students in object if want to add more properties
 	} catch(error) {
 		log(error)
 		res.status(500).send("Internal Server Error")
@@ -77,7 +76,7 @@ router.get('/api/userlists/:id', mongoChecker, authenticate, async (req, res) =>
 
 	// If id valid, findById
 	try {
-		const user = await U.findOne({_id: id, creator: req.user._id})
+		const userapi = await UserApi.findOne({_id: id, creator: req.user._id})
 		if (!user) {
 			res.status(404).send('Resource not found')  // could not find this student
 		} else {
@@ -104,11 +103,11 @@ router.delete('/api/userlists/:id', mongoChecker, authenticate, async (req, res)
 
 	// Delete a student by their id
 	try {
-		const user = await Student.findOneAndRemove({_id: id, creator: req.user._id})
-		if (!user) {
+		const userapi = await UserApi.findOneAndRemove({_id: id, creator: req.user._id})
+		if (!userapi) {
 			res.status(404).send()
 		} else {   
-			res.send(user)
+			res.send(userapi)
 		}
 	} catch(error) {
 		log(error)
@@ -133,11 +132,11 @@ router.put('/api/userlists/:id', mongoChecker, authenticate, async (req, res) =>
 
 	// Replace the student by their id using req.body
 	try {
-		const user  = await Student.findOneAndReplace({_id: id, creator: req.user._id}, req.body, {new: true})
-		if (!user) {
+		const userapi  = await UserApi.findOneAndReplace({_id: id, creator: req.user._id}, req.body, {new: true})
+		if (!userapi) {
 			res.status(404).send()
 		} else {   
-			res.send(user)
+			res.send(userapi)
 		}
 	} catch (error) {
 		log(error) // log server error to the console, not to the client.
@@ -180,11 +179,11 @@ router.patch('/api/userlists/:id', mongoChecker, authenticate, async (req, res) 
 
 	// Update the student by their id.
 	try {
-		const user = await Student.findOneAndUpdate({_id: id, creator: req.user._id}, {$set: fieldsToUpdate}, {new: true})
-		if (!user) {
+		const userapi= await UserApi.findOneAndUpdate({_id: id, creator: req.user._id}, {$set: fieldsToUpdate}, {new: true})
+		if (!userapi) {
 			res.status(404).send('Resource not found')
 		} else {   
-			res.send(user)
+			res.send(userapi)
 		}
 	} catch (error) {
 		log(error)

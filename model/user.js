@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema({
 		trim: true,
 		unique: true,
 		validate: {
-			validator: validator.isEmail,   // custom validator
+			validator: validator.isEmail, 
 			message: 'Not valid email'
 		}
 	}, 
@@ -24,9 +24,7 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.pre('save', function(next) {
 	const user = this; 
-	// checks to ensure we don't hash password more than once
 	if (user.isModified('password')) {
-		// generate salt and hash the password
 		bcrypt.genSalt(10, (err, salt) => {
 			bcrypt.hash(user.password, salt, (err, hash) => {
 				user.password = hash
@@ -45,7 +43,6 @@ UserSchema.statics.findByEmailPassword = function(email, password) {
 		if (!user) {
 			return Promise.reject()  
 		}
-		// if the user exists, make sure their password is correct
 		return new Promise((resolve, reject) => {
 			bcrypt.compare(password, user.password, (err, result) => {
 				if (result) {

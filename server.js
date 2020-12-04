@@ -14,13 +14,6 @@ const { mongoose } = require('./db/mongoose')
 mongoose.set('bufferCommands', false);  // don't buffer db requests if the db server isn't connected - minimizes http requests hanging if this is the case.
 mongoose.set('useFindAndModify', false); // for some deprecation issues
 
-/*** handlebars: server-side templating engine ***/
-const hbs = require('hbs')
-// Set express property 'view engine' to be 'hbs'
-app.set('view engine', 'hbs')
-// setting up partials directory
-hbs.registerPartials(path.join(__dirname, '/views/partials'))
-
 // body-parser: middleware for parsing HTTP JSON body into a usable object
 const bodyParser = require('body-parser') 
 app.use(bodyParser.json())
@@ -43,8 +36,6 @@ app.use(session({
 
 
 /** Import the various routes **/
-// Webpage routes
-app.use(require('./routes/webpage'))
 // User and login routes
 app.use(require('./routes/users'))
 // Student API routes

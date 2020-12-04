@@ -1,7 +1,6 @@
-/* Student mongoose model */
 const mongoose = require('mongoose')
 
-const U = mongoose.model('user', {
+const UserApi = mongoose.model('user', {
 	name: {
 		type: String,
 		required: true,
@@ -14,4 +13,4 @@ const U = mongoose.model('user', {
 	}
 })
 
-module.exports = { U }
+module.exports = { UserApi }
