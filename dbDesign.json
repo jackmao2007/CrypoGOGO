@@ -24,7 +24,7 @@
     accounts : [
         {
             _id: "account IDObject",
-            creator: "user IDObject"
+            creator: "user IDObject",
             cash: 123123,
             positions: ["posistion IDObject"],
             orders: ["order IDObject"]                    
