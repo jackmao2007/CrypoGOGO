@@ -3,6 +3,10 @@
 const mongoose = require('mongoose')
 
 const Account = mongoose.model('Account', {
+    creator: {
+		type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
 	account: {
 		type: mongoose.Schema.Types.ObjectId,
         required: true

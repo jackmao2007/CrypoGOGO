@@ -2,6 +2,10 @@
 const mongoose = require('mongoose')
 
 const Position = mongoose.model('Position', {
+    creator: {
+		type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
 	account: {
         type: mongoose.Schema.Types.ObjectId,
         required: true

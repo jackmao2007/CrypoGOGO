@@ -17,6 +17,9 @@ const Activity = mongoose.model('Activity', {
     content: {
         type: String,
         required: true
+    },
+    link: {
+        type: String
     }
 })
 
