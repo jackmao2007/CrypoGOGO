@@ -1,5 +1,5 @@
   
-/* Student mongoose model */
+/* Account mongoose model */
 const mongoose = require('mongoose')
 
 const Account = mongoose.model('Account', {
