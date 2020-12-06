@@ -29,7 +29,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        expires: 60000, // 1 minute expiry
+        expires: 6000000, // 100 minute expiry
         httpOnly: true // important: saves it in browser's memory - not accessible by javascript (so it can't be easily stolen!).
     }
 }));

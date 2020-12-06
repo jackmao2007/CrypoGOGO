@@ -1,7 +1,7 @@
 
 // helpers for authentication
 
-const { User } = require('../../model/user')
+const { User } = require('../../models/user')
 
 module.exports = {
 	// Middleware for authentication of resources

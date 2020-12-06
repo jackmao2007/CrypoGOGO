@@ -6,7 +6,7 @@ const express = require('express');
 const router = express.Router(); // Express Router
 
 // import the user mongoose model
-const { User } = require('../model/user')
+const { User } = require('../models/user')
 
 // helpers/middlewares
 const { mongoChecker, isMongoError } = require("./helpers/mongo_helpers");
@@ -17,7 +17,12 @@ router.post('/api/users', mongoChecker, async (req, res) => {
 
 	const user = new User({
 		email: req.body.email,
-		password: req.body.password
+		password: req.body.password,
+		username: req.body.username,
+		recentActivities: [],
+		UserAccounts: [],
+		userPosts: [],
+		isAdmin: false
 	})
 
 	try {
