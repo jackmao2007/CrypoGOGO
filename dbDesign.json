@@ -48,13 +48,8 @@
             limit: null,
             stop: null,
             duration: "DAY",
-            bracket: true,
-            profitQty: 11,
-            profitLmt: 11321,
-            profitDur: "DAY",
-            lossQty: 11,
-            lossStp: 11321,
-            lossDur: "DAY"
+            activated: false,
+            parentOrder: "order IDObject"
         }
     ],
     posts: [
