@@ -16,12 +16,13 @@
     activities: [
         {   
             _id: "activity IDObject",
+            type: "trading",
             creator: "user IDObject",
             timestamp: "2020-12-12",
             content: "liked your post"
         }
-    ]
-    accounts : [
+    ],
+    accounts: [
         {
             _id: "account IDObject",
             creator: "user IDObject",
@@ -36,19 +37,21 @@
             account: "account IDObject",
             symbol: "btc",
             quantity: 1123,
+            avgPrice: 123123,
             bookValue: 1231
         }
     ],
     orders:[
         {
             _id: "order IDObject",
+            account: "account IDObject",
             mode: "BUY",
             quantity: 11,
             orderType: "Market",
             limit: null,
             stop: null,
             duration: "DAY",
-            activated: false,
+            status: "pending",
             parentOrder: "order IDObject"
         }
     ],
