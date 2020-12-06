@@ -5,32 +5,57 @@
             username: "admin",
             email: "admin@admin.com",
             password: "password",
-            recentActivities: [
-                {
-                    timestamp: "2020-12-12",
-                    content: "liked your post"
-                }
-            ]
-            accounts: [
-                {
-                    cash: 123123,
-                    positions: [
-                        {
-                            symbol: "btc",
-                            quantity: 1123,
-                            bookValue: 1231
-                        }
-                    ],
-                    orders: []                    
-                }
-            ],
-            personalInfo: {
-                profession: "Teacher",
-                Address: "40 Willcocks Street",
-            },
+            recentActivities: ["activity IDObject"],
+            UserAccounts: ["account IDObject"],
+            profession: "Teacher",
+            Address: "40 Willcocks Street",
             userPosts: ["post IDObject"],
             isAdmin: false
        }
+    ],
+    activities: [
+        {   
+            _id: "activity IDObject",
+            creator: "user IDObject",
+            timestamp: "2020-12-12",
+            content: "liked your post"
+        }
+    ]
+    accounts : [
+        {
+            _id: "account IDObject",
+            creator: "user IDObject"
+            cash: 123123,
+            positions: ["posistion IDObject"],
+            orders: ["order IDObject"]                    
+        }
+    ],
+    positions:[
+        {   
+            _id: "position IDObject",
+            account: "account IDObject",
+            symbol: "btc",
+            quantity: 1123,
+            bookValue: 1231
+        }
+    ],
+    orders:[
+        {
+            _id: "order IDObject",
+            mode: "BUY",
+            quantity: 11,
+            orderType: "Market",
+            limit: null,
+            stop: null,
+            duration: "DAY",
+            bracket: true,
+            profitQty: 11,
+            profitLmt: 11321,
+            profitDur: "DAY",
+            lossQty: 11,
+            lossStp: 11321,
+            lossDur: "DAY"
+        }
     ],
     posts: [
         {
@@ -48,9 +73,7 @@
                 }
             ],
             likes: 12,
-            tags: []
+            tags: ["bitcoin"]
         }
     ]
-
-
 }

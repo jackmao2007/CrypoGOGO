@@ -45,7 +45,7 @@ class NewsSection extends Component {
 
     getNewsFromGoogleNews() {
         const apiKey = "b394b31e64e74e78bca68f9d8442cf00";
-        const url = "http://newsapi.org/v2/everything?q=crypto&sortBy=popularity&apiKey=" + apiKey;
+        const url = "http://newsapi.org/v2/everything?q=crypto&sortBy=date&apiKey=" + apiKey;
         return fetch(url)
         .then(response => response.json())
         .then((data) => 
