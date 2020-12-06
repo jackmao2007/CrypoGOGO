@@ -2,7 +2,8 @@
 
 const mongoose = require('mongoose')
 const validator = require('validator')
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const { ObjectID } = require('bson');
 const UserSchema = new mongoose.Schema({
 	email: {
 		type: String,
@@ -20,6 +21,31 @@ const UserSchema = new mongoose.Schema({
 		required: true,
 		minlength: 6
 	},
+	username: {
+		type: String,
+		required: true,
+		minlength: 4,
+		unique: true
+	},
+	recentActivities: {
+		type: [mongoose.Schema.Types.ObjectId]
+	},
+	UserAccounts: {
+		type: [mongoose.Schema.Types.ObjectId]
+	},
+	profession: {
+		type: String
+	},
+	Address: {
+		type: String
+	},
+	userPosts: {
+		type: [mongoose.Schema.Types.ObjectId]
+	},
+	isAdmin: {
+		type: Boolean,
+		required: true
+	}
 })
 
 UserSchema.pre('save', function(next) {

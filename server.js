@@ -37,9 +37,9 @@ app.use(session({
 
 /** Import the various routes **/
 // User and login routes
-app.use(require('./routes/users'))
-// Student API routes
-app.use(require('./routes/userapi'))
+app.use(require('./routes/user'))
+// Account API routes
+app.use(require('./routes/accounts'))
 
 
 

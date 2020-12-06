@@ -38,7 +38,7 @@ router.post('/api/users', mongoChecker, async (req, res) => {
 
 /*** Login and Logout routes ***/
 // A route to login and create a session
-router.post('/users/login', mongoChecker, async (req, res) => {
+router.post('/api/users/login', mongoChecker, async (req, res) => {
 	const email = req.body.email
     const password = req.body.password
 
@@ -47,35 +47,33 @@ router.post('/users/login', mongoChecker, async (req, res) => {
 	    // by their email and password.
 		const user = await User.findByEmailPassword(email, password);
 		if (!user) {
-            res.redirect('/login');
+            res.redirect('/sign-in');
         } else {
             req.session.user = user._id;
             req.session.email = user.email
-            res.redirect('/dashboard');
+            res.redirect('/');
         }
     } catch (error) {
     	if (isMongoError(error)) { 
-			res.status(500).redirect('/login');
+			res.status(500).redirect('/sign-in');
 		} else {
 			log(error)
-			res.status(400).redirect('/login');
+			res.status(400).redirect('/sign-in');
 		}
     }
 
 })
 
-router.get('/users/logout', (req, res) => {
+router.get('/api/users/logout', (req, res) => {
 	// Remove the session
 	req.session.destroy((error) => {
 		if (error) {
 			res.status(500).send(error)
 		} else {
-			res.redirect('/')
+			res.redirect('/sign-in')
 		}
 	})
 })
-
-
 
 
 // export the router
