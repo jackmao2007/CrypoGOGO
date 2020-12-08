@@ -40,6 +40,8 @@ app.use(session({
 app.use(require('./routes/user'))
 // Account API routes
 app.use(require('./routes/accounts'))
+// Post API routes
+app.use(require('./routes/post'))
 
 
 
