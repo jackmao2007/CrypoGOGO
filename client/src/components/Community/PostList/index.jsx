@@ -5,7 +5,7 @@ import Tab from "@material-ui/core/Tab";
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField } from "@material-ui/core";
+import { Divider } from "@material-ui/core";
 
 
 function TabPanel(props) {
@@ -42,9 +42,11 @@ const useStyles = makeStyles((theme) => ({
   },
   tab: {
     textTransform: "none",
+    textAlign: "left",
     minWidth: 400,
     maxWidth: 400,
     minHeight: 100,
+    maxHeight: 150,
     borderBottom: `1px solid #9e9e9e`,
     borderTop: `1px solid #9e9e9e`,
     backgroundColor: "#e0f2f1",
@@ -53,15 +55,24 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: '10px',
     marginBottom: '20px',
   },
+  heading: {
+    // border: `3px solid #73AD21`,
+    width: 380,
+    margin: `1px`
+  }
 }));
 
 function PostSummary(props) {
-  const { title, author, date } = props;
+  const { title, author, date, summary } = props;
+  const classes = useStyles();
 
   return (
-    <div>
-      <h2>{ title }</h2>
-      <h6> { author } posted on { date }</h6>
+    <div className={classes.heading}>
+      <h5><strong>{ title }</strong></h5>
+      <Divider/>
+      <div dangerouslySetInnerHTML={{__html: summary}}/>
+      <Divider/>
+      <span> <strong> { author } </strong> posted on { date }</span>
     </div>
   )
 }
@@ -88,7 +99,7 @@ export default function PostList(props) {
         return (
           <Tab key={index} 
           label=  { 
-          <PostSummary title={post.title} author={post.author} date={post.date}
+          <PostSummary title={post.title} author={post.author} date={post.date} summary={post.content.slice(0, 150)}
           className = {classes.label}
           />} 
           className={classes.tab}/>
