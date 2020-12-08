@@ -7,7 +7,6 @@ import CommentList from './CommentList'
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Reply from './Reply'
 import { Card, withStyles, CardContent } from '@material-ui/core';
-import PostList from '..';
 
 const useStyles = theme => ({
     root: {
