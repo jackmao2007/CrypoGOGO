@@ -1,5 +1,9 @@
+// environment, just using now for test
+const API_HOST = 5000
+
+
 function updateID(stack) {
-    for (let i = 0; i< stack.length; i++){
+    for (let i = 0; i < stack.length; i++) {
         stack[i].postID = i;
     }
 }
@@ -17,22 +21,24 @@ export const addPost = stack => {
     }
 
     const post = {
-        postID: newPostID, title: stack.state.topic, 
-        author: "UserNew", content: stack.state.content, date: "date: 20201111",
+        postID: newPostID,
+        title: stack.state.topic,
+        author: "UserNew",
+        content: stack.state.content,
+        date: "date: 20201111",
         comments: []
     };
-    
+
     postList.push(post);
 
     updateID(postList);
-   
+
 
     stack.setState({
         posts: postList
     });
     stack.handleClose()
 };
-
 
 
 export const removePost = (stack, post) => {
@@ -45,8 +51,8 @@ export const removePost = (stack, post) => {
     stack.setState({
         posts: notDeletedPosts
     })
-    
-    
+
+
 
 }
 
@@ -54,21 +60,31 @@ export function searchByKeyWord(stack, keywords) {
     // deep copy the oringinal list in case that will change
     const postList = Array.from(stack.state.posts);
     var newList = [];
-    if ( keywords == "") {
+    if (keywords == "") {
         newList = Array.from(postList);
     } else {
         var isInclude = Array(postList.length).fill(0);
-        for (let i = 0; i < postList.length; i++){
-            if ( postList[i].content.toLowerCase().search(keywords) != -1 ||
+        for (let i = 0; i < postList.length; i++) {
+            if (postList[i].content.toLowerCase().search(keywords) != -1 ||
                 postList[i].title.toLowerCase().search(keywords) != -1 ||
                 postList[i].author.toLowerCase().search(keywords) != -1
-                ) {
+            ) {
                 isInclude[i] = 1
             }
         }
         console.log(isInclude);
         if (isInclude.every((i) => i == 0)) {
-            const noResult = {postID: 0, title: "No Result!", author: "xxx", content: "No result", date: "xxx", comments:[{username:"xxx", text:"xxx"}]}
+            const noResult = {
+                postID: 0,
+                title: "No Result!",
+                author: "xxx",
+                content: "No result",
+                date: "xxx",
+                comments: [{
+                    username: "xxx",
+                    text: "xxx"
+                }]
+            }
             newList.push(noResult);
         } else {
             for (let i = 0; i < postList.length; i++) {
@@ -87,6 +103,73 @@ export const addComment = stack => {
     const commentList = stack.state.value
 
     const comment = {
-        
+
     }
+}
+
+
+
+
+// back-end functions 
+
+export const addPostBE = (newPostComp, postsComp) => {
+    // URL for the req
+    const url = `${API_HOST}/api/posts`;
+    // the data to send in req
+    const post = newPostComp.state;
+
+    const request = new Request(url, {
+        method: "post",
+        body: JSON.stringify(post),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    // send the request 
+    fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                // post added successfully
+                postsComp.setState({
+                    message: {
+                        body: "Success: Added a post.",
+                        type: "success"
+                    }
+                })
+            } else {
+                postsComp.setState({
+                    message: {
+                        body: "Error: Could not add post.",
+                        type: "error"
+                    }
+                })
+            }
+        }).catch(error => {
+            console.log(error)
+        });
+}
+
+
+export const getPosts = (postList) => {
+    // URL for the req
+    const url = `${API_HOST}/api/posts`;
+
+
+    // send the request 
+    fetch(url)
+        .then((res) => {
+            if (res.status === 200) {
+                return res.json()
+            } else {
+                alert("Could not find posts")
+            }
+        })
+        .then(json => {
+            postList.setState({ postList: json.posts})
+        })
+        .catch(error => {
+            console.log(error)
+        })
 }

@@ -61,6 +61,7 @@ router.post('/api/posts/:id/comments', mongoChecker, authenticate, async (req, r
         createDate: new Date(),
         author: req.user._id, // creator id from the authenticate middleware
         content: req.body.content,
+		content: req.body.content,
 	})
 
 	// Save post to the database
