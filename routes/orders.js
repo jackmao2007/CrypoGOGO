@@ -16,7 +16,7 @@ router.post('/api/orders', mongoChecker, authenticate, async (req, res) => {
         account: req.body.account,
         mode: req.body.mode,
         quantity: req.body.quantity,
-        orderType: req.body.orderType,
+        orderType: req.body.orderType, 
         limit: req.body.limit,
         stop: req.body.stop,
         duration: req.body.duration,
