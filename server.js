@@ -40,7 +40,14 @@ app.use(session({
 app.use(require('./routes/user'))
 // Account API routes
 app.use(require('./routes/accounts'))
-
+// Positions API routes
+app.use(require('./routes/positions'))
+// Activities API routes
+app.use(require('./routes/activities'))
+// Orders API routes
+app.use(require('./routes/orders'))
+// Dashboard API routes
+app.use(require('./routes/dashboardApi'))
 
 
 

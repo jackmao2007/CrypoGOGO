@@ -2,7 +2,11 @@
 /* Orders mongoose model */
 const mongoose = require('mongoose')
 
-const Account = mongoose.model('Account', {
+const Order = mongoose.model('Order', {
+    creator: {
+		type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
 	account: {
 		type: mongoose.Schema.Types.ObjectId,
         required: true
@@ -38,4 +42,4 @@ const Account = mongoose.model('Account', {
     }
 })
 
-module.exports = { Account }
+module.exports = { Order }
