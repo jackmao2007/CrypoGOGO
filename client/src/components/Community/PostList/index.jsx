@@ -68,9 +68,9 @@ function PostSummary(props) {
 
   return (
     <div className={classes.heading}>
-      <h6><strong>{ title }</strong></h6>
+      <h5><strong>{ title }</strong></h5>
       <Divider/>
-      <span> { summary } </span>
+      <div dangerouslySetInnerHTML={{__html: summary}}/>
       <Divider/>
       <span> <strong> { author } </strong> posted on { date }</span>
     </div>
@@ -99,7 +99,7 @@ export default function PostList(props) {
         return (
           <Tab key={index} 
           label=  { 
-          <PostSummary title={post.title} author={post.author} date={post.date} summary={post.content.slice(0, 100)}
+          <PostSummary title={post.title} author={post.author} date={post.date} summary={post.content.slice(0, 150)}
           className = {classes.label}
           />} 
           className={classes.tab}/>
