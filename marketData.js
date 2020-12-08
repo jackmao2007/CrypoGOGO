@@ -121,7 +121,7 @@ const updateMarketData = async() => {
     }
 };
 
-
-setInterval(updateMarketData, 60000) // MarketData refresh rate. updates every 6 seconds. Change to 60 seconds when finshing developement.
+updateMarketData()
+setInterval(updateMarketData, 60000) // MarketData refresh rate. updates every 60 seconds
 
 module.exports = supportedCurrencies;

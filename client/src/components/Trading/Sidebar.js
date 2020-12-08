@@ -1,4 +1,6 @@
+import { TheatersOutlined } from '@material-ui/icons';
 import React, { Component } from 'react';
+import { renderIntoDocument } from 'react-dom/test-utils';
 import TradingViewWidget from 'react-tradingview-widget';
 import { thatReturnsArgument } from 'react-tradingview-widget/dist/vendor';
 
@@ -15,48 +17,16 @@ class Sidebar extends Component {
       assets: [
         {
           symbol: "BTC",
-          price: "1134.23",
+          currentPrice: "1134.23",
           name: "Bitcoin/USD",
-          dayChange: "+123",
-          open: 123123,
-          high: 123123,
-          low: 123123,
-          vol: 123123,
-          w52high: 123123,
-          w52low: 123123,
-          prevClose: 100000,
-          marketCap: "123.3B"
-        },
-        {
-          symbol: "ETH",
-          price: "534.23",
-          name: "Etherum/USD",
-          dayChange: "+123",
-          open: 223123,
-          high: 223123,
-          low: 223123,
-          vol: 223123,
-          w52high: 223123,
-          w52low: 223123,
-          prevClose: 200000,
-          marketCap: "23.3B"
-
-        },
-        {
-          symbol: "LTC",
-          price: "58.23",
-          name: "Litecoin/USD",
-          dayChange: "+123",
-          open: 323123,
-          high: 323123,
-          low: 323123,
-          vol: 323123,
-          w52high: 323123,
-          w52low: 323123,
-          prevClose: 300000,
-          marketCap: "13.3B"
-
-        },
+          dayPriceChange: "+123",
+          dayHigh: 123123,
+          dayLow: 123123,
+          totalVolume: 123123,
+          ath: 123123,
+          atl: 123123,
+          marketCap: 123123123
+        }
       ],
       selectedAsset: "BTC"
     }
@@ -75,6 +45,15 @@ class Sidebar extends Component {
     orderLossStpRef = React.createRef();
     orderLossDurRef = React.createRef();
 
+    componentDidMount() {
+      fetch("api/trading/marketData")
+      .then((result) => result.json())
+      .then((data) => {
+        console.log("asdasdasdasd")
+        this.setState({assets: data, selectedAsset: data[0].symbol})
+      })
+    }
+
     updateSelectedAsset(symbol) {
       this.setState({selectedAsset: symbol});
     }
@@ -91,7 +70,7 @@ class Sidebar extends Component {
       }
       return display.map((assets) => {
         return <li className='trading-side-bar-asset' onClick={()=> {this.updateSelectedAsset(assets.symbol)}}>
-              <span className='header'> {assets.symbol} </span> <span className='subheader'> {assets.price} </span>
+              <span className='header'> {assets.symbol} </span> <span className='subheader'> {assets.currentPrice} </span>
               <h6> <span style={{color:"grey"}}> {assets.name}</span> <span style={{color:"green"}}> {this.dayChange} </span> </h6>
         </li>
       })
@@ -111,7 +90,6 @@ class Sidebar extends Component {
     }
 
     updateBracketOrderSelect = () => {
-    
       if (this.orderBracketRef.current.checked) {
         this.setState({orderConfig : { isLimit: this.state.orderConfig.isLimit,
           isStop: this.state.orderConfig.isStop,
@@ -151,6 +129,8 @@ class Sidebar extends Component {
     }
 
     findAssetInfo(symbol) {
+      console.log(symbol)
+      console.log(this.state.assets)
       return this.state.assets.filter((asset) => asset.symbol == symbol)[0]
     }
 
@@ -158,6 +138,10 @@ class Sidebar extends Component {
       this.props.onOrder();
       // Send server request with information thats is in the input fields
       // grab information from react refs
+    }
+
+    mapSymbolToChart() {
+      return this.state.selectedAsset + "USD"
     }
 
     render() { 
@@ -173,16 +157,16 @@ class Sidebar extends Component {
         <div className="sidebar-margin">
         </div>
         <div className="trading-current-asset-container">
-          <TradingViewWidget symbol={this.state.selectedAsset} width="850" height="400"/>
+          <TradingViewWidget symbol={this.mapSymbolToChart()} width="850" height="400"/>
         </div>
         <ul className="trading-current-asset-info-conatiner">
-          <li className="trading-current-asset-info-field"> Open: {this.findAssetInfo(this.state.selectedAsset).open} </li>
-          <li className="trading-current-asset-info-field"> Prev. Close: {this.findAssetInfo(this.state.selectedAsset).prevClose} </li>
-          <li className="trading-current-asset-info-field"> High: {this.findAssetInfo(this.state.selectedAsset).high} </li>
-          <li className="trading-current-asset-info-field"> Low: {this.findAssetInfo(this.state.selectedAsset).low} </li>
-          <li className="trading-current-asset-info-field"> Volume: {this.findAssetInfo(this.state.selectedAsset).vol} </li>
-          <li className="trading-current-asset-info-field"> 52 Week High: {this.findAssetInfo(this.state.selectedAsset).w52high} </li>
-          <li className="trading-current-asset-info-field"> 52 Week Low: {this.findAssetInfo(this.state.selectedAsset).w52low} </li>
+          <li className="trading-current-asset-info-field"> Current Price: {this.findAssetInfo(this.state.selectedAsset).currentPrice} </li>
+          <li className="trading-current-asset-info-field"> 24hr Price Change: {this.findAssetInfo(this.state.selectedAsset).dayPriceChange} </li>
+          <li className="trading-current-asset-info-field"> 24hr High: {this.findAssetInfo(this.state.selectedAsset).dayHigh} </li>
+          <li className="trading-current-asset-info-field"> 24hr Low: {this.findAssetInfo(this.state.selectedAsset).dayLow} </li>
+          <li className="trading-current-asset-info-field"> Total Volume: {this.findAssetInfo(this.state.selectedAsset).totalVolume} </li>
+          <li className="trading-current-asset-info-field"> All Time High: {this.findAssetInfo(this.state.selectedAsset).ath} </li>
+          <li className="trading-current-asset-info-field"> All Time Low: {this.findAssetInfo(this.state.selectedAsset).atl} </li>
           <li className="trading-current-asset-info-field"> Market Cap.: {this.findAssetInfo(this.state.selectedAsset).marketCap} </li>
         </ul>
         <div className="trading-order-container">

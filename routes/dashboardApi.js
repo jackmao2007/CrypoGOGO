@@ -49,5 +49,31 @@ router.get('/api/dashboard/summary', mongoChecker, authenticate, async (req, res
 
 })
 
+// a GET route to get dashboard accounts for the logged in user
+router.get('/api/dashboard/accounts', mongoChecker, authenticate, async (req, res) => {
+	// Get the accounts
+	try {
+		let userAccounts = []
+		const accounts = await Account.find({creator: req.user._id})
+		for (let i = 0; i < accounts.length; i++){
+			let dashboardAccountObj = {
+				accountNumber: accounts[i]._id,
+				holdings: {cash: accounts[i].Cash}
+			}
+			const accountPositions = await Position.find({account: accounts[i]._id})
+			for (let j = 0; j < accountPositions.length; j++){
+				const data = supportedCurrencies.find((coin) => coin.symbol == accountPositions[i].symbol)
+				const marketValue = data.currentPrice * accountPositions[i].quantity
+				dashboardAccountObj.holdings[accountPositions[i].symbol.toUpperCase()] = marketValue
+			}
+			userAccounts.push(dashboardAccountObj)
+		}
+		res.send(userAccounts)
+	} catch(error) {
+		log(error);
+		res.status(500).send("Internal Server Error");
+	}
+})
+
 // export the router
 module.exports = router

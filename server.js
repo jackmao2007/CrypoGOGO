@@ -48,6 +48,8 @@ app.use(require('./routes/activities'))
 app.use(require('./routes/orders'))
 // Dashboard API routes
 app.use(require('./routes/dashboardApi'))
+// Trading API routes
+app.use(require('./routes/tradingApi'))
 
 
 
