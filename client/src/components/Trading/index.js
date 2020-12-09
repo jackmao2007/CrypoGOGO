@@ -21,6 +21,7 @@ class Trading extends Component {
 
     updateAccount = () => {
         this.setState({updatedTimestamp: Date.now()});
+        // do server calls too accounts
     }
 
 

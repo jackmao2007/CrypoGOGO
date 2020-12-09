@@ -28,7 +28,8 @@ class Sidebar extends Component {
           marketCap: 123123123
         }
       ],
-      selectedAsset: "BTC"
+      selectedAsset: "BTC",
+      orderError: false
     }
     sidebarSearchBoxRef = React.createRef();
     orderQuantityRef = React.createRef();
@@ -37,7 +38,6 @@ class Sidebar extends Component {
     orderStopRef = React.createRef();
     orderDurationRef = React.createRef();
     orderBracketRef = React.createRef();
-    orderProfitRef = React.createRef();
     orderProfitQtyRef = React.createRef();
     orderProfitLmtRef = React.createRef();
     orderProfitDurRef = React.createRef();
@@ -104,10 +104,10 @@ class Sidebar extends Component {
     generateOrderLimitStopFields = () => {
       let generate = [];
       if (this.state.orderConfig.isLimit) {
-        generate.push(<div className="order-input-field"> Limit: <input ref={this.orderLimitRef} /> </div>);
+        generate.push(<div className="order-input-field"> Limit: <input type="number" ref={this.orderLimitRef} /> </div>);
       }
       if (this.state.orderConfig.isStop) {
-        generate.push(<div className="order-input-field"> Stop: <input ref={this.orderStopRef} /> </div>);
+        generate.push(<div className="order-input-field"> Stop: <input type="number" ref={this.orderStopRef} /> </div>);
       }
       return generate;
     }
@@ -116,13 +116,13 @@ class Sidebar extends Component {
       if (this.state.orderConfig.isBracket) {
         return <div className="order-bracket-section">
           <div className="order-input-field"> Profit:  
-            <div className="order-input-field"> - Qty: <input ref={this.orderProfitQtyRef}/></div>
-            <div className="order-input-field"> - Lmt: <input ref={this.orderProfitLmtRef}/> </div>
+            <div className="order-input-field"> - Qty: <input type="number" ref={this.orderProfitQtyRef}/></div>
+            <div className="order-input-field"> - Lmt: <input type="number" ref={this.orderProfitLmtRef}/> </div>
             <div className="order-input-field"> - Dur: <select ref={this.orderProfitDurRef}> <option value="DAY"> DAY </option> <option value="GTC"> GTC </option></select> </div>
           </div>
           <div className="order-input-field"> Loss: 
-            <div className="order-input-field"> - Qty: <input ref={this.orderLossQtyRef}/></div>
-            <div className="order-input-field"> - Stp: <input ref={this.orderLossStpRef}/> </div>
+            <div className="order-input-field"> - Qty: <input type="number" ref={this.orderLossQtyRef}/></div>
+            <div className="order-input-field"> - Stp: <input type="number" ref={this.orderLossStpRef}/> </div>
             <div className="order-input-field"> - Dur: <select ref={this.orderLossDurRef}> <option value="DAY"> DAY </option> <option value="GTC"> GTC </option></select> </div></div>
         </div>
       }
@@ -134,7 +134,10 @@ class Sidebar extends Component {
       return this.state.assets.filter((asset) => asset.symbol == symbol)[0]
     }
 
-    sendOrder(BuySell) {
+    async sendOrder(BuySell) {
+      const account = this.props.accountNumber
+      const mode = BuySell
+      const symbol = this.state.selectedAsset.toLowerCase()
       this.props.onOrder();
       // Send server request with information thats is in the input fields
       // grab information from react refs
@@ -142,6 +145,17 @@ class Sidebar extends Component {
 
     mapSymbolToChart() {
       return this.state.selectedAsset + "USD"
+    }
+
+    generateOrderErrorMessage = () => {
+      if (this.state.orderError){
+        return (
+        <div> 
+          <div> <span className="red-error-message"> Something went wrong with your order :(  </span> </div>
+          <div> <span className="red-error-message"> Please check your inputs. </span> </div>
+        </div>
+        )
+      }
     }
 
     render() { 
@@ -171,13 +185,12 @@ class Sidebar extends Component {
         </ul>
         <div className="trading-order-container">
           <h4> Make Order </h4>
-          <div className="order-input-field"> Quantity: <input ref={this.orderQuantityRef} /> </div>
+          <div className="order-input-field"> Quantity: <input type="number" ref={this.orderQuantityRef} /> </div>
           <div className="order-input-field">
           Order Type: <select ref={this.orderTypeRef} onChange={() => this.updateSelectedOrderType(this.orderTypeRef.current.value)}>
                         <option value="market"> Market </option>
                         <option value="limit"> Limit </option>
                         <option value="stop"> Stop </option>
-                        <option value="stopLimit"> Stp Lmt</option>
                       </select>
           </div>
           {this.generateOrderLimitStopFields()}
@@ -192,6 +205,9 @@ class Sidebar extends Component {
             <button className="order-button-buy" onClick={() => this.sendOrder("buy")}> Buy </button>
             <button className="order-button-sell" onClick = {() => this.sendOrder("sell")}> Sell </button>
           </div>
+
+          {this.generateOrderErrorMessage()}
+
         </div>
       </div>
   );    

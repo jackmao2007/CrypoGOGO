@@ -4,6 +4,7 @@ class AccountOrders extends Component {
     state = { 
         orders: [
             {
+                id: "",
                 symbol: "BTC",
                 status: "Accepted", // Accepted, Excecuted, Cancelled
                 action: "Buy",
@@ -15,6 +16,7 @@ class AccountOrders extends Component {
                 timePlaced: '07 Nov 2020 11:24:23 PM'
             },
             {
+                id: "",
                 symbol: "LTC",
                 status: "Excecuted", // Accepted, Excecuted, Cancelled
                 action: "Sell",
@@ -24,17 +26,6 @@ class AccountOrders extends Component {
                 duration: 'DAY',
                 type: 'Limit',
                 timePlaced: '07 Nov 2020 11:34:13 PM'
-            },
-            {
-                symbol: "ETH",
-                status: "Excecuted", // Accepted, Excecuted, Cancelled
-                action: "Sell",
-                quantity: 10.0,
-                limit: "--",
-                stop: "14128.92",
-                duration: 'DAY',
-                type: 'Stop',
-                timePlaced: '05 Nov 2020 11:25:00 PM'
             }
         ]
     }
