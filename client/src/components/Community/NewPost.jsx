@@ -98,7 +98,8 @@ class NewPostForm extends Component {
       addPostBE(this, comminity)
       this.setState({
         title: "",
-        content: ""
+        content: "",
+        open: false
       })
     } else {
       alert('You cannot create a blank post!')
