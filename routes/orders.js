@@ -12,8 +12,9 @@ const { ObjectID } = require('mongodb')
 router.post('/api/orders', mongoChecker, authenticate, async (req, res) => {
 
 	const order = new Order({
-        creator: req.user._id,
-        account: req.body.account,
+		creator: req.user._id,
+		account: req.body.account,
+		symbol: req.body.symbol,
         mode: req.body.mode,
         quantity: req.body.quantity,
         orderType: req.body.orderType, 
@@ -21,7 +22,8 @@ router.post('/api/orders', mongoChecker, authenticate, async (req, res) => {
         stop: req.body.stop,
         duration: req.body.duration,
         status: req.body.status,
-        parentOrder: req.body.parentOrder 
+		parentOrder: req.body.parentOrder,
+		timePlaced: Date.now()
 	})
 
 	try {
