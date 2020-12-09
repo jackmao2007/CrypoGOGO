@@ -25,3 +25,4 @@ yarn-error.log*
 debug.log*
 /mongo-data
 client/debug.log
+*.log
