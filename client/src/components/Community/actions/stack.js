@@ -117,6 +117,7 @@ export const addPostBE = (newPostComp, postsComp) => {
     const url = `${API_HOST}/api/posts`;
     // the data to send in req
     const post = newPostComp.state;
+    console.log(post);
 
     const request = new Request(url, {
         method: "post",
@@ -132,19 +133,10 @@ export const addPostBE = (newPostComp, postsComp) => {
         .then((res) => {
             if (res.status === 200) {
                 // post added successfully
-                postsComp.setState({
-                    message: {
-                        body: "Success: Added a post.",
-                        type: "success"
-                    }
-                })
+                console.log("post added")
             } else {
-                postsComp.setState({
-                    message: {
-                        body: "Error: Could not add post.",
-                        type: "error"
-                    }
-                })
+                const errorno = res.status
+                console.log(errorno)
             }
         }).catch(error => {
             console.log(error)
@@ -154,7 +146,7 @@ export const addPostBE = (newPostComp, postsComp) => {
 
 export const getPosts = (postList) => {
     // URL for the req
-    const url = `${API_HOST}/api/posts`;
+    const url = `${API_HOST}/api/posts/postslist`;
 
 
     // send the request 
@@ -173,3 +165,7 @@ export const getPosts = (postList) => {
             console.log(error)
         })
 }
+
+
+
+

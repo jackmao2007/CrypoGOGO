@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import PostComment from "./PostComment"
 import Divider from '@material-ui/core/Divider';
 import Button from "@material-ui/core/Button"
-import { removePost } from "../actions/stack"
+import { removePost } from "../../actions/stack"
 import CommentList from './CommentList'
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Reply from './Reply'

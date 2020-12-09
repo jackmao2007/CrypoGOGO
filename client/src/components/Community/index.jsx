@@ -1,18 +1,11 @@
 import React, { Component } from 'react';
-import Navbar from "../Navbar/index";
-import SearchBox from "./SearchBox/index"
+import SearchBox from "./SearchBox"
 import PostList from"./PostList/index"
-import {addPost, searchByKeyWord} from "./PostList/actions/stack"
-import CreateTopicForm from './CreateTopicForm';
+import { searchByKeyWord } from "./actions/stack"
+import NewPostForm from './NewPost';
 
 class Community extends Component {
     state = {
-        topic: "",
-        postAuthor: "",
-        content: null,
-        postDate: "",
-        comment: "",
-        open: false,
         // permission used to tell whether the current user can delete a post
         isAdmin: true,
         searchKeyWord: "",
@@ -39,58 +32,12 @@ class Community extends Component {
         console.log(this.state.posts)
     };
 
-    handleClickOpen = () => {
-        this.setState({open: true})
-    };
-    
-    handleClose = () => {
-        this.setState({open: false})
-    };
-
-    handleSubmit = () => {
-        if (this.state.topic !== "" && this.state.content !== "") {
-            addPost(this)
-            this.setState({
-                topic:"",
-                content:"",
-                searched:false,
-            })
-        } else {
-            alert('You cannot create a blank post!')
-        }
-    }
-
-    handleInputChange = event => {
-        const target = event.target;
-        const value = target.value;
-        const name = target.name;
-        this.setState({
-          [name]: value 
-        });
-    };
-
-    onValueChange = (content) => {
-        console.log(this.state.content);
-        this.setState({
-           content
-        })
-    }
 
 
     render() { 
         return (
             <div>
-                <CreateTopicForm
-                    open={this.state.open}
-                    topic={this.state.topic}
-                    content={this.state.content}
-                    handleChange={this.handleInputChange}
-                    handleClose={this.handleClose}
-                    handleClickOpen={this.handleClickOpen}
-                    onValueChange={this.onValueChange}
-                    // position,
-                    handleSubmit={this.handleSubmit}
-                /> 
+                <NewPostForm community={ this }/> 
                 <SearchBox keyword={this.state.searchKeyWord} stackComponent={this}
                 handleSearchInput={this.handleSearchInput}/>
                 {!this.state.searched && (<PostList posts={this.state.posts} 
