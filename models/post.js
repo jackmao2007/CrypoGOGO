@@ -24,9 +24,6 @@ const Post = mongoose.model('Post', {
         required: true,
         minlength: 1
     },
-    comment: {
-        type: [mongoose.Schema.Types.ObjectId]
-    },
     top: {
         type: Boolean,
         default: false
