@@ -94,9 +94,8 @@ router.get('/api/posts', mongoChecker, async (req, res) => {
 
 })
 
-// a GET route to get all posts for the logged in user
+// a GET route to get all posts for the current user
 router.get('/api/users/posts', mongoChecker, authenticate, async (req, res) => {
-	// Get the posts
 	try {
 		const posts = await Post.find({author: req.user._id})
 		res.send(posts);
@@ -132,7 +131,7 @@ router.get('/api/posts/:id', mongoChecker, async (req, res) => {
 
 })
 
-// a GET route to get all posts for the logged in user
+// a GET route to get all comments for the current post
 router.get('/api/posts/:id/comments', mongoChecker, authenticate, async (req, res) => {
     
     const id = req.params.id
@@ -177,7 +176,7 @@ router.get('/api/comments/:cid', mongoChecker, async (req, res) => {
 
 })
 
-/// a DELETE route to remove an account by their id.
+/// a DELETE route to remove a post by their id.
 router.delete('/api/posts/:id', mongoChecker, authenticate, async (req, res) => {
     const id = req.params.id
 
@@ -202,7 +201,7 @@ router.delete('/api/posts/:id', mongoChecker, authenticate, async (req, res) => 
 
 })
 
-/// a DELETE route to remove an account by their id.
+/// a DELETE route to remove a comment by their id.
 router.delete('/api/comments/:cid', mongoChecker, authenticate, async (req, res) => {
     const cid = req.params.cid
 
@@ -212,7 +211,7 @@ router.delete('/api/comments/:cid', mongoChecker, authenticate, async (req, res)
 		return;
 	}
 
-	// Delete a post by their id
+	// Delete a comment by their id
 	try {
         const comment = await Comment.findOneAndRemove({_id: cid, author: req.user._id})
 		if (!comment) {
