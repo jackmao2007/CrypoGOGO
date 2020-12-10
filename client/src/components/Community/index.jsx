@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SearchBox from "./SearchBox"
 import PostList from"./PostList/index"
-import { searchByKeyWord } from "./actions/stack"
+import { getPosts, searchPost } from "./actions/stack"
 import NewPostForm from './NewPost';
 
 
@@ -12,7 +12,6 @@ class Community extends Component {
             searchKeyWord: "",
             searched: false,
             filteredPost: [],
-            //hard-coded data, will be replaced by real server call in phase2
             postList: []
         };
 
@@ -20,26 +19,23 @@ class Community extends Component {
     handleSearchInput = event => {
         const kw = event.target.value.toLowerCase();
         this.setState({searchKeyWord: kw});
-        const filteredPosts = searchByKeyWord(this, kw);
-        this.setState({filteredPost: filteredPosts})
-        this.setState({searched: true})
-        console.log(this.state.posts)
+        if(kw.trim() === ""){
+            this.setState({searched: false})
+        }else{
+            this.setState({searched: true})
+        }
+        if(this.state.searched){
+            this.setState({ filteredPost: searchPost(this) })
+        }
     };
 
-    async componentDidMount() {
-        const url = `/api/posts`;
 
-        const resp = await fetch(url);
-        const posts = await resp.json()
-        this.setState({ postList: posts })
+    componentDidMount() {
+        getPosts(this);
     }
 
-    async componentDidUpdate() {
-        const url = `/api/posts`;
-
-        const resp = await fetch(url);
-        const posts = await resp.json()
-        this.setState({ postList: posts })
+    componentDidUpdate() {
+        getPosts(this);
     }
 
 
@@ -47,13 +43,10 @@ class Community extends Component {
         return (
             <div>
                 <NewPostForm community={ this }/> 
-                <SearchBox keyword={this.state.searchKeyWord} stackComponent={this}
-                handleSearchInput={this.handleSearchInput}/>
+                <SearchBox handleSearchInput={this.handleSearchInput}/>
                 {!this.state.searched && (<PostList posts={this.state.postList} 
-                    stackComponent={this} 
                     permission={this.state.isAdmin}/>)}
                 {this.state.searched && (<PostList posts={this.state.filteredPost} 
-                    stackComponent={this} 
                     permission={this.state.isAdmin}/>)}
             </div>
             );

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import Divider from '@material-ui/core/Divider';
 import Button from "@material-ui/core/Button"
-import { removePost } from "../../actions/stack"
-import CommentList from './CommentList'
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Reply from './Reply'
 import { Card, withStyles, CardContent } from '@material-ui/core';
@@ -15,12 +13,12 @@ const useStyles = theme => ({
         marginBottom: 30,
     },
     title: {
-        fontSize: 36,
+        fontSize: 40,
         paddingTop: 10,
         paddingBottom: 10,
     },
     content: {
-        fontSize: 14,
+        fontSize: 18,
         paddingTop: 20,
         paddingBottom: 20,
     }, 
@@ -47,7 +45,7 @@ class Post extends Component{
     }
     
     render() {
-        const { post, stackComponent, permission, classes } = this.props;
+        const { post,  permission, classes } = this.props;
 
 
         return (
@@ -88,10 +86,10 @@ class Post extends Component{
 
                 <Reply/>
                 {/* use state to tell whether current user has permission to delete a post */}
-                {permission && (
+                {/* {permission && (
                     <Button variant="contained"
                         onClick={()=>removePost(stackComponent, post)}>Delete Post</Button>
-                )}
+                )} */}
             </div>
         )
     }

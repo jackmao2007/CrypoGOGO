@@ -21,7 +21,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={3}>
-          <Typography>{children}</Typography>
+          <Typography>{ children }</Typography>
         </Box>
       )}
     </div>
@@ -56,7 +56,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '20px',
   },
   heading: {
-    // border: `3px solid #73AD21`,
     width: 380,
     margin: `1px`
   }
@@ -86,7 +85,7 @@ export default function PostList(props) {
   };
   
   return (
-    <div className={classes.root}>           
+    <div className={ classes.root }>           
     <Tabs
       orientation="vertical"
       variant="scrollable"

@@ -1,74 +1,3 @@
-// environment, just using now for test
-
-export const removePost = (stack, post) => {
-    const notDeletedPosts = stack.state.posts.filter(p => {
-        return p !== post;
-    })
-
-    stack.setState({
-        posts: notDeletedPosts
-    })
-
-
-
-}
-
-export function searchByKeyWord(stack, keywords) {
-    // deep copy the oringinal list in case that will change
-    const postList = Array.from(stack.state.posts);
-    var newList = [];
-    if (keywords == "") {
-        newList = Array.from(postList);
-    } else {
-        var isInclude = Array(postList.length).fill(0);
-        for (let i = 0; i < postList.length; i++) {
-            if (postList[i].content.toLowerCase().search(keywords) != -1 ||
-                postList[i].title.toLowerCase().search(keywords) != -1 ||
-                postList[i].author.toLowerCase().search(keywords) != -1
-            ) {
-                isInclude[i] = 1
-            }
-        }
-        console.log(isInclude);
-        if (isInclude.every((i) => i == 0)) {
-            const noResult = {
-                postID: 0,
-                title: "No Result!",
-                author: "xxx",
-                content: "No result",
-                date: "xxx",
-                comments: [{
-                    username: "xxx",
-                    text: "xxx"
-                }]
-            }
-            newList.push(noResult);
-        } else {
-            for (let i = 0; i < postList.length; i++) {
-                if (isInclude[i] == 1) {
-                    console.log(postList[i])
-                    newList.push(postList[i])
-                }
-            }
-        }
-    }
-    console.log(newList)
-    return newList;
-}
-
-export const addComment = stack => {
-    const commentList = stack.state.value
-
-    const comment = {
-
-    }
-}
-
-
-
-
-// back-end functions 
-
 export const addPost = (newPostComp) => {
     // URL for the req
     const url = `/api/posts`;
@@ -100,6 +29,52 @@ export const addPost = (newPostComp) => {
         });
 }
 
+
+export const getPosts = async (community) => {
+    try{
+        const url = `/api/posts`;
+        const resp = await fetch(url);
+        const posts = await resp.json()
+        community.setState({ postList: posts })
+    }catch(error){
+        console.log(error)
+    }
+}
+
+
+export const searchPost = (community) => {
+    // pointers
+    const kw = community.state.searchKeyWord;
+    const posts = community.state.postList;
+
+    let result = []
+    posts.forEach((post) => {
+        if (post.title.toLowerCase().search(kw) != -1 || 
+            post.content.toLowerCase().search(kw) != -1 ) {
+            result.push(post)
+        }
+    });
+    try{
+        if(result.length === 0){
+            const noResult = {
+                title: "No Result!",
+                author: "xxx",
+                content: "No result",
+                date: "xxx",
+                comments: [{
+                    username: "xxx",
+                    text: "xxx"
+                }]
+            }
+            return [noResult]
+        }else{
+            return result
+        }
+    }catch(error){
+        console.log(error);
+    }
+
+}
 
 
 
