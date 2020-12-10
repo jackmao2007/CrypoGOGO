@@ -7,6 +7,7 @@ const router = express.Router(); // Express Router
 // import the models
 const { Account } = require('../models/accounts')
 const { Position } = require('../models/positions')
+const { Order } = require('../models/orders')
 let supportedCurrencies = require('../marketData')
 
 // helpers/middlewares
@@ -30,28 +31,32 @@ router.get('/api/trading/marketData', mongoChecker, authenticate, async (req, re
 
 router.post('/api/trading/createOrder', mongoChecker, authenticate, async (req, res) => {
     parrentOrderId = null;
+    if (req.body.orderQuantity <= 0){
+        response.status(400).send()
+        return
+    }
     // get Account 
     try {
-		const account = await Account.findOne({creator: req.user._id, _id: req.body.account})
+        const account = await Account.findOne({creator: req.user._id, _id: req.body.account})
 
         let limit = 0
         let stop = 0
-        let price = supportedCurrencies.find((coin) => coin.symbol = req.body.symbol).currentPrice
-        if (req.body.orderType == "Limit"){
+        let price = supportedCurrencies.find((coin) => {return coin.symbol == req.body.symbol}).currentPrice
+        if (req.body.orderType == "limit"){
             limit = req.body.orderLimit
             price = limit
-        }else if (req.body.orderType == "Stop"){
+        }else if (req.body.orderType == "stop"){
             stop = req.body.orderStop
             price = stop
         }
 
         if (req.body.mode == 'buy'){
             // price check (cant buy if you dont have money)
-            if (price * req.body.quanity > account.cash){
+            if (price *  req.body.orderQuantity > account.cash){
                 res.status(480).send("Insufficient funds")
                 return
             }
-            account.cash = Math.round((account.cash - price * req.body.quanity)*100)/100
+            account.cash = Math.round((account.cash - price * req.body.orderQuantity)*100)/100
             await account.save()
         } else if (req.body.mode == 'sell'){
             // position check (Cant sell stuff you dont have)
@@ -78,16 +83,16 @@ router.post('/api/trading/createOrder', mongoChecker, authenticate, async (req, 
         saved = await order.save()
         parrentOrderId = saved._id
         // Handle Braket order
-        if (req.body.orderBracket == "true"){
+        if (req.body.orderBracket == true){
             let bracketMode = 'sell'
             let bracketStatus = 'Pending'
             if (req.body.mode == 'buy'){ // Error checks, check if bracket is legitimate
-                if (req.orderProfitLmt <= orderLossStp){
+                if (req.body.orderProfitLmt <= req.body.orderLossStp){
                     bracketStatus = 'Failed'
                 }
             }else if (req.body.mode == 'buy'){ // Error checks, check if bracket is legitimate
                 bracketMode = 'buy'
-                if (req.orderProfitLmt >= orderLossStp){
+                if (req.body.orderProfitLmt >= req.body.orderLossStp){
                     bracketStatus = 'Failed'
                 }
             }
@@ -98,7 +103,7 @@ router.post('/api/trading/createOrder', mongoChecker, authenticate, async (req, 
                 symbol: req.body.symbol,
                 mode: bracketMode,
                 quantity: req.body.orderProfitQty,
-                orderType: "Limit", 
+                orderType: "limit", 
                 limit: req.body.orderProfitLmt,
                 stop: 0,
                 duration: req.body.orderProfitDur,
@@ -113,7 +118,7 @@ router.post('/api/trading/createOrder', mongoChecker, authenticate, async (req, 
                 symbol: req.body.symbol,
                 mode: bracketMode,
                 quantity: req.body.orderLossQty,
-                orderType: "Stop", 
+                orderType: "stop", 
                 limit: 0,
                 stop: req.body.orderLossStp,
                 duration: req.body.orderLossDur,
@@ -125,7 +130,7 @@ router.post('/api/trading/createOrder', mongoChecker, authenticate, async (req, 
             await lorder.save()
         }
 
-        req.status(200).send("Success")
+        res.status(200).send("Success")
 
     } catch (error) {
         console.log(error)

@@ -6,7 +6,7 @@ class AccountOrders extends Component {
             {
                 id: "",
                 symbol: "BTC",
-                status: "Accepted", // Accepted, Excecuted, Cancelled
+                status: "Accepted", // Pending, Accepted, Executed, Failed
                 action: "Buy",
                 quantity: 0.42,
                 limit: "11123.24",
@@ -18,7 +18,7 @@ class AccountOrders extends Component {
             {
                 id: "",
                 symbol: "LTC",
-                status: "Excecuted", // Accepted, Excecuted, Cancelled
+                status: "Excecuted", // Pending, Accepted, Executed, Failed
                 action: "Sell",
                 quantity: 1.42,
                 limit: "5223.24",
@@ -30,17 +30,39 @@ class AccountOrders extends Component {
         ]
     }
 
-    componentDidMount() {
-        // populate state from this.prop.accountNumber via server request
+    async updateState(){
+        const resp = await fetch("/api/orders/account/" + this.props.accountNumber)
+        const orders = await resp.json()
+        let orderState = []
+        for (let i = 0; i < orders.length; i++){
+            let newOrder = {
+                id: orders[i]._id,
+                symbol: orders[i].symbol.toUpperCase(),
+                status: orders[i].status,
+                action: orders[i].mode.toUpperCase(),
+                quantity: orders[i].quantity,
+                limit: orders[i].limit == 0 ? "--": orders[i].limit,
+                stop: orders[i].stop == 0 ? "--": orders[i].stop,
+                duration: orders[i].duration,
+                type: orders[i].orderType.toUpperCase(),
+                timePlaced: orders[i].timePlaced
+            }
+            orderState.push(newOrder)
+        }
+        this.setState({orders: orderState})
+        console.log(orderState)
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    async componentDidMount() {
+        // populate state from this.prop.accountNumber via server request
+        this.updateState()
+    }
+
+    async componentDidUpdate(prevProps, prevState) {
         // populate state from this.props.accountNumber server request
         // This is different from the dashboard page, this will update with a server request
         if (this.props.accountNumber !== prevProps.accountNumber || this.props.updatedTime !== prevProps.updatedTime) {
-            // fetch data 
-            console.log("fetch account balances data");
-            // setState
+            this.updateState()
           }
     }
 

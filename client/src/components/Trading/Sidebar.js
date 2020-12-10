@@ -1,9 +1,5 @@
-import { TheatersOutlined } from '@material-ui/icons';
 import React, { Component } from 'react';
-import { renderIntoDocument } from 'react-dom/test-utils';
 import TradingViewWidget from 'react-tradingview-widget';
-import { thatReturnsArgument } from 'react-tradingview-widget/dist/vendor';
-
 import './styles.css'
 
 class Sidebar extends Component {
@@ -29,7 +25,7 @@ class Sidebar extends Component {
         }
       ],
       selectedAsset: "BTC",
-      orderError: false
+      orderError: ""
     }
     sidebarSearchBoxRef = React.createRef();
     orderQuantityRef = React.createRef();
@@ -49,7 +45,6 @@ class Sidebar extends Component {
       fetch("api/trading/marketData")
       .then((result) => result.json())
       .then((data) => {
-        console.log("asdasdasdasd")
         this.setState({assets: data, selectedAsset: data[0].symbol})
       })
     }
@@ -129,8 +124,6 @@ class Sidebar extends Component {
     }
 
     findAssetInfo(symbol) {
-      console.log(symbol)
-      console.log(this.state.assets)
       return this.state.assets.filter((asset) => asset.symbol == symbol)[0]
     }
 
@@ -140,7 +133,39 @@ class Sidebar extends Component {
       const symbol = this.state.selectedAsset.toLowerCase()
       this.props.onOrder();
       // Send server request with information thats is in the input fields
-      // grab information from react refs
+
+      const reqBody = {
+        account: account,
+        mode: mode,
+        symbol: symbol,
+        orderQuantity: Number(this.orderQuantityRef.current.value),
+        orderType: this.orderTypeRef.current.value,
+        orderLimit: this.orderLimitRef.current == null ? 0: Number(this.orderLimitRef.current.value),
+        orderStop: this.orderStopRef.current == null ? 0: Number(this.orderStopRef.current.value),
+        orderDuration: this.orderDurationRef.current.value,
+        orderBracket: this.orderBracketRef.current.checked,
+        orderProfitDur: this.orderProfitDurRef.current == null ? "" : this.orderProfitDurRef.current.value,
+        orderProfitLmt: this.orderProfitLmtRef.current == null ? 0: Number(this.orderProfitLmtRef.current.value),
+        orderProfitQty: this.orderProfitQtyRef.current == null ? 0: Number(this.orderProfitQtyRef.current.value),
+        orderLossQty: this.orderLossQtyRef.current == null ? 0: Number(this.orderLossQtyRef.current.value),
+        orderLossStp: this.orderLossStpRef.current == null ? 0: Number(this.orderLossStpRef.current.value),
+        orderLossDur: this.orderLossDurRef.current == null ? "" : this.orderLossDurRef.current.value
+      }
+      const result = await fetch("/api/trading/createOrder", {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(reqBody)
+      })
+      if (result.status == 500) {
+        this.setState({orderError: "Oops, something went wrong, please check your inputs :("})
+      } else if (result.status == 480){
+        this.setState({orderError: "Insufficient Funds."})
+      } else if (result.status == 481){
+        this.setState({orderError: "Not enough positions to sell."})
+      }
+      this.props.onOrder()
     }
 
     mapSymbolToChart() {
@@ -150,10 +175,7 @@ class Sidebar extends Component {
     generateOrderErrorMessage = () => {
       if (this.state.orderError){
         return (
-        <div> 
-          <div> <span className="red-error-message"> Something went wrong with your order :(  </span> </div>
-          <div> <span className="red-error-message"> Please check your inputs. </span> </div>
-        </div>
+        <div> <span className="red-error-message"> {this.state.orderError} </span> </div>
         )
       }
     }

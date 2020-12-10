@@ -14,20 +14,25 @@ class Trading extends Component {
 
     accountSelector = React.createRef();
 
-    componentDidMount() {
-        // populate state
-        // get account ids
+    async componentDidMount() {
+        const results = await fetch("/api/accounts")
+        const accounts = await results.json()
+        let accountIds = []
+        accounts.map((acc) => {
+            accountIds.push(acc._id)
+        })
+        this.setState({accounts: accountIds, currentAccount: accountIds[0], updatedTimestamp: Date.now()})
     }
 
     updateAccount = () => {
         this.setState({updatedTimestamp: Date.now()});
-        // do server calls too accounts
+        // done server calls too accounts
     }
 
 
 
     handleAccountSelectChange = () => {
-        this.setState({currentAccountNumber: this.accountSelector.current.value});
+        this.setState({currentAccount: this.accountSelector.current.value});
     }
 
     render() { 

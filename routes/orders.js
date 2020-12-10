@@ -40,8 +40,23 @@ router.post('/api/orders', mongoChecker, authenticate, async (req, res) => {
 })
 
 router.get('/api/orders', mongoChecker, authenticate, async (req, res) => {
+
 	try {
 		const orders = await Order.find({creator: req.user._id})
+		res.send(orders);
+	} catch(error) {
+		log(error);
+		res.status(500).send("Internal Server Error");
+	}
+
+})
+
+router.get('/api/orders/account/:accountId', mongoChecker, authenticate, async (req, res) => {
+
+	const accId = req.params.accountId
+	console.log(accId)
+	try {
+		const orders = await Order.find({creator: req.user._id, account: accId})
 		res.send(orders);
 	} catch(error) {
 		log(error);
