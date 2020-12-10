@@ -26,3 +26,4 @@ debug.log*
 /mongo-data
 client/debug.log
 *.log
+client/debug.log
