@@ -13,6 +13,7 @@ export const addPost = (newPostComp) => {
             "Content-Type": "application/json"
         }
     });
+    console.log(request)
 
     // send the request 
     fetch(request)
@@ -79,17 +80,17 @@ export const searchPost = (community) => {
 
 export const likePost = (postID) => {
     // URL for the req
-    const url = `/api/posts/:` + postID;
+    const url = `/api/posts/like/` + postID 
     // the data to send in req
 
     const request = new Request(url, {
-        method: "patch",
-        body: null,
+        method: "post",
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"
         }
     });
+
 
     // send the request 
     fetch(request)

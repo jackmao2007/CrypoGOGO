@@ -50,12 +50,13 @@ router.post('/api/posts', mongoChecker, async (req, res) => {
 })
 
 // a POST route to like a post
-router.patch('/api/posts/:id', mongoChecker, async (req, res) => {
+router.post('/api/posts/like/:id', mongoChecker, async (req, res) => {
 	const postID = req.params.id;
 	if (!ObjectID.isValid(postID)) {
 		res.status(404).send();
 		return; 
 	}
+
 	Post.findById(postID).then((post) => {
 		if(!post){
 			res.status(404).send()

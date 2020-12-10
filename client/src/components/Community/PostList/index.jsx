@@ -95,6 +95,7 @@ export default function PostList(props) {
     <Tabs
       orientation="vertical"
       variant="scrollable"
+      scrollButtons="off"
       value={value}
       indicatorColor = 'primary'
       onChange={handleChange}
