@@ -1,12 +1,9 @@
 // environment, just using now for test
-const API_HOST = 5000
 
 export const removePost = (stack, post) => {
     const notDeletedPosts = stack.state.posts.filter(p => {
         return p !== post;
     })
-
-    updateID(notDeletedPosts);
 
     stack.setState({
         posts: notDeletedPosts
