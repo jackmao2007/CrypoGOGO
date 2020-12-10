@@ -48,6 +48,7 @@
             _id: "order IDObject",
             creator: "user IDObject",
             account: "account IDObject",
+            symbol: "btc",
             mode: "BUY",
             quantity: 11,
             orderType: "Market",
@@ -55,7 +56,9 @@
             stop: null,
             duration: "DAY",
             status: "pending",
-            parentOrder: "order IDObject"
+            parentOrder: "order IDObject",
+            timePlaced: "Date obj",
+            cashOnHold: 123123
         }
     ],
     posts: [

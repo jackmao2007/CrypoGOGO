@@ -69,7 +69,7 @@ class AccountBalance extends Component {
     componentDidUpdate(prevProps, prevState) {
         // populate state from this.props.accountNumber server request
         // This is different from the dashboard page, this will update with a server request
-        if (this.props.accountNumber !== prevProps.accountNumber) {
+        if (this.props.accountNumber !== prevProps.accountNumber || this.props.updatedTime !== prevProps.updatedTime) {
             // fetch data 
           }
         // setState

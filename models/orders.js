@@ -11,6 +11,10 @@ const Order = mongoose.model('Order', {
 		type: mongoose.Schema.Types.ObjectId,
         required: true
     },
+    symbol: {
+        type: String,
+        required: true
+    },
     mode: {
         type: String,
         required: true,
@@ -39,6 +43,13 @@ const Order = mongoose.model('Order', {
     },
     parentOrder: {
         type: mongoose.Schema.Types.ObjectId // ID of another order, used if bracket order.
+    },
+    timePlaced: {
+        type: Date,
+        required: true
+    },
+    cashOnHold: {
+        type: Number
     }
 })
 

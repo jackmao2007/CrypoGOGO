@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import TradingViewWidget from 'react-tradingview-widget';
-import { thatReturnsArgument } from 'react-tradingview-widget/dist/vendor';
-
 import './styles.css'
 
 class Sidebar extends Component {
@@ -15,50 +13,19 @@ class Sidebar extends Component {
       assets: [
         {
           symbol: "BTC",
-          price: "1134.23",
+          currentPrice: "1134.23",
           name: "Bitcoin/USD",
-          dayChange: "+123",
-          open: 123123,
-          high: 123123,
-          low: 123123,
-          vol: 123123,
-          w52high: 123123,
-          w52low: 123123,
-          prevClose: 100000,
-          marketCap: "123.3B"
-        },
-        {
-          symbol: "ETH",
-          price: "534.23",
-          name: "Etherum/USD",
-          dayChange: "+123",
-          open: 223123,
-          high: 223123,
-          low: 223123,
-          vol: 223123,
-          w52high: 223123,
-          w52low: 223123,
-          prevClose: 200000,
-          marketCap: "23.3B"
-
-        },
-        {
-          symbol: "LTC",
-          price: "58.23",
-          name: "Litecoin/USD",
-          dayChange: "+123",
-          open: 323123,
-          high: 323123,
-          low: 323123,
-          vol: 323123,
-          w52high: 323123,
-          w52low: 323123,
-          prevClose: 300000,
-          marketCap: "13.3B"
-
-        },
+          dayPriceChange: "+123",
+          dayHigh: 123123,
+          dayLow: 123123,
+          totalVolume: 123123,
+          ath: 123123,
+          atl: 123123,
+          marketCap: 123123123
+        }
       ],
-      selectedAsset: "BTC"
+      selectedAsset: "BTC",
+      orderError: ""
     }
     sidebarSearchBoxRef = React.createRef();
     orderQuantityRef = React.createRef();
@@ -67,13 +34,20 @@ class Sidebar extends Component {
     orderStopRef = React.createRef();
     orderDurationRef = React.createRef();
     orderBracketRef = React.createRef();
-    orderProfitRef = React.createRef();
     orderProfitQtyRef = React.createRef();
     orderProfitLmtRef = React.createRef();
     orderProfitDurRef = React.createRef();
     orderLossQtyRef = React.createRef();
     orderLossStpRef = React.createRef();
     orderLossDurRef = React.createRef();
+
+    componentDidMount() {
+      fetch("api/trading/marketData")
+      .then((result) => result.json())
+      .then((data) => {
+        this.setState({assets: data, selectedAsset: data[0].symbol})
+      })
+    }
 
     updateSelectedAsset(symbol) {
       this.setState({selectedAsset: symbol});
@@ -91,7 +65,7 @@ class Sidebar extends Component {
       }
       return display.map((assets) => {
         return <li className='trading-side-bar-asset' onClick={()=> {this.updateSelectedAsset(assets.symbol)}}>
-              <span className='header'> {assets.symbol} </span> <span className='subheader'> {assets.price} </span>
+              <span className='header'> {assets.symbol} </span> <span className='subheader'> {assets.currentPrice} </span>
               <h6> <span style={{color:"grey"}}> {assets.name}</span> <span style={{color:"green"}}> {this.dayChange} </span> </h6>
         </li>
       })
@@ -111,7 +85,6 @@ class Sidebar extends Component {
     }
 
     updateBracketOrderSelect = () => {
-    
       if (this.orderBracketRef.current.checked) {
         this.setState({orderConfig : { isLimit: this.state.orderConfig.isLimit,
           isStop: this.state.orderConfig.isStop,
@@ -126,10 +99,10 @@ class Sidebar extends Component {
     generateOrderLimitStopFields = () => {
       let generate = [];
       if (this.state.orderConfig.isLimit) {
-        generate.push(<div className="order-input-field"> Limit: <input ref={this.orderLimitRef} /> </div>);
+        generate.push(<div className="order-input-field"> Limit: <input type="number" ref={this.orderLimitRef} /> </div>);
       }
       if (this.state.orderConfig.isStop) {
-        generate.push(<div className="order-input-field"> Stop: <input ref={this.orderStopRef} /> </div>);
+        generate.push(<div className="order-input-field"> Stop: <input type="number" ref={this.orderStopRef} /> </div>);
       }
       return generate;
     }
@@ -138,13 +111,13 @@ class Sidebar extends Component {
       if (this.state.orderConfig.isBracket) {
         return <div className="order-bracket-section">
           <div className="order-input-field"> Profit:  
-            <div className="order-input-field"> - Qty: <input ref={this.orderProfitQtyRef}/></div>
-            <div className="order-input-field"> - Lmt: <input ref={this.orderProfitLmtRef}/> </div>
+            <div className="order-input-field"> - Qty: <input type="number" ref={this.orderProfitQtyRef}/></div>
+            <div className="order-input-field"> - Lmt: <input type="number" ref={this.orderProfitLmtRef}/> </div>
             <div className="order-input-field"> - Dur: <select ref={this.orderProfitDurRef}> <option value="DAY"> DAY </option> <option value="GTC"> GTC </option></select> </div>
           </div>
           <div className="order-input-field"> Loss: 
-            <div className="order-input-field"> - Qty: <input ref={this.orderLossQtyRef}/></div>
-            <div className="order-input-field"> - Stp: <input ref={this.orderLossStpRef}/> </div>
+            <div className="order-input-field"> - Qty: <input type="number" ref={this.orderLossQtyRef}/></div>
+            <div className="order-input-field"> - Stp: <input type="number" ref={this.orderLossStpRef}/> </div>
             <div className="order-input-field"> - Dur: <select ref={this.orderLossDurRef}> <option value="DAY"> DAY </option> <option value="GTC"> GTC </option></select> </div></div>
         </div>
       }
@@ -154,10 +127,57 @@ class Sidebar extends Component {
       return this.state.assets.filter((asset) => asset.symbol == symbol)[0]
     }
 
-    sendOrder(BuySell) {
+    async sendOrder(BuySell) {
+      const account = this.props.accountNumber
+      const mode = BuySell
+      const symbol = this.state.selectedAsset.toLowerCase()
       this.props.onOrder();
       // Send server request with information thats is in the input fields
-      // grab information from react refs
+
+      const reqBody = {
+        account: account,
+        mode: mode,
+        symbol: symbol,
+        orderQuantity: Number(this.orderQuantityRef.current.value),
+        orderType: this.orderTypeRef.current.value,
+        orderLimit: this.orderLimitRef.current == null ? 0: Number(this.orderLimitRef.current.value),
+        orderStop: this.orderStopRef.current == null ? 0: Number(this.orderStopRef.current.value),
+        orderDuration: this.orderDurationRef.current.value,
+        orderBracket: this.orderBracketRef.current.checked,
+        orderProfitDur: this.orderProfitDurRef.current == null ? "" : this.orderProfitDurRef.current.value,
+        orderProfitLmt: this.orderProfitLmtRef.current == null ? 0: Number(this.orderProfitLmtRef.current.value),
+        orderProfitQty: this.orderProfitQtyRef.current == null ? 0: Number(this.orderProfitQtyRef.current.value),
+        orderLossQty: this.orderLossQtyRef.current == null ? 0: Number(this.orderLossQtyRef.current.value),
+        orderLossStp: this.orderLossStpRef.current == null ? 0: Number(this.orderLossStpRef.current.value),
+        orderLossDur: this.orderLossDurRef.current == null ? "" : this.orderLossDurRef.current.value
+      }
+      const result = await fetch("/api/trading/createOrder", {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(reqBody)
+      })
+      if (result.status == 500) {
+        this.setState({orderError: "Oops, something went wrong, please check your inputs :("})
+      } else if (result.status == 480){
+        this.setState({orderError: "Insufficient Funds."})
+      } else if (result.status == 481){
+        this.setState({orderError: "Not enough positions to sell."})
+      }
+      this.props.onOrder()
+    }
+
+    mapSymbolToChart() {
+      return this.state.selectedAsset + "USD"
+    }
+
+    generateOrderErrorMessage = () => {
+      if (this.state.orderError){
+        return (
+        <div> <span className="red-error-message"> {this.state.orderError} </span> </div>
+        )
+      }
     }
 
     render() { 
@@ -173,27 +193,26 @@ class Sidebar extends Component {
         <div className="sidebar-margin">
         </div>
         <div className="trading-current-asset-container">
-          <TradingViewWidget symbol={this.state.selectedAsset} width="850" height="400"/>
+          <TradingViewWidget symbol={this.mapSymbolToChart()} width="850" height="400"/>
         </div>
         <ul className="trading-current-asset-info-conatiner">
-          <li className="trading-current-asset-info-field"> Open: {this.findAssetInfo(this.state.selectedAsset).open} </li>
-          <li className="trading-current-asset-info-field"> Prev. Close: {this.findAssetInfo(this.state.selectedAsset).prevClose} </li>
-          <li className="trading-current-asset-info-field"> High: {this.findAssetInfo(this.state.selectedAsset).high} </li>
-          <li className="trading-current-asset-info-field"> Low: {this.findAssetInfo(this.state.selectedAsset).low} </li>
-          <li className="trading-current-asset-info-field"> Volume: {this.findAssetInfo(this.state.selectedAsset).vol} </li>
-          <li className="trading-current-asset-info-field"> 52 Week High: {this.findAssetInfo(this.state.selectedAsset).w52high} </li>
-          <li className="trading-current-asset-info-field"> 52 Week Low: {this.findAssetInfo(this.state.selectedAsset).w52low} </li>
+          <li className="trading-current-asset-info-field"> Current Price: {this.findAssetInfo(this.state.selectedAsset).currentPrice} </li>
+          <li className="trading-current-asset-info-field"> 24hr Price Change: {this.findAssetInfo(this.state.selectedAsset).dayPriceChange} </li>
+          <li className="trading-current-asset-info-field"> 24hr High: {this.findAssetInfo(this.state.selectedAsset).dayHigh} </li>
+          <li className="trading-current-asset-info-field"> 24hr Low: {this.findAssetInfo(this.state.selectedAsset).dayLow} </li>
+          <li className="trading-current-asset-info-field"> Total Volume: {this.findAssetInfo(this.state.selectedAsset).totalVolume} </li>
+          <li className="trading-current-asset-info-field"> All Time High: {this.findAssetInfo(this.state.selectedAsset).ath} </li>
+          <li className="trading-current-asset-info-field"> All Time Low: {this.findAssetInfo(this.state.selectedAsset).atl} </li>
           <li className="trading-current-asset-info-field"> Market Cap.: {this.findAssetInfo(this.state.selectedAsset).marketCap} </li>
         </ul>
         <div className="trading-order-container">
           <h4> Make Order </h4>
-          <div className="order-input-field"> Quantity: <input ref={this.orderQuantityRef} /> </div>
+          <div className="order-input-field"> Quantity: <input type="number" ref={this.orderQuantityRef} /> </div>
           <div className="order-input-field">
           Order Type: <select ref={this.orderTypeRef} onChange={() => this.updateSelectedOrderType(this.orderTypeRef.current.value)}>
                         <option value="market"> Market </option>
                         <option value="limit"> Limit </option>
                         <option value="stop"> Stop </option>
-                        <option value="stopLimit"> Stp Lmt</option>
                       </select>
           </div>
           {this.generateOrderLimitStopFields()}
@@ -208,6 +227,9 @@ class Sidebar extends Component {
             <button className="order-button-buy" onClick={() => this.sendOrder("buy")}> Buy </button>
             <button className="order-button-sell" onClick = {() => this.sendOrder("sell")}> Sell </button>
           </div>
+
+          {this.generateOrderErrorMessage()}
+
         </div>
       </div>
   );    

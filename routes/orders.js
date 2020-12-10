@@ -12,8 +12,9 @@ const { ObjectID } = require('mongodb')
 router.post('/api/orders', mongoChecker, authenticate, async (req, res) => {
 
 	const order = new Order({
-        creator: req.user._id,
-        account: req.body.account,
+		creator: req.user._id,
+		account: req.body.account,
+		symbol: req.body.symbol,
         mode: req.body.mode,
         quantity: req.body.quantity,
         orderType: req.body.orderType, 
@@ -21,7 +22,9 @@ router.post('/api/orders', mongoChecker, authenticate, async (req, res) => {
         stop: req.body.stop,
         duration: req.body.duration,
         status: req.body.status,
-        parentOrder: req.body.parentOrder 
+		parentOrder: req.body.parentOrder,
+		timePlaced: Date.now(),
+		cashOnHold: 0
 	})
 
 	try {
@@ -38,8 +41,23 @@ router.post('/api/orders', mongoChecker, authenticate, async (req, res) => {
 })
 
 router.get('/api/orders', mongoChecker, authenticate, async (req, res) => {
+
 	try {
 		const orders = await Order.find({creator: req.user._id})
+		res.send(orders);
+	} catch(error) {
+		log(error);
+		res.status(500).send("Internal Server Error");
+	}
+
+})
+
+router.get('/api/orders/account/:accountId', mongoChecker, authenticate, async (req, res) => {
+
+	const accId = req.params.accountId
+	console.log(accId)
+	try {
+		const orders = await Order.find({creator: req.user._id, account: accId})
 		res.send(orders);
 	} catch(error) {
 		log(error);
@@ -85,6 +103,23 @@ router.delete('/api/orders/:id', mongoChecker, authenticate, async (req, res) =>
 
 	try {
 		const order = await Order.findOneAndRemove({_id: id, creator: req.user._id})
+		if (!order) {
+			res.status(404).send()
+		} else {   
+			res.send(order)
+		}
+	} catch(error) {
+		log(error)
+		res.status(500).send()
+	}
+
+})
+
+
+/// a DELETE route to remove ***ALL ORDERS*** (ADMIN API)
+router.delete('/api/orders', mongoChecker, authenticate, async (req, res) => {
+	try {
+		const order = await Order.remove({})
 		if (!order) {
 			res.status(404).send()
 		} else {   

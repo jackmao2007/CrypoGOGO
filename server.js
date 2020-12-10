@@ -34,6 +34,8 @@ app.use(session({
     }
 }));
 
+// Order Handle Functions
+const {serverTickOrderHandler, serverDailyOrderExpireHandler} = require("./orderHandler")
 
 /** Import the various routes **/
 // User and login routes
@@ -48,6 +50,8 @@ app.use(require('./routes/activities'))
 app.use(require('./routes/orders'))
 // Dashboard API routes
 app.use(require('./routes/dashboardApi'))
+// Trading API routes
+app.use(require('./routes/tradingApi'))
 
 
 
@@ -56,6 +60,12 @@ app.get('*', (req, res) => {
   res.status(404).send("404 Error: We cannot find the page you are looking for.");
   // you could also send back a fancy 404 webpage here.
 });
+
+
+// ********** SPINNING SERVER JOBS ****************
+setInterval(serverTickOrderHandler, 5000) // loops over orders and excecute.
+setInterval(serverDailyOrderExpireHandler, 1000 * 60 * 60 * 24) // loops over orders and check for expired.  // Make cron job if have time.
+
 
 
 /*************************************************/

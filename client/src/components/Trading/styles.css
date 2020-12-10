@@ -267,3 +267,7 @@ table.trading-account-balance-table-current td {
     width: 200px;
     border-radius: 5px;
 }
+
+.red-error-message {
+    color: red;
+}

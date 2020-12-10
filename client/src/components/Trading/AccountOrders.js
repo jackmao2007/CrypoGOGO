@@ -2,54 +2,42 @@ import React, { Component } from 'react';
 
 class AccountOrders extends Component {
     state = { 
-        orders: [
-            {
-                symbol: "BTC",
-                status: "Accepted", // Accepted, Excecuted, Cancelled
-                action: "Buy",
-                quantity: 0.42,
-                limit: "11123.24",
-                stop: "--",
-                duration: 'DAY',
-                type: 'Limit',
-                timePlaced: '07 Nov 2020 11:24:23 PM'
-            },
-            {
-                symbol: "LTC",
-                status: "Excecuted", // Accepted, Excecuted, Cancelled
-                action: "Sell",
-                quantity: 1.42,
-                limit: "5223.24",
-                stop: "--",
-                duration: 'DAY',
-                type: 'Limit',
-                timePlaced: '07 Nov 2020 11:34:13 PM'
-            },
-            {
-                symbol: "ETH",
-                status: "Excecuted", // Accepted, Excecuted, Cancelled
-                action: "Sell",
-                quantity: 10.0,
-                limit: "--",
-                stop: "14128.92",
-                duration: 'DAY',
-                type: 'Stop',
-                timePlaced: '05 Nov 2020 11:25:00 PM'
+        orders: []
+    }
+
+    async updateState(){
+        const resp = await fetch("/api/orders/account/" + this.props.accountNumber)
+        const orders = await resp.json()
+        let orderState = []
+        for (let i = 0; i < orders.length; i++){
+            let newOrder = {
+                id: orders[i]._id,
+                symbol: orders[i].symbol.toUpperCase(),
+                status: orders[i].status,
+                action: orders[i].mode.toUpperCase(),
+                quantity: orders[i].quantity,
+                limit: orders[i].limit == 0 ? "--": orders[i].limit,
+                stop: orders[i].stop == 0 ? "--": orders[i].stop,
+                duration: orders[i].duration,
+                type: orders[i].orderType.toUpperCase(),
+                timePlaced: orders[i].timePlaced
             }
-        ]
+            orderState.push(newOrder)
+        }
+        this.setState({orders: orderState})
+        console.log(orderState)
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         // populate state from this.prop.accountNumber via server request
+        this.updateState()
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    async componentDidUpdate(prevProps, prevState) {
         // populate state from this.props.accountNumber server request
         // This is different from the dashboard page, this will update with a server request
         if (this.props.accountNumber !== prevProps.accountNumber || this.props.updatedTime !== prevProps.updatedTime) {
-            // fetch data 
-            console.log("fetch account balances data");
-            // setState
+            this.updateState()
           }
     }
 
