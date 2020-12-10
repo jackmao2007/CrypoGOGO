@@ -90,13 +90,9 @@ export const likePost = (postID) => {
             "Content-Type": "application/json"
         }
     });
-
-
-    // send the request 
     fetch(request)
         .then((res) => {
             if (res.status === 200) {
-                // post added successfully
                 console.log("post liekd!!")
             } else {
                 console.log(res.status, "link front and back")
@@ -104,5 +100,24 @@ export const likePost = (postID) => {
         }).catch(error => {
             console.log(error)
         });
+}
 
+export const deletePost = (postID) => {
+    const url = 'api/posts/'+ postID;
+    const request = new Request(url, {
+        method: "delete",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    })
+    fetch(request).then((res) => {
+        if (res.status === 200){
+            console.log(" post deleted!")
+        } else {
+            console.log(res.status)
+        }
+    }).catch(error => {
+        console.log(error)
+    })
 }

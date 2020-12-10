@@ -203,18 +203,18 @@ router.get('/api/comments/:cid', mongoChecker, async (req, res) => {
 })
 
 /// a DELETE route to remove a post by their id.
-router.delete('/api/posts/:id', mongoChecker, authenticate, async (req, res) => {
-    const id = req.params.id
+router.delete('/api/posts/:id', mongoChecker, async (req, res) => {
+    const postID = req.params.id
 
 	// Validate id
-	if (!ObjectID.isValid(id)) {
+	if (!ObjectID.isValid(postID)) {
 		res.status(404).send('Resource not found')
 		return;
 	}
 
 	// Delete a post by their id
 	try {
-		const post = await Post.findOneAndRemove({_id: id, author: req.user._id})
+		const post = await Post.findOneAndRemove({_id: postID})
 		if (!post) {
 			res.status(404).send()
 		} else {   

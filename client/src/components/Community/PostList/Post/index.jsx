@@ -5,7 +5,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import Reply from './Reply'
 import { Card, withStyles, CardContent } from '@material-ui/core';
 import moment from 'moment'
-import { likePost } from "../../actions/stack" 
+import { likePost, deletePost } from "../../actions/stack" 
 
 const useStyles = theme => ({
     root: {
@@ -92,11 +92,11 @@ class Post extends Component{
                 </Card> */}
 
                 <Reply/>
-                {/* use state to tell whether current user has permission to delete a post */}
-                {/* {permission && (
+                
+                {permission && (
                     <Button variant="contained"
-                        onClick={()=>removePost(stackComponent, post)}>Delete Post</Button>
-                )} */}
+                        onClick={()=>deletePost(post._id)}>Delete Post</Button>
+                )}
             </div>
         )
     }
