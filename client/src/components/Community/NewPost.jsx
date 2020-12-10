@@ -93,9 +93,9 @@ class NewPostForm extends Component {
     this.setState({ open: false })
   };
 
-  handleSubmit = (comminity) => {
+  handleSubmit = () => {
     if (this.state.title !== "" && this.state.content !== "") {
-      addPostBE(this, comminity)
+      addPostBE(this)
       this.setState({
         title: "",
         content: "",

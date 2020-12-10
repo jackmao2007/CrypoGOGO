@@ -19,13 +19,14 @@ const { ObjectID } = require('mongodb')
 /*** Post API Routes  ************************************/
 
 // a POST route to create an post
-router.post('/api/posts', mongoChecker, authenticate, async (req, res) => {
+router.post('/api/posts', mongoChecker, async (req, res) => {
 	// log(req.body)
 
 	// Create a new post using the Post mongoose model
 	const post = new Post({
         createDate: new Date(),
-        author: req.user._id, // creator id from the authenticate middleware
+        author: 111,
+        //author: req.user._id, // creator id from the authenticate middleware
         title: req.body.title,
         content: req.body.content,
         comment:[],
@@ -49,7 +50,7 @@ router.post('/api/posts', mongoChecker, authenticate, async (req, res) => {
 })
 
 // a POST route to create an comment
-router.post('/api/posts/:id/comments', mongoChecker, authenticate, async (req, res) => {
+router.post('/api/posts/:id/comments', mongoChecker, async (req, res) => {
 
     const id = req.params.id
 
@@ -62,7 +63,8 @@ router.post('/api/posts/:id/comments', mongoChecker, authenticate, async (req, r
 	const comment = new Comment({
         post: req.params.id,
         createDate: new Date(),
-        author: req.user._id, // creator id from the authenticate middleware
+        author: 111,
+        //author: req.user._id, // creator id from the authenticate middleware
         content: req.body.content
 	})
 
@@ -95,9 +97,9 @@ router.get('/api/posts', mongoChecker, async (req, res) => {
 })
 
 // a GET route to get all posts for the current user
-router.get('/api/users/posts', mongoChecker, authenticate, async (req, res) => {
+router.get('/api/users/posts', mongoChecker, async (req, res) => {
 	try {
-		const posts = await Post.find({author: req.user._id})
+		const posts = await Post.find({author: 111})
 		res.send(posts);
 	} catch(error) {
 		log(error);
@@ -132,7 +134,7 @@ router.get('/api/posts/:id', mongoChecker, async (req, res) => {
 })
 
 // a GET route to get all comments for the current post
-router.get('/api/posts/:id/comments', mongoChecker, authenticate, async (req, res) => {
+router.get('/api/posts/:id/comments', mongoChecker, async (req, res) => {
     
     const id = req.params.id
 

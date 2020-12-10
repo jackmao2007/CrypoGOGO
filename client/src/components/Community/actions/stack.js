@@ -112,9 +112,9 @@ export const addComment = stack => {
 
 // back-end functions 
 
-export const addPostBE = (newPostComp, postsComp) => {
+export const addPostBE = (newPostComp) => {
     // URL for the req
-    const url = `${API_HOST}/api/posts`;
+    const url = `/api/posts`;
     // the data to send in req
     const post = newPostComp.state;
     console.log(post);
@@ -146,7 +146,7 @@ export const addPostBE = (newPostComp, postsComp) => {
 
 export const getPosts = (postList) => {
     // URL for the req
-    const url = `${API_HOST}/api/posts/postslist`;
+    const url = `/api/posts`;
 
 
     // send the request 

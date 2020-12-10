@@ -11,8 +11,9 @@ const Post = mongoose.model('Post', {
         default: new Date()
     },
     author: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true
+        // type: mongoose.Schema.Types.ObjectId,
+        // required: true
+        type: Number
     },
     title: {
         type: String,
