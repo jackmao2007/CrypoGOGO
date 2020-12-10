@@ -2,9 +2,17 @@
 /* Orders mongoose model */
 const mongoose = require('mongoose')
 
-const Account = mongoose.model('Account', {
+const Order = mongoose.model('Order', {
+    creator: {
+		type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
 	account: {
 		type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
+    symbol: {
+        type: String,
         required: true
     },
     mode: {
@@ -35,7 +43,14 @@ const Account = mongoose.model('Account', {
     },
     parentOrder: {
         type: mongoose.Schema.Types.ObjectId // ID of another order, used if bracket order.
+    },
+    timePlaced: {
+        type: Date,
+        required: true
+    },
+    cashOnHold: {
+        type: Number
     }
 })
 
-module.exports = { Account }
+module.exports = { Order }

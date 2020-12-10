@@ -19,7 +19,8 @@
             type: "trading",
             creator: "user IDObject",
             timestamp: "2020-12-12",
-            content: "liked your post"
+            content: "liked your post",
+            link: "/community/asasddasd"
         }
     ],
     accounts: [
@@ -34,6 +35,7 @@
     positions:[
         {   
             _id: "position IDObject",
+            creator: "user IDObject",
             account: "account IDObject",
             symbol: "btc",
             quantity: 1123,
@@ -44,7 +46,9 @@
     orders:[
         {
             _id: "order IDObject",
+            creator: "user IDObject",
             account: "account IDObject",
+            symbol: "btc",
             mode: "BUY",
             quantity: 11,
             orderType: "Market",
@@ -52,7 +56,9 @@
             stop: null,
             duration: "DAY",
             status: "pending",
-            parentOrder: "order IDObject"
+            parentOrder: "order IDObject",
+            timePlaced: "Date obj",
+            cashOnHold: 123123
         }
     ],
     posts: [
