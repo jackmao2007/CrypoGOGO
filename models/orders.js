@@ -47,6 +47,9 @@ const Order = mongoose.model('Order', {
     timePlaced: {
         type: Date,
         required: true
+    },
+    cashOnHold: {
+        type: Number
     }
 })
 

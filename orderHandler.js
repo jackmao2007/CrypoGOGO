@@ -6,7 +6,7 @@ let supportedCurrencies = require('./marketData')
 
 
 
-function executeOrder(order, cashOnHold) {
+async function executeOrder(order) {
     price = supportedCurrencies.find((coin) => {return coin.symbol == order.symbol}).currentPrice
     let account  = await Account.findOne({creator: order.creator, _id: order.account})
     if (!account){
@@ -19,13 +19,13 @@ function executeOrder(order, cashOnHold) {
 
     if (order.mode.toLowerCase() == 'buy'){
         // Check existing position
-        if (account.cash + cashOnHold - orderValue < 0){
-            // TODO: add activity failed
+        if (account.cash + order.cashOnHold - orderValue < 0){
+            // TODO: ADD FAILED ACITIVITY
             order.status = 'Failed'
             await order.save()
             return
         }
-        account.cash = account.cash + cashOnHold - orderValue
+        account.cash = account.cash + order.cashOnHold - orderValue
         await account.save()
         if (position) { // add to position
             position.quantity = position.quantity + order.quantity
@@ -42,17 +42,19 @@ function executeOrder(order, cashOnHold) {
             })
         }
         await position.save()
-        // TODO: add execute activity
+        order.status = "Executed"
+        await order.save()
+        // TODO: ADD EXECUTE ACITIVITY
     } else if (order.mode.toLowerCase() == 'sell'){
         // position check
         if (!position){
-            // TODO: add activity failed
+            // TODO: ADD FAILED ACITIVITY
             order.status = 'Failed'
             await order.save()
             return
         } else {
             if (position.quantity < order.quantity){
-                // TODO: add activity failed
+                // TODO: ADD FAILED ACITIVITY
                 order.status = 'Failed'
                 await order.save()
                 return
@@ -65,16 +67,62 @@ function executeOrder(order, cashOnHold) {
             }
         }
         account.cash = account.cash + orderValue
+        await account.save()
+        order.status = "Executed"
+        await order.save()
+        // TODO: ADD EXECUTE ACITIVITY
     }
 }
 
-function serverTickOrderHandler() {
+async function serverTickOrderHandler() {
     const allOrders = await Order.find({})
     for (let i = 0; i < allOrders.length; i++){
         let curOrder = allOrders[i]
+        if (curOrder.status != "Accepted"){
+            continue
+        }
+        marktPrice = supportedCurrencies.find((coin) => {return coin.symbol == curOrder.symbol}).currentPrice
         if (curOrder.orderType.toLowerCase() == "market") {  // execute
-            
-
+            executeOrder(curOrder)
+        }else if (curOrder.orderType.toLowerCase() == "limit"){
+            if (curOrder.mode.toLowerCase() == 'buy'){
+                if (marktPrice <= curOrder.limit){
+                    executeOrder(curOrder)
+                }
+            }else if (curOrder.mode.toLowerCase() == 'sell'){
+                if (marktPrice >= curOrder.limit){
+                    executeOrder(curOrder)
+                }
+            }
+        }else if (curOrder.orderType.toLowerCase() == "stop"){
+            if (curOrder.mode.toLowerCase() == 'buy'){
+                if (marktPrice >= curOrder.limit){
+                    executeOrder(curOrder)
+                }
+            }else if (curOrder.mode.toLowerCase() == 'sell'){
+                if (marktPrice <= curOrder.limit){
+                    executeOrder(curOrder)
+                }
+            }
         }
     }
 }
+
+async function serverDailyOrderExpireHandler () {
+    const allOrders = await Order.find({})
+    for (let i = 0; i < allOrders.length; i++){
+        let curOrder = allOrders[i]
+        if (curOrder.status != "Accepted"){
+            continue
+        }
+        if (curOrder.duration.toUpperCase() == "DAY"){
+            order.status = "Cancelled"
+            order.save()
+            // TODO: ADD EXPIRE ACTIVITY
+        }
+    }
+
+}
+
+
+module.exports = {serverTickOrderHandler, serverDailyOrderExpireHandler}

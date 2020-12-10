@@ -2,32 +2,7 @@ import React, { Component } from 'react';
 
 class AccountOrders extends Component {
     state = { 
-        orders: [
-            {
-                id: "",
-                symbol: "BTC",
-                status: "Accepted", // Pending, Accepted, Executed, Failed
-                action: "Buy",
-                quantity: 0.42,
-                limit: "11123.24",
-                stop: "--",
-                duration: 'DAY',
-                type: 'Limit',
-                timePlaced: '07 Nov 2020 11:24:23 PM'
-            },
-            {
-                id: "",
-                symbol: "LTC",
-                status: "Excecuted", // Pending, Accepted, Executed, Failed
-                action: "Sell",
-                quantity: 1.42,
-                limit: "5223.24",
-                stop: "--",
-                duration: 'DAY',
-                type: 'Limit',
-                timePlaced: '07 Nov 2020 11:34:13 PM'
-            }
-        ]
+        orders: []
     }
 
     async updateState(){

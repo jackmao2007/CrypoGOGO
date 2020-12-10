@@ -57,7 +57,8 @@
             duration: "DAY",
             status: "pending",
             parentOrder: "order IDObject",
-            timePlaced: "Date obj"
+            timePlaced: "Date obj",
+            cashOnHold: 123123
         }
     ],
     posts: [

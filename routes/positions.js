@@ -7,12 +7,14 @@ const { Position } = require('../models/positions')
 // helpers/middlewares
 const { mongoChecker, isMongoError } = require("./helpers/mongo_helpers");
 const { authenticate } = require("./helpers/authentication");
+// to validate object IDs
+const { ObjectID } = require('mongodb')
 
 
 // NO API TO CREATE THIS RESOURCE
 
 
-// a GET route to get all accounts for the logged in user
+// a GET route to get positions by account
 router.get('/api/positions/:account', mongoChecker, authenticate, async (req, res) => {
     // Get the accounts
     const account = req.params.account;

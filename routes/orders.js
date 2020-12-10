@@ -23,7 +23,8 @@ router.post('/api/orders', mongoChecker, authenticate, async (req, res) => {
         duration: req.body.duration,
         status: req.body.status,
 		parentOrder: req.body.parentOrder,
-		timePlaced: Date.now()
+		timePlaced: Date.now(),
+		cashOnHold: 0
 	})
 
 	try {
@@ -102,6 +103,23 @@ router.delete('/api/orders/:id', mongoChecker, authenticate, async (req, res) =>
 
 	try {
 		const order = await Order.findOneAndRemove({_id: id, creator: req.user._id})
+		if (!order) {
+			res.status(404).send()
+		} else {   
+			res.send(order)
+		}
+	} catch(error) {
+		log(error)
+		res.status(500).send()
+	}
+
+})
+
+
+/// a DELETE route to remove ***ALL ORDERS*** (ADMIN API)
+router.delete('/api/orders', mongoChecker, authenticate, async (req, res) => {
+	try {
+		const order = await Order.remove({})
 		if (!order) {
 			res.status(404).send()
 		} else {   

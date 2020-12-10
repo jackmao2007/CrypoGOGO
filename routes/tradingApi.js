@@ -42,6 +42,7 @@ router.post('/api/trading/createOrder', mongoChecker, authenticate, async (req, 
         let limit = 0
         let stop = 0
         let price = supportedCurrencies.find((coin) => {return coin.symbol == req.body.symbol}).currentPrice
+        let cashOnHold = 0
         if (req.body.orderType == "limit"){
             limit = req.body.orderLimit
             price = limit
@@ -56,6 +57,7 @@ router.post('/api/trading/createOrder', mongoChecker, authenticate, async (req, 
                 res.status(480).send("Insufficient funds")
                 return
             }
+            cashOnHold = price * req.body.orderQuantity
             account.cash = Math.round((account.cash - price * req.body.orderQuantity)*100)/100
             await account.save()
         } else if (req.body.mode == 'sell'){
@@ -78,7 +80,8 @@ router.post('/api/trading/createOrder', mongoChecker, authenticate, async (req, 
             stop: stop,
             duration: req.body.orderDuration,
             status: "Accepted",
-            timePlaced: Date.now()
+            timePlaced: Date.now(),
+            cashOnHold: cashOnHold
         })
         saved = await order.save()
         parrentOrderId = saved._id
@@ -109,7 +112,8 @@ router.post('/api/trading/createOrder', mongoChecker, authenticate, async (req, 
                 duration: req.body.orderProfitDur,
                 status: bracketStatus,
                 parrentOrder: parrentOrderId,
-                timePlaced: Date.now()
+                timePlaced: Date.now(),
+                cashOnHold: 0
             })
             //Loss order 
             const lorder = new Order({
@@ -124,7 +128,8 @@ router.post('/api/trading/createOrder', mongoChecker, authenticate, async (req, 
                 duration: req.body.orderLossDur,
                 status: bracketStatus,
                 parrentOrder: parrentOrderId,
-                timePlaced: Date.now()
+                timePlaced: Date.now(),
+                cashOnHold: 0
             })
             await porder.save()
             await lorder.save()
