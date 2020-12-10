@@ -1,3 +1,4 @@
+import { Result } from 'antd';
 import React, { Component } from 'react';
 
 class Summary extends Component {
@@ -6,19 +7,24 @@ class Summary extends Component {
         marketValue: '3,000.46',
         equity: '13,000.46',
         unrealizedPL: '223.32',
-        PLIsProfit: true,
         date: '14:00 PST 29 Oct 2020',
-        currency: 'CAD'
      }
 
 
-    componentDidMount() {
-        // get user summary
-        // populate state
+    async componentDidMount() {
+        const resuit = await fetch("/api/dashboard/summary")
+        const summary = await resuit.json()
+        this.setState({
+            cash: summary.totalCash,
+            marketValue: Math.round(summary.totalMarketValue * 100) / 100,
+            equity: Math.round(summary.totalEquity * 100) / 100,
+            date: summary.updatedDate,
+            unrealizedPL: Math.round(summary.totalPL * 100) / 100
+        })
     }
 
     renderPLValue() {
-        if (this.state.PLIsProfit){
+        if (this.state.unrealizedPL >= 0){
             return <span className='pos-PL-val'> {this.state.unrealizedPL} </span>
         }
         return <span className='neg-PL-val'> {this.state.unrealizedPL} </span>

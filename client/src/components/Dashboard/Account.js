@@ -80,9 +80,11 @@ class Account extends Component {
     accountSelector = React.createRef();
 
 
-    componentDidMount() {
+    async componentDidMount() {
       // reuqests to populate state
-      this.handleAccountChange();
+      const result = await fetch("/api/dashboard/accounts")
+      const accounts = await result.json()
+      this.setState({accounts: accounts, currentAccountNumber: accounts[0].accountNumber}, this.handleAccountChange)
     }
 
 
