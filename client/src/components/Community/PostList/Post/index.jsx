@@ -4,6 +4,7 @@ import Button from "@material-ui/core/Button"
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Reply from './Reply'
 import { Card, withStyles, CardContent } from '@material-ui/core';
+import moment from 'moment'
 
 const useStyles = theme => ({
     root: {
@@ -43,6 +44,11 @@ class Post extends Component{
     handellike = () => {
         this.setState({likenum: this.state.likenum + 1})
     }
+
+    dateToStr = (date) => {
+        const d = moment(date).format('YYYY-MM-DD hh:mm a')
+        return d
+    }
     
     render() {
         const { post,  permission, classes } = this.props;
@@ -53,7 +59,7 @@ class Post extends Component{
                 <Card className={classes.root} variant="outlined">
                     <CardContent className={classes.title}>
                         <div className={classes.author}>
-                            {post.author} posted on {post.date}
+                            {post.author} posted on {this.dateToStr(post.createDate)}
                         </div>
                         <Divider />
                         {post.title}

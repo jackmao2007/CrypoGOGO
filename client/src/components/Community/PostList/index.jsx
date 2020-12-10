@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import { Divider } from "@material-ui/core";
+import moment from 'moment'
 
 
 function TabPanel(props) {
@@ -83,6 +84,11 @@ export default function PostList(props) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const dateToStr = (date) => {
+    const d = moment(date).format('YYYY-MM-DD hh:mm a')
+    return d
+  }
   
   return (
     <div className={ classes.root }>           
@@ -98,7 +104,8 @@ export default function PostList(props) {
         return (
           <Tab key={index} 
           label=  { 
-          <PostSummary title={post.title} author={post.author} date={post.date} summary={post.content.slice(0, 150)}
+          <PostSummary title={post.title} author={post.author} summary={post.content.slice(0, 150)}
+            date={dateToStr(post.createDate)} 
           className = {classes.label}
           />} 
           className={classes.tab}/>
@@ -108,7 +115,7 @@ export default function PostList(props) {
     {props.posts.slice(0).reverse().map((post, index) => {
       return (
         <TabPanel key={index} value={value} index={index}>
-          <Post post={post} stackComponent={props.stackComponent} permission={props.permission} />
+          <Post post={post}  permission={props.permission} />
         </TabPanel>
       );
     })}
