@@ -17,7 +17,7 @@ const { authenticate } = require("./helpers/authentication");
 // to validate object IDs
 const { ObjectID } = require('mongodb');
 const { response } = require('express');
-const { exception } = require('console');
+
 
 
 // a GET route to get market data for the supported currencies
@@ -29,6 +29,73 @@ router.get('/api/trading/marketData', mongoChecker, authenticate, async (req, re
     res.send(prepData)
 })
 
+router.get('/api/trading/accountCurrentBalance/:id', mongoChecker, authenticate, async (req, res) => {
+    const id = req.params.id
+
+	// Good practise: Validate id immediately.
+	if (!ObjectID.isValid(id)) {
+		res.status(404).send();
+		return; 
+	}
+
+	// If id valid, findById
+	try {
+        const account = await Account.findOne({_id: id, creator: req.user._id})
+        let marketValue = 0
+		if (!account) {
+			res.status(404).send('Resource not found')  // could not find this account
+		} else { 
+            const accountPositions = await Position.find({account: account._id})
+            for (i = 0; i < accountPositions.length; i++){
+                const curPrice = supportedCurrencies.find((coin) => coin.symbol == accountPositions[i].symbol).currentPrice
+                marketValue += curPrice * accountPositions[i].quantity
+            }
+            let resp = {
+                cash: account.cash,
+                marketValue: marketValue,
+                totalEquity: account.cash + marketValue,
+                maintenanceExcess: account.cash, // Currently no margin or short feature
+                buyingPower: account.cash // Currently no margin or short feature
+            }
+            console.log(resp)
+			res.send(resp)
+		}
+	} catch(error) {
+		console.log(error)
+		res.status(500).send('Internal Server Error')  // server error
+	}
+})
+
+
+router.get('/api/trading/accountCurrentPositions/:id', mongoChecker, authenticate, async (req, res) => {
+    const id = req.params.id
+
+	// Good practise: Validate id immediately.
+	if (!ObjectID.isValid(id)) {
+		res.status(404).send();
+		return; 
+	}
+
+	// If id valid, findById
+	try {
+        const positions = await Position.find({creator: req.user._id, account: id})
+        let prepData = JSON.parse(JSON.stringify(positions))
+        for (let i = 0; i < prepData.length; i++){
+            delete prepData[i]._id
+            delete prepData[i].creator
+            prepData[i].marketValue = supportedCurrencies.find((coin) => coin.symbol == prepData[i].symbol).currentPrice * prepData[i].quantity
+            prepData[i].openPL = prepData[i].marketValue - prepData[i].bookValue
+        }
+        res.send(prepData)
+    } catch(error) {
+		console.log(error)
+		res.status(500).send('Internal Server Error')  // server error
+	}
+})
+
+
+
+// post route for the entire order creation logic
 router.post('/api/trading/createOrder', mongoChecker, authenticate, async (req, res) => {
     parrentOrderId = null;
     if (req.body.orderQuantity <= 0){

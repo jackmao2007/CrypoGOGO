@@ -3,76 +3,38 @@ import React, { Component } from 'react';
 class AccountBalance extends Component {
     state = { 
         balance:{
-            cash: 10000.00,
-            marketValue: 20000.23,
-            totalEquity: 30000.23,
-            maintenanceExcess: 10000.00,
-            buyingPower: 10000.00
+            cash: 0,
+            marketValue: 0,
+            totalEquity: 0,
+            maintenanceExcess: 0,
+            buyingPower: 0
         },
-        positions:[
-            {
-                symbol: "BTC",
-                avgPrice: 11232.23,
-                quantity: 1.232,
-                marketValue: 13838.11,
-                price: 12100.00,
-                openPL: 1231.00,
-            },
-            {
-                symbol: "LTC",
-                avgPrice: 22232.23,
-                quantity: 3.132,
-                marketValue: 63838.11,
-                price: 12100.00,
-                openPL: -31231.00,
-            },
-            {
-                symbol: "BTC",
-                avgPrice: 11232.23,
-                quantity: 1.232,
-                marketValue: 13838.11,
-                price: 12100.00,
-                openPL: 1231.00,
-            },
-            {
-                symbol: "BTC",
-                avgPrice: 11232.23,
-                quantity: 1.232,
-                marketValue: 13838.11,
-                price: 12100.00,
-                openPL: 1231.00,
-            },
-            {
-                symbol: "BTC",
-                avgPrice: 11232.23,
-                quantity: 1.232,
-                marketValue: 13838.11,
-                price: 12100.00,
-                openPL: 1231.00,
-            },
-            {
-                symbol: "BTC",
-                avgPrice: 11232.23,
-                quantity: 1.232,
-                marketValue: 13838.11,
-                price: 12100.00,
-                openPL: 1231.00,
-            },
-        ]
+        positions:[]
      }
 
-
-    componentDidMount() {
-        // populate state from this.props.accountNumber request
+    async updateAccountBalance() {
+        try {
+            const resBal = await fetch("/api/trading/accountCurrentBalance/" + this.props.accountNumber)
+            const newBalance = await resBal.json()
+            const resPos = await fetch("/api/trading/accountCurrentPositions/" + this.props.accountNumber)
+            const newPositions = await resPos.json()
+            this.setState({balance: newBalance, positions: newPositions})
+        } catch (error){
+            console.log("g")
+        }
     }
 
-    componentDidUpdate(prevProps, prevState) {
+
+    async componentDidMount() {
+        await this.updateAccountBalance()
+    }
+
+    async componentDidUpdate(prevProps, prevState) {
         // populate state from this.props.accountNumber server request
         // This is different from the dashboard page, this will update with a server request
         if (this.props.accountNumber !== prevProps.accountNumber || this.props.updatedTime !== prevProps.updatedTime) {
-            // fetch data 
+            await this.updateAccountBalance()
           }
-        // setState
     }
 
     mapPositionsToTableRows= () => {
@@ -82,12 +44,12 @@ class AccountBalance extends Component {
                 plClass = "neg-PL-val"
             }
             return <tr>
-                        <td> {position.symbol} </td>
+                        <td> {position.symbol.toUpperCase()} </td>
                         <td> {position.quantity} </td>
-                        <td> {position.avgPrice} </td>
-                        <td> {position.price} </td>
-                        <td> {position.marketValue} </td>
-                        <td> <span className={plClass}> {position.openPL} </span> </td>
+                        <td> {Math.round(position.avgPrice * 10000)/10000} </td>
+                        <td> {Math.round(position.bookValue * 100)/100} </td>
+                        <td> {Math.round(position.marketValue * 100)/100} </td>
+                        <td> <span className={plClass}> {Math.round(position.openPL * 100)/100} </span> </td>
                     </tr>
         });
     }
@@ -100,23 +62,23 @@ class AccountBalance extends Component {
                     <table className="trading-account-balance-table-current">
                         <tr>
                             <td> <span className="balance-label"> Cash: </span>  </td>
-                            <td> {this.state.balance.cash} </td>
+                            <td> {Math.round(this.state.balance.cash * 100) / 100} </td>
                         </tr>
                         <tr>
                             <td> <span className="balance-label"> MarketValue: </span> </td>
-                            <td> {this.state.balance.marketValue} </td>
+                            <td> {Math.round(this.state.balance.marketValue * 100) / 100} </td>
                         </tr>
                         <tr>
                             <td> <span className="balance-label"> Total Equity: </span> </td>
-                            <td> {this.state.balance.totalEquity} </td>
+                            <td> {Math.round(this.state.balance.totalEquity * 100)/ 100} </td>
                         </tr>
                         <tr>
                             <td> <span className="balance-label"> Maintenance Excess: </span> </td>
-                            <td> {this.state.balance.maintenanceExcess} </td>
+                            <td> {Math.round(this.state.balance.maintenanceExcess * 100)/ 100} </td>
                         </tr>
                         <tr>
                             <td> <span className="balance-label"> Buying Power: </span> </td>
-                            <td> {this.state.balance.buyingPower} </td>
+                            <td> {Math.round(this.state.balance.buyingPower * 100)/ 100} </td>
                         </tr>
                     </table>
                 </div>
@@ -125,10 +87,10 @@ class AccountBalance extends Component {
                     <table className="trading-account-balance-table">
                         <tr>
                             <th> Symbol</th>
-                            <th> Quantit </th>
-                            <th> Avg pric </th>
-                            <th> Price</th>
-                            <th> Market valu </th>
+                            <th> Quantity </th>
+                            <th> Avg price </th>
+                            <th> Book value</th>
+                            <th> Market value </th>
                             <th>Open P&L</th>
                         </tr>
                         {this.mapPositionsToTableRows()}

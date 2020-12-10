@@ -58,7 +58,7 @@ router.get('/api/orders/account/:accountId', mongoChecker, authenticate, async (
 	console.log(accId)
 	try {
 		const orders = await Order.find({creator: req.user._id, account: accId})
-		res.send(orders);
+		res.send(orders.reverse()); // latest created order first
 	} catch(error) {
 		log(error);
 		res.status(500).send("Internal Server Error");

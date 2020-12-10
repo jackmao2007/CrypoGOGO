@@ -31,16 +31,17 @@ router.get('/api/dashboard/summary', mongoChecker, authenticate, async (req, res
 		for (let i = 0; i < accounts.length; i++){
 			totalCash += accounts[i].cash
 			const accountPositions = await Position.find({account: accounts[i]._id})
-			userPositions = userPositions + accountPositions
+			userPositions = userPositions.concat(accountPositions)
 		}
-		for (i = 0; i < userPositions; i++){
+		for (i = 0; i < userPositions.length; i++){
 			const data = supportedCurrencies.find((coin) => coin.symbol == userPositions[i].symbol)
 			const marketValue = data.currentPrice * userPositions[i].quantity
 			totalMarketValue += marketValue
 			totalPL += marketValue - userPositions[i].bookValue
 		}
-		const updatedDate = Date.now()
-		let response = {totalCash, totalMarketValue, totalPL, updatedDate}
+		const updatedDate = Date.now().toString()
+		const totalEquity = totalCash + totalMarketValue
+		let response = {totalCash, totalMarketValue, totalPL, totalEquity, updatedDate}
 		res.send(response)
 	} catch(error) {
 		log(error);
@@ -58,13 +59,13 @@ router.get('/api/dashboard/accounts', mongoChecker, authenticate, async (req, re
 		for (let i = 0; i < accounts.length; i++){
 			let dashboardAccountObj = {
 				accountNumber: accounts[i]._id,
-				holdings: {cash: accounts[i].Cash}
+				holdings: {cash: accounts[i].cash}
 			}
 			const accountPositions = await Position.find({account: accounts[i]._id})
 			for (let j = 0; j < accountPositions.length; j++){
-				const data = supportedCurrencies.find((coin) => coin.symbol == accountPositions[i].symbol)
-				const marketValue = data.currentPrice * accountPositions[i].quantity
-				dashboardAccountObj.holdings[accountPositions[i].symbol.toUpperCase()] = marketValue
+				const data = supportedCurrencies.find((coin) => coin.symbol == accountPositions[j].symbol)
+				const marketValue = data.currentPrice * accountPositions[j].quantity
+				dashboardAccountObj.holdings[accountPositions[j].symbol.toUpperCase()] = marketValue
 			}
 			userAccounts.push(dashboardAccountObj)
 		}
