@@ -144,27 +144,7 @@ export const addPostBE = (newPostComp) => {
 }
 
 
-export const getPosts = (postList) => {
-    // URL for the req
-    const url = `/api/posts`;
 
-
-    // send the request 
-    fetch(url)
-        .then((res) => {
-            if (res.status === 200) {
-                return res.json()
-            } else {
-                alert("Could not find posts")
-            }
-        })
-        .then(json => {
-            postList.setState({ postList: json.posts})
-        })
-        .catch(error => {
-            console.log(error)
-        })
-}
 
 
 

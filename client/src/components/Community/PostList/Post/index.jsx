@@ -73,7 +73,7 @@ class Post extends Component{
                         </div>
                     </CardContent>
                 </Card>
-                <Card className={classes.comments} variant="outlined">
+                {/* <Card className={classes.comments} variant="outlined">
                     <CardContent>
                         <div>
                         <p>Comments:</p>
@@ -84,7 +84,7 @@ class Post extends Component{
                         
                         </div>
                     </CardContent>
-                </Card>
+                </Card> */}
 
                 <Reply/>
                 {/* use state to tell whether current user has permission to delete a post */}
