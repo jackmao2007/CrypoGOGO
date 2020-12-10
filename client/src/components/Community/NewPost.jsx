@@ -10,7 +10,7 @@ import "react-quill/dist/quill.snow.css";
 import { Form } from "antd";
 import "antd/dist/antd.css";
 import { withStyles } from "@material-ui/core";
-import { addPost, addPostBE } from "./actions/stack"
+import { addPost } from "./actions/stack"
 
 const FormItem = Form.Item;
 
@@ -95,7 +95,7 @@ class NewPostForm extends Component {
 
   handleSubmit = () => {
     if (this.state.title !== "" && this.state.content !== "") {
-      addPostBE(this)
+      addPost(this)
       this.setState({
         title: "",
         content: "",

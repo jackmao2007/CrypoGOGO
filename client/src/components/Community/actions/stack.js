@@ -1,46 +1,6 @@
 // environment, just using now for test
 const API_HOST = 5000
 
-
-function updateID(stack) {
-    for (let i = 0; i < stack.length; i++) {
-        stack[i].postID = i;
-    }
-}
-
-
-export const addPost = stack => {
-    const postList = stack.state.posts;
-    const newPostID = () => {
-        const len = postList.length;
-        if (len == 0) {
-            return 0;
-        } else {
-            return postList[postList.length - 1].postID + 1
-        }
-    }
-
-    const post = {
-        postID: newPostID,
-        title: stack.state.topic,
-        author: "UserNew",
-        content: stack.state.content,
-        date: "date: 20201111",
-        comments: []
-    };
-
-    postList.push(post);
-
-    updateID(postList);
-
-
-    stack.setState({
-        posts: postList
-    });
-    stack.handleClose()
-};
-
-
 export const removePost = (stack, post) => {
     const notDeletedPosts = stack.state.posts.filter(p => {
         return p !== post;
@@ -112,7 +72,7 @@ export const addComment = stack => {
 
 // back-end functions 
 
-export const addPostBE = (newPostComp) => {
+export const addPost = (newPostComp) => {
     // URL for the req
     const url = `/api/posts`;
     // the data to send in req

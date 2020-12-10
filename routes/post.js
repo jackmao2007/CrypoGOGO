@@ -99,7 +99,7 @@ router.get('/api/posts', mongoChecker, async (req, res) => {
 // a GET route to get all posts for the current user
 router.get('/api/users/posts', mongoChecker, async (req, res) => {
 	try {
-		const posts = await Post.find({author: 111})
+		const posts = await Post.find({author: req.user._id})
 		res.send(posts);
 	} catch(error) {
 		log(error);
