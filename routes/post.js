@@ -49,6 +49,29 @@ router.post('/api/posts', mongoChecker, async (req, res) => {
 	}
 })
 
+// a POST route to like a post
+router.patch('/api/posts/:id', mongoChecker, async (req, res) => {
+	const postID = req.params.id;
+	if (!ObjectID.isValid(postID)) {
+		res.status(404).send();
+		return; 
+	}
+	Post.findById(postID).then((post) => {
+		if(!post){
+			res.status(404).send()
+		}else{
+			post.like += 1;
+		}
+		post.save().then((result) => {
+			res.send(result)
+		}, (error) => {
+			res.status(400).send(error)
+		})
+	}, (error) => {
+		res.status(400).send(error)
+	})
+})
+
 // a POST route to create an comment
 router.post('/api/posts/:id/comments', mongoChecker, async (req, res) => {
 

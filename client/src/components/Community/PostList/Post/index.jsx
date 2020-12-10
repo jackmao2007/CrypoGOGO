@@ -5,6 +5,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import Reply from './Reply'
 import { Card, withStyles, CardContent } from '@material-ui/core';
 import moment from 'moment'
+import { likePost } from "../../actions/stack" 
 
 const useStyles = theme => ({
     root: {
@@ -40,9 +41,9 @@ const classes = useStyles();
 
 
 class Post extends Component{
-    state = {likenum: 0}
     handellike = () => {
-        this.setState({likenum: this.state.likenum + 1})
+        const postID = this.props.post._id;
+        likePost(postID)
     }
 
     dateToStr = (date) => {
@@ -72,7 +73,7 @@ class Post extends Component{
                         <div className={classes.likebutton}>
                         <Button onClick={this.handellike} variant="contained" color="secondary"
                             startIcon={<FavoriteIcon />}> 
-                            Like! {this.state.likenum} </Button>
+                            Like! {this.props.post.like} </Button>
                         </div>
                         </div>
                     </CardContent>

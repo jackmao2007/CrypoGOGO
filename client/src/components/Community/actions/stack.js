@@ -21,8 +21,7 @@ export const addPost = (newPostComp) => {
                 // post added successfully
                 console.log("post added")
             } else {
-                const errorno = res.status
-                console.log(errorno)
+                console.log(res.status)
             }
         }).catch(error => {
             console.log(error)
@@ -31,12 +30,14 @@ export const addPost = (newPostComp) => {
 
 
 export const getPosts = async (community) => {
-    try{
+    try {
         const url = `/api/posts`;
         const resp = await fetch(url);
         const posts = await resp.json()
-        community.setState({ postList: posts })
-    }catch(error){
+        community.setState({
+            postList: posts
+        })
+    } catch (error) {
         console.log(error)
     }
 }
@@ -49,13 +50,13 @@ export const searchPost = (community) => {
 
     let result = []
     posts.forEach((post) => {
-        if (post.title.toLowerCase().search(kw) != -1 || 
-            post.content.toLowerCase().search(kw) != -1 ) {
+        if (post.title.toLowerCase().search(kw) != -1 ||
+            post.content.toLowerCase().search(kw) != -1) {
             result.push(post)
         }
     });
-    try{
-        if(result.length === 0){
+    try {
+        if (result.length === 0) {
             const noResult = {
                 title: "No Result!",
                 author: "xxx",
@@ -67,17 +68,40 @@ export const searchPost = (community) => {
                 }]
             }
             return [noResult]
-        }else{
+        } else {
             return result
         }
-    }catch(error){
+    } catch (error) {
         console.log(error);
     }
 
 }
 
+export const likePost = (postID) => {
+    // URL for the req
+    const url = `/api/posts/:` + postID;
+    // the data to send in req
 
+    const request = new Request(url, {
+        method: "patch",
+        body: null,
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
 
+    // send the request 
+    fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                // post added successfully
+                console.log("post liekd!!")
+            } else {
+                console.log(res.status, "link front and back")
+            }
+        }).catch(error => {
+            console.log(error)
+        });
 
-
-
+}
