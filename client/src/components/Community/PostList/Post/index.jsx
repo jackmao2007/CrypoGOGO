@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import PostComment from "./PostComment"
 import Divider from '@material-ui/core/Divider';
 import Button from "@material-ui/core/Button"
-import { removePost } from "../actions/stack"
-import CommentList from './CommentList'
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Reply from './Reply'
 import { Card, withStyles, CardContent } from '@material-ui/core';
-import PostList from '..';
+import moment from 'moment'
+import { likePost } from "../../actions/stack" 
 
 const useStyles = theme => ({
     root: {
@@ -17,12 +15,12 @@ const useStyles = theme => ({
         marginBottom: 30,
     },
     title: {
-        fontSize: 36,
+        fontSize: 40,
         paddingTop: 10,
         paddingBottom: 10,
     },
     content: {
-        fontSize: 14,
+        fontSize: 18,
         paddingTop: 20,
         paddingBottom: 20,
     }, 
@@ -43,13 +41,18 @@ const classes = useStyles();
 
 
 class Post extends Component{
-    state = {likenum: 0}
     handellike = () => {
-        this.setState({likenum: this.state.likenum + 1})
+        const postID = this.props.post._id;
+        likePost(postID)
+    }
+
+    dateToStr = (date) => {
+        const d = moment(date).format('YYYY-MM-DD hh:mm a')
+        return d
     }
     
     render() {
-        const { post, stackComponent, permission, classes } = this.props;
+        const { post,  permission, classes } = this.props;
 
 
         return (
@@ -57,7 +60,7 @@ class Post extends Component{
                 <Card className={classes.root} variant="outlined">
                     <CardContent className={classes.title}>
                         <div className={classes.author}>
-                            {post.author} posted on {post.date}
+                            {post.author} posted on {this.dateToStr(post.createDate)}
                         </div>
                         <Divider />
                         {post.title}
@@ -70,12 +73,12 @@ class Post extends Component{
                         <div className={classes.likebutton}>
                         <Button onClick={this.handellike} variant="contained" color="secondary"
                             startIcon={<FavoriteIcon />}> 
-                            Like! {this.state.likenum} </Button>
+                            Like! {this.props.post.like} </Button>
                         </div>
                         </div>
                     </CardContent>
                 </Card>
-                <Card className={classes.comments} variant="outlined">
+                {/* <Card className={classes.comments} variant="outlined">
                     <CardContent>
                         <div>
                         <p>Comments:</p>
@@ -86,14 +89,14 @@ class Post extends Component{
                         
                         </div>
                     </CardContent>
-                </Card>
+                </Card> */}
 
                 <Reply/>
                 {/* use state to tell whether current user has permission to delete a post */}
-                {permission && (
+                {/* {permission && (
                     <Button variant="contained"
                         onClick={()=>removePost(stackComponent, post)}>Delete Post</Button>
-                )}
+                )} */}
             </div>
         )
     }

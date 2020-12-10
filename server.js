@@ -42,6 +42,11 @@ const {serverTickOrderHandler, serverDailyOrderExpireHandler} = require("./order
 app.use(require('./routes/user'))
 // Account API routes
 app.use(require('./routes/accounts'))
+
+// Post API routes
+app.use(require('./routes/post'))
+
+
 // Positions API routes
 app.use(require('./routes/positions'))
 // Activities API routes
@@ -52,6 +57,7 @@ app.use(require('./routes/orders'))
 app.use(require('./routes/dashboardApi'))
 // Trading API routes
 app.use(require('./routes/tradingApi'))
+
 
 
 
