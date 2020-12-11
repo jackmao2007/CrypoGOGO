@@ -20,15 +20,18 @@ class Signup extends Component {
         }
     }
 
-
     clickHandler = () =>{
         if (this.state.password === this.state.passwordrep) {
-            const reg= /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
-            if (reg.test(this.state.email)) {
-                //server call to add new User to backend database
-                signup(this)
+            if (this.state.password.length > 3) {
+                const reg= /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+                if (reg.test(this.state.email)) {
+                    //server call to add new User to backend database
+                    signup(this)
+                } else {
+                    alert('Please enter correct email!')
+                }
             } else {
-                alert('Please enter correct email!')
+                alert('Password too short!')
             }
         } else {
             alert('Fail to sign up, different password!');
