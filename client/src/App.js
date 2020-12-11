@@ -61,6 +61,7 @@ class App extends Component {
         <Route exact path='/adminprofile' render={ props => 
                   (!this.state.loginStatus ? <Login {...props} app={this} /> : <Admin/>)}/>                
       </Switch>
+      <footer className="App-footer"> ©2020 Created by Team45 </footer>
       </BrowserRouter>
      );
   }
