@@ -16,8 +16,8 @@ mongoose.set('useFindAndModify', false); // for some deprecation issues
 
 // body-parser: middleware for parsing HTTP JSON body into a usable object
 const bodyParser = require('body-parser') 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: '5mb'}))
+app.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
 
 const cors = require('cors');
 app.use(cors());
@@ -28,12 +28,12 @@ const session = require('express-session')
 
 // Create a session cookie
 app.use(session({
-    secret: 'our hardcoded secret', // later we will define the session secret as an environment variable for production. for now, we'll just hardcode it.
+    secret: 'our hardcoded secret', 
     resave: false,
     saveUninitialized: false,
     cookie: {
         expires: 6000000, // 100 minute expiry
-        httpOnly: true // important: saves it in browser's memory - not accessible by javascript (so it can't be easily stolen!).
+        httpOnly: true 
     }
 }));
 
@@ -72,7 +72,7 @@ app.use(express.static(path.join(__dirname, "/client/build")));
 // All routes other than above will go to index.html
 app.get("*", (req, res) => {
     // check for page routes that we expect in the frontend to provide correct status code.
-    const goodPageRoutes = ["/", "/sign-up","/sign-in", "/trading, /community, /profile, /adminprofile"];
+    const goodPageRoutes = ["/", "/sign-up","/sign-in", "/trading", "/community", "/profile", "/adminprofile"];
     if (!goodPageRoutes.includes(req.url)) {
         // if url not in expected page routes, set status to 404.
         res.status(404).send("404 Error: We cannot find the page you are looking for.");

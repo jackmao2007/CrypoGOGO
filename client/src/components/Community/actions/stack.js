@@ -25,6 +25,11 @@ export const addPost = (newPostComp) => {
             if (res.status === 200) {
                 // post added successfully
                 log("post added")
+                window.location.reload()
+            } else if(res.status === 413) {
+                // too large photo
+                alert("file too larger! Limit: 2.5mb")
+                log(res.status)
             } else {
                 log(res.status)
             }
@@ -39,9 +44,14 @@ export const getPosts = async (community) => {
         const url = `/api/posts`;
         const resp = await fetch(url);
         const posts = await resp.json()
-        community.setState({
-            postList: posts
-        })
+        if (community.state.postList !== posts) {
+            console.log("getting post!!!")
+            community.setState({
+                postList: posts
+            })
+        }else{
+            log("No change")
+        }
     } catch (error) {
         log(error)
     }
@@ -124,17 +134,36 @@ export const deletePost = (postID) => {
 
 
 /*********** comment API Calls for front-end */
-export const getComments = async (postComp) => {
-    const postID = postComp.props.post._id
-    try {
-        const url = "/api/posts?" + postID + "comments";
-        const resp = await fetch(url);
-        const comments = await resp.json()
-        postComp.setState({
-            comments: comments
-        })
-    } catch (error) {
-        log(error)
-    }
-}
+// export const getComments = async (postComp) => {
+//     const postID = postComp.props.post._id
+//     try {
+//         const url = "/api/posts/" + postID + "/comments";
+//         const resp = await fetch(url);
+//         const comments = await resp.json()
+//         postComp.setState({
+//             comments: comments
+//         })
+//     } catch (error) {
+//         log(error)
+//     }
+// }
 
+export const deleteComment = (postID, commentID) => {
+    const url = 'api/posts/' + postID + '/' + commentID;
+    const request = new Request(url, {
+        method: "delete",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    })
+    fetch(request).then((res) => {
+        if (res.status === 200) {
+            log(" comment deleted!")
+        } else {
+            log(res.status)
+        }
+    }).catch(error => {
+        log(error)
+    })
+}
