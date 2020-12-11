@@ -50,14 +50,12 @@ class NewsSection extends Component {
         .then(response => response.json())
         .then((data) => 
             {
-                this.setState({articles: data});
+                this.setState({articles: data, }, this.populateNewsSection);
             });
     }
 
     componentDidMount() {
-        this.getNewsFromGoogleNews().then(() => {
-            this.populateNewsSection();
-        });
+        this.getNewsFromGoogleNews()
     }
 
     render() { 

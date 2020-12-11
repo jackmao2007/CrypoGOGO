@@ -1,4 +1,4 @@
-import { Input, TextField, withStyles } from '@material-ui/core';
+import { TextField, withStyles } from '@material-ui/core';
 import React, { Component } from 'react';
 
 
@@ -14,7 +14,7 @@ const classes = useStyles();
 class SearchBox extends Component {
 
     render() {
-        const { classes ,keyword, stackComponent, handleSearchInput} = this.props;
+        const { classes , handleSearchInput} = this.props;
 
         return (
             <div>

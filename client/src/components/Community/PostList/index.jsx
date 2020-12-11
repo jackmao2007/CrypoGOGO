@@ -5,28 +5,9 @@ import Tab from "@material-ui/core/Tab";
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField } from "@material-ui/core";
+import { Divider } from "@material-ui/core";
+import moment from 'moment'
 
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-};
 
 
 const useStyles = makeStyles((theme) => ({
@@ -42,9 +23,11 @@ const useStyles = makeStyles((theme) => ({
   },
   tab: {
     textTransform: "none",
+    textAlign: "left",
     minWidth: 400,
     maxWidth: 400,
     minHeight: 100,
+    maxHeight: 150,
     borderBottom: `1px solid #9e9e9e`,
     borderTop: `1px solid #9e9e9e`,
     backgroundColor: "#e0f2f1",
@@ -53,15 +36,45 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: '10px',
     marginBottom: '20px',
   },
+  heading: {
+    width: 380,
+    margin: `1px`
+  }
 }));
 
-function PostSummary(props) {
-  const { title, author, date } = props;
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
 
   return (
-    <div>
-      <h2>{ title }</h2>
-      <h6> { author } posted on { date }</h6>
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`vertical-tabpanel-${index}`}
+      aria-labelledby={`vertical-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography>{ children }</Typography>
+        </Box>
+      )}
+    </div>
+  );
+};
+
+
+
+function PostSummary(props) {
+  const { title, author, date, summary } = props;
+  const classes = useStyles();
+
+  return (
+    <div className={classes.heading}>
+      <h5><strong>{ title }</strong></h5>
+      <Divider/>
+      <div dangerouslySetInnerHTML={{__html: summary}}/>
+      <Divider/>
+      <span> <strong> { author } </strong> posted on { date }</span>
     </div>
   )
 }
@@ -73,12 +86,18 @@ export default function PostList(props) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const dateToStr = (date) => {
+    const d = moment(date).format('YYYY-MM-DD hh:mm a')
+    return d
+  }
   
   return (
-    <div className={classes.root}>           
+    <div className={ classes.root }>           
     <Tabs
       orientation="vertical"
       variant="scrollable"
+      scrollButtons="off"
       value={value}
       indicatorColor = 'primary'
       onChange={handleChange}
@@ -88,7 +107,9 @@ export default function PostList(props) {
         return (
           <Tab key={index} 
           label=  { 
-          <PostSummary title={post.title} author={post.author} date={post.date}
+          <PostSummary title={post.title} author={post.username} 
+            summary={post.content.slice(0, 150).replace(/<[^>]*>/g, '')}
+            date={dateToStr(post.createDate)} 
           className = {classes.label}
           />} 
           className={classes.tab}/>
@@ -98,7 +119,7 @@ export default function PostList(props) {
     {props.posts.slice(0).reverse().map((post, index) => {
       return (
         <TabPanel key={index} value={value} index={index}>
-          <Post post={post} stackComponent={props.stackComponent} permission={props.permission} />
+          <Post post={post}  permission={props.permission} />
         </TabPanel>
       );
     })}

@@ -52,7 +52,7 @@ class App extends Component {
         {!this.state.loginStatus ? null: <Navbar app={this}/> }
       </div>
       <Switch>
-        <Route exact path={['/','/sign-in','/dashboard']} render={ props => (
+        <Route exact path='/dashboard' render={ props => (
                         <div>
                         {!this.state.loginStatus ? <Login {...props} app={this} /> : <Dashboard/>}
                         </div>
@@ -61,7 +61,7 @@ class App extends Component {
                         (<div>
                           {!this.state.loginStatus ? <Login {...props} app={this} /> : <Trading/>}
                           </div>)}/>
-        <Route exact path='/community' render={ props => 
+        <Route exact path={['/','/sign-in','/community']} render={ props => 
                         (<div>
                           {!this.state.loginStatus ? <Login {...props} app={this} /> : <Community {...props} app={this} />}
                           </div>)}/>
@@ -70,6 +70,9 @@ class App extends Component {
                           {!this.state.loginStatus ? <Login {...props} app={this} /> : <Admin/>}
                           </div>)}/>                
       </Switch>
+      <footer style={{ textAlign: 'center' }}>
+                        ©2020 Created by Team45
+                    </footer>
       </BrowserRouter>
      );
   }

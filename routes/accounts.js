@@ -27,7 +27,7 @@ router.post('/api/accounts', mongoChecker, authenticate, async (req, res) => {
 	// Create a new Account using the Account mongoose model
 	const account = new Account({
         creator: req.user._id, // creator id from the authenticate middleware
-        cash: 100000,
+        cash: 100000, 
         positions:[],
         orders:[]
 	})
