@@ -107,7 +107,7 @@ export default function PostList(props) {
         return (
           <Tab key={index} 
           label=  { 
-          <PostSummary title={post.title} author={post.author} 
+          <PostSummary title={post.title} author={post.username} 
             summary={post.content.slice(0, 150).replace(/<[^>]*>/g, '')}
             date={dateToStr(post.createDate)} 
           className = {classes.label}

@@ -83,7 +83,7 @@ class NewPostForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onValueChange = this.onValueChange.bind(this);
   };
-  state = { title: "", content: "", open: false };
+  state = { title: "", content: "", username: "", open: false };
 
   handleClickOpen = () => {
     this.setState({ open: true })

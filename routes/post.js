@@ -23,13 +23,13 @@ const { ObjectID } = require('mongodb')
 /*** Post API Routes  ************************************/
 
 // a POST route to create an post
-router.post('/api/posts', mongoChecker, async (req, res) => {
+router.post('/api/posts', mongoChecker, authenticate, async (req, res) => {
 	// log(req.body)
 
 	// Create a new post using the Post mongoose model
 	const post = new Post({
-        author: 111,
-        //author: req.user._id, // creator id from the authenticate middleware
+		username: req.user.username,
+        author: req.user._id, // creator id from the authenticate middleware
         title: req.body.title,
         content: req.body.content,
         comments:[],
@@ -40,6 +40,7 @@ router.post('/api/posts', mongoChecker, async (req, res) => {
 	// Save post to the database
 	// async-await version:
 	try {
+		console.log(req.user)
 		const result = await post.save()	
 		res.send(result)
 	} catch(error) {

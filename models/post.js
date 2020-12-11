@@ -32,10 +32,13 @@ const Post = mongoose.model('Post', {
         required: true,
         default: new Date()
     },
+    username: {
+        type: String,
+        required:true
+    },
     author: {
-        // type: mongoose.Schema.Types.ObjectId,
-        // required: true
-        type: Number
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
     },
     title: {
         type: String,
