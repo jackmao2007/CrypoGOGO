@@ -3,16 +3,17 @@ import Navbar from "../Navbar/index";
 import './Profile.css';
 import Sidebar from './Content'
 import Information from './Information'
+import List from './List'
 
-class Profile extends Component {
+class User extends Component {
     state = {  }
     render() { 
         return (
-            <div>
-                <Sidebar/>
-            </div>
+           <div className='title'>
+           		<List/>
+                </div>
          );
     }
 }
  
-export default Profile;
+export default User;

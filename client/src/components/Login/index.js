@@ -9,7 +9,7 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {username: '', password: ''};
-        //this.props.history.push("/sign-in");
+        this.props.history.push("/sign-in");
     }
 
     handleChange(key,val){

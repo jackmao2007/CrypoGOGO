@@ -23,8 +23,7 @@ class Signup extends Component {
 
     clickHandler = () =>{
         if (this.state.password === this.state.passwordrep) {
-            const reg= /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
-            if (reg.test(this.state.email)) {
+            if (this.state.email.indexOf("@") > 0 && this.state.email.indexOf(".com") > 0) {
                 //server call to add new User to backend database
                 signup(this)
             } else {
