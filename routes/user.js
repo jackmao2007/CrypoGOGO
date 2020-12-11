@@ -63,7 +63,7 @@ router.post('/api/users/login', mongoChecker, (req, res) => {
             // We can check later if this exists to ensure we are logged in.
 			req.session.user = user._id;
 			req.session.isAdmin = user.isAdmin
-            req.session.username = user.username; // we will later send the email to the browser when checking if someone is logged in through GET /check-session (we will display it on the frontend dashboard. You could however also just send a boolean flag).
+            req.session.username = user.username;
             res.send({ currentUser: user.username, isAdmin: user.isAdmin });
         })
         .catch(error => {

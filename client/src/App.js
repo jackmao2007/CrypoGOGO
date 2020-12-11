@@ -46,7 +46,7 @@ class App extends Component {
     return ( 
       <BrowserRouter>
       <Switch>
-        <Route exact path='/sign-up'> <Signup/> </Route>
+        <Route exact path='/sign-up'> <Signup app={this}/> </Route>
       </Switch>
       <div>
         {!this.state.loginStatus ? null: <Navbar app={this}/> }
