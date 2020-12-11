@@ -1,6 +1,5 @@
-# team45
+# team45 CryptoGoGo
 
-### This is a late submission due to illness of one member, we've talked with professor for a short extension
 
 Third-Party Libraries: Material-UI, Bootstrap, Antd, React Quill, React, Chart.js
 
