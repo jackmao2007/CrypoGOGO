@@ -7,6 +7,7 @@ import moment from 'moment'
 import { likePost, deletePost, getComments } from "../../actions/stack" 
 import CommentList from "./Comment/index"
 import Reply from './Comment/Reply';
+import "./Comment/styles.css";
 
 const useStyles = theme => ({
     root: {
@@ -85,7 +86,7 @@ class Post extends Component{
                         <Button onClick={this.handellike} variant="contained" color="secondary"
                             startIcon={<FavoriteIcon />}> 
                             Like! {this.props.post.like} </Button>
-                        <Reply postID={post._id}/>
+                        <Reply postID={post._id} className="reply"/>
                         </div>
                         </div>
                     </CardContent>

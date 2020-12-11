@@ -10,4 +10,12 @@
     font-size: 0.75em;
     color: rgb(38, 141, 209);
 }
+
+.reply {
+    float: right;
+}
+
+.reply .input{
+    height: 50px;
+}
   

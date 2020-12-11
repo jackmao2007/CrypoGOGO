@@ -6,9 +6,6 @@ import TableRow from "@material-ui/core/TableRow";
 import moment from 'moment'
 
 
-import "./styles.css";
-
-
 class PostComment extends Component {
   dateToStr = (date) => {
     const d = moment(date).format('YYYY-MM-DD hh:mm a')
@@ -19,7 +16,7 @@ class PostComment extends Component {
     const { comment } = this.props;
 
     return (
-      <TableRow className="comment" key={comment.username}>
+      <TableRow className="comment" key={comment.author}>
         <TableCell style={{ width: 80 }} component="th" scope="row">
           {comment.author}:
             </TableCell>

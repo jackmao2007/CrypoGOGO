@@ -97,7 +97,7 @@ export const likePost = (postID) => {
     fetch(request)
         .then((res) => {
             if (res.status === 200) {
-                log("post liekd!!")
+                log("post liked!!")
             } else {
                 log(res.status, "link front and back")
             }

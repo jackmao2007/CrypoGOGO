@@ -9,26 +9,6 @@ import { Divider } from "@material-ui/core";
 import moment from 'moment'
 
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{ children }</Typography>
-        </Box>
-      )}
-    </div>
-  );
-};
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,6 +41,28 @@ const useStyles = makeStyles((theme) => ({
     margin: `1px`
   }
 }));
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`vertical-tabpanel-${index}`}
+      aria-labelledby={`vertical-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography>{ children }</Typography>
+        </Box>
+      )}
+    </div>
+  );
+};
+
+
 
 function PostSummary(props) {
   const { title, author, date, summary } = props;
