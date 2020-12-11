@@ -9,6 +9,7 @@ import "./styles.css";
 class Navbar extends Component {
     logoutUser = (app) => {
         logout(app);
+        window.location.pathname = '/sign-in'
     };
 
     render() { 
