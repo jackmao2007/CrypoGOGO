@@ -150,7 +150,8 @@ router.post('/api/trading/createOrder', mongoChecker, authenticate, async (req, 
             timePlaced: Date.now(),
             cashOnHold: cashOnHold
         })
-        saved = await order.save()
+        const saved = await order.save()
+        console.log(saved, "===============================================================HERE===================")
         parrentOrderId = saved._id
         // Handle Braket order
         if (req.body.orderBracket == true){
@@ -178,7 +179,7 @@ router.post('/api/trading/createOrder', mongoChecker, authenticate, async (req, 
                 stop: 0,
                 duration: req.body.orderProfitDur,
                 status: bracketStatus,
-                parrentOrder: parrentOrderId,
+                parentOrder: parrentOrderId,
                 timePlaced: Date.now(),
                 cashOnHold: 0
             })
@@ -194,7 +195,7 @@ router.post('/api/trading/createOrder', mongoChecker, authenticate, async (req, 
                 stop: req.body.orderLossStp,
                 duration: req.body.orderLossDur,
                 status: bracketStatus,
-                parrentOrder: parrentOrderId,
+                parentOrder: parrentOrderId,
                 timePlaced: Date.now(),
                 cashOnHold: 0
             })

@@ -28,7 +28,7 @@ router.post('/api/orders', mongoChecker, authenticate, async (req, res) => {
 	})
 
 	try {
-		const result = await order.save()	
+		const result = await order.save()
 		res.send(result)
 	} catch(error) {
 		log(error) 
@@ -49,7 +49,6 @@ router.get('/api/orders', mongoChecker, authenticate, async (req, res) => {
 		log(error);
 		res.status(500).send("Internal Server Error");
 	}
-
 })
 
 router.get('/api/orders/account/:accountId', mongoChecker, authenticate, async (req, res) => {

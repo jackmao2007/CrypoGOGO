@@ -4,39 +4,23 @@ import News from './News'
 class NewsSection extends Component {
     state = { 
         newsList: [
-            {
-                site: 'jacksweb.com',
-                title: 'Bitcoin Signals for Massive Upside, Top Analyst Warns for Risks',
-                url: 'https://www.google.com/search?q=Bitcoin',
-                text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget sit amet tellus cras adipiscing enim eu turpis. Semper feugiat nibh sed pulvinar. Enim ut sem viverra aliquet eget sit amet ...',
-                published: '2020-10-27',
-                image: 'https://picsum.photos/300/300',
-            },
-            {
-                site: 'jackswebtwo.com',
-                title: 'Mnuchin Says the Money Printer Needs to Brrrrrrrrrrr, Powell Agrees',
-                url: 'https://www.youtube.com/watch?v=O1hCLBTD5RM',
-                text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget sit amet tellus cras adipiscing enim eu turpis. Semper feugiat nibh sed pulvinar. Enim ut sem viverra aliquet eget sit amet ...',
-                published: '2020-10-27',
-                image: 'https://picsum.photos/300/300',
-            }
-
         ],
         articles: {},
-        maxArticles: 3
+        maxArticles: 2
     }
 
     populateNewsSection = () => {
         let newArticles = [];
-        const allArticles = this.state.articles.articles;
+        const allArticles = this.state.articles.news;
+        console.log(allArticles)
         for (let i = 0; i < this.state.maxArticles && i < allArticles.length; i++){
             let articleObj = {
-                site: allArticles[i].source.name,
+                site: allArticles[i].author,
                 title:  allArticles[i].title,
                 url:  allArticles[i].url,
-                text:  allArticles[i].content,
-                published:  allArticles[i].publishedAt,
-                image:  allArticles[i].urlToImage
+                text:  allArticles[i].description,
+                published:  allArticles[i].published,
+                image:  allArticles[i].image
             };
             newArticles.push(articleObj);
         }
@@ -44,12 +28,15 @@ class NewsSection extends Component {
     }
 
     getNewsFromGoogleNews() {
-        const apiKey = "b394b31e64e74e78bca68f9d8442cf00";
-        const url = "http://newsapi.org/v2/everything?q=crypto&sortBy=date&apiKey=" + apiKey;
+        const apiKey = "aSU8TpgLOVmu53r3SIbkEmoN6MdzmX-5ZpNa6BEjNZ28RAs1";
+
+        
+        const url = "https://api.currentsapi.services/v1/search?" + 'keywords=Cryptocurrency&language=en&' +  `apiKey=${apiKey}`;
         return fetch(url)
         .then(response => response.json())
         .then((data) => 
             {
+                console.log(data)
                 this.setState({articles: data, }, this.populateNewsSection);
             });
     }

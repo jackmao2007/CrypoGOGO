@@ -39,7 +39,8 @@ router.get('/api/dashboard/summary', mongoChecker, authenticate, async (req, res
 			totalMarketValue += marketValue
 			totalPL += marketValue - userPositions[i].bookValue
 		}
-		const updatedDate = Date.now().toString()
+		const timeStamp = new Date(Date.now())
+		const updatedDate = timeStamp
 		const totalEquity = totalCash + totalMarketValue
 		let response = {totalCash, totalMarketValue, totalPL, totalEquity, updatedDate}
 		res.send(response)
@@ -65,7 +66,7 @@ router.get('/api/dashboard/accounts', mongoChecker, authenticate, async (req, re
 			for (let j = 0; j < accountPositions.length; j++){
 				const data = supportedCurrencies.find((coin) => coin.symbol == accountPositions[j].symbol)
 				const marketValue = data.currentPrice * accountPositions[j].quantity
-				dashboardAccountObj.holdings[accountPositions[j].symbol.toUpperCase()] = marketValue
+				dashboardAccountObj.holdings[accountPositions[j].symbol.toUpperCase()] = Math.round(marketValue * 100) / 100
 			}
 			userAccounts.push(dashboardAccountObj)
 		}

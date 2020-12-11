@@ -28,27 +28,7 @@ class Account extends Component {
               ETH: 15222.12,
               Other: 6123.00
             }
-          },
-          { 
-            accountNumber: 10000001,
-            holdings: {
-              Cash: 10000.00,
-              BTC: 21512.00,
-              LTC: 14421.00,
-              ETH: 16123.00
-            }
-          },
-          { 
-            accountNumber: 10000003,
-            holdings: {
-              Cash: 10000.00,
-              BTC: 32362.00,
-              LTC: 12221.00,
-              ETH: 16123.00,
-              BCH: 20000.00
-            }
           }
-
         ],
         currentAccountNumber: 10000000,
         chartData: {
