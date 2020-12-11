@@ -25,6 +25,10 @@ export const addPost = (newPostComp) => {
             if (res.status === 200) {
                 // post added successfully
                 log("post added")
+            } else if(res.status === 413) {
+                // too large photo
+                alert("file too larger! Limit: 2.5mb")
+                log(res.status)
             } else {
                 log(res.status)
             }

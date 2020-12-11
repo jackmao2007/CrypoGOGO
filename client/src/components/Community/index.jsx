@@ -23,7 +23,6 @@ class Community extends Component {
         const kw = event.target.value.toLowerCase().trim();
         if (kw === "") {
             this.setState({ searched: false })
-            })
         } else {
             this.setState({ searched: true })
         }

@@ -16,8 +16,8 @@ mongoose.set('useFindAndModify', false); // for some deprecation issues
 
 // body-parser: middleware for parsing HTTP JSON body into a usable object
 const bodyParser = require('body-parser') 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: '5mb'}))
+app.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
 
 /*** Session handling **************************************/
 // express-session for managing user sessions
