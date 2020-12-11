@@ -17,8 +17,8 @@ class PostComment extends Component {
 
     return (
       <TableRow className="comment" key={comment.author}>
-        <TableCell style={{ width: 80 }} component="th" scope="row">
-          {comment.author}:
+        <TableCell style={{ width: 50 }} component="th" scope="row">
+          {comment.username}:
             </TableCell>
 
         <TableCell component="th" scope="row">

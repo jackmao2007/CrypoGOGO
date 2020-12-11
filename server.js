@@ -25,12 +25,12 @@ const session = require('express-session')
 
 // Create a session cookie
 app.use(session({
-    secret: 'our hardcoded secret', // later we will define the session secret as an environment variable for production. for now, we'll just hardcode it.
+    secret: 'our hardcoded secret', 
     resave: false,
     saveUninitialized: false,
     cookie: {
         expires: 6000000, // 100 minute expiry
-        httpOnly: true // important: saves it in browser's memory - not accessible by javascript (so it can't be easily stolen!).
+        httpOnly: true 
     }
 }));
 

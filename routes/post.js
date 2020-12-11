@@ -29,7 +29,7 @@ router.post('/api/posts', mongoChecker, authenticate, async (req, res) => {
 	// Create a new post using the Post mongoose model
 	const post = new Post({
 		username: req.user.username,
-        author: req.user._id, // creator id from the authenticate middleware
+        author: req.user._id, 
         title: req.body.title,
         content: req.body.content,
         comments:[],
@@ -159,7 +159,7 @@ router.delete('/api/posts/:id', mongoChecker, async (req, res) => {
 /*** Comment API Routes  ************************************/
 
 // a POST route to create an comment
-router.post('/api/posts/comments/:id', mongoChecker, async (req, res) => {
+router.post('/api/posts/comments/:id', authenticate, mongoChecker, async (req, res) => {
 
     const postID = req.params.id
 
@@ -171,7 +171,8 @@ router.post('/api/posts/comments/:id', mongoChecker, async (req, res) => {
     // Create a new post using the Post mongoose model
 	const comment = {
 		postBelongTo: postID,
-		author: 111,
+		username: req.user.username,
+		author: req.user._id,
 		commentContent: req.body.commentContent
 	}
 
