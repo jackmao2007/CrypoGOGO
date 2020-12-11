@@ -15,20 +15,10 @@ module.exports = {
 					next()
 				}
 			}).catch((error) => {
-				res.status(401).send("Unauthorized")
+				res.redirect('/sign-in')
 			})
 		} else {
-			res.status(401).send("Unauthorized")
+			res.redirect('/sign-in')
 		}
-	},
-	
-	// Our own express middleware to check for 
-	// an active user on the session cookie (indicating a logged in user.)
-    sessionChecker: (req, res, next) => {		
-	    if (req.session.user) {
-	        res.redirect('/'); // redirect to dashboard if logged in.
-	    } else {
-	        next(); // next() moves on to the route.
-	    }    
 	}
 }
