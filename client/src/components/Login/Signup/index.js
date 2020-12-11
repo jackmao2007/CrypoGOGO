@@ -2,31 +2,30 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles.css'
 
-import { signup } from '../../../actions/user'
+import { signup, autologin } from '../../../actions/user'
 
 class Signup extends Component {
     constructor(props) {
         super(props);
-        this.state = {username: '', password: '', passwordrep: '', email: '', isAdmin:false, adminkey:''};
+        this.state = {username: '', password: '', passwordrep: '', email: '', isAdmin:false};
     }
 
     handleChange(key,val){
         this.setState({
             [key]: val
         })
-        if (this.state.adminkey.indexOf("team4") != -1) {
-            console.log(this.state.adminkey.indexOf("team4"))
-            this.setState({ isAdmin: true })
-        }
     }
 
-    clickHandler = () =>{
+    clickHandler = (app) =>{
         if (this.state.password === this.state.passwordrep) {
             if (this.state.password.length > 3) {
                 const reg= /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
                 if (reg.test(this.state.email)) {
                     //server call to add new User to backend database
-                    signup(this)
+                    const body = JSON.parse(JSON.stringify(this.state))
+                    console.log(body)
+                    signup(body)
+                    setTimeout(function(){autologin(body, app)}, 1000) 
                 } else {
                     alert('Please enter correct email!')
                 }
@@ -40,6 +39,7 @@ class Signup extends Component {
     }
 
     render() { 
+        const { app } = this.props
         return (
             <div className="auth-wrapper">
                 <div className="auth-inner">
@@ -73,7 +73,7 @@ class Signup extends Component {
                         </div> */}
 
                     {/* <button type="submit" onClick={this.clickHandler} className="btn btn-primary btn-block">Sign Up</button> */}
-                    <button type="button" onClick={this.clickHandler} className="btn btn-primary btn-block">Sign Up</button>
+                    <button type="button" onClick={() => this.clickHandler(app)} className="btn btn-primary btn-block">Sign Up</button>
                     <p className="forgot-password text-right">
                         Already registered <a href="./sign-in">sign in?</a>
                     </p>

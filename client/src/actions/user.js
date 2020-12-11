@@ -13,7 +13,7 @@ export const login = (loginComp, app) => {
     fetch(request)
         .then(res => {
             if (res.status === 200) {
-                // window.location.pathname = '/'
+                window.location.pathname = '/dashboard'
                 return res.json();
             } else {
                 alert("Wrong Username or Password!")
@@ -74,7 +74,7 @@ export const signup = (signupComp) => {
     // Create our request constructor with all the parameters we need
     const request = new Request(`api/users`, {
         method: "post",
-        body: JSON.stringify(signupComp.state),
+        body: JSON.stringify(signupComp),
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"
@@ -85,7 +85,8 @@ export const signup = (signupComp) => {
     fetch(request)
         .then(res => {
             if (res.status === 200) {
-                window.location.pathname = '/sign-in'
+                // window.location.pathname = '/sign-in'
+                console.log("sign up successfully!")
                 return res.json();
             } else {
                 alert("Username or Email already exists!")
@@ -98,6 +99,39 @@ export const signup = (signupComp) => {
         //         //window.location.pathname = '/community'
         //     }
         // })
+        .catch(error => {
+            console.log(error);
+        });
+};
+
+export const autologin = (loginComp, app) => {
+    // Create our request constructor with all the parameters we need
+    const request = new Request(`api/users/login`, {
+        method: "post",
+        body: JSON.stringify(loginComp),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    // Send the request with fetch()
+    fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                window.location.pathname = '/'
+                return res.json();
+            } else {
+                alert("Wrong Username or Password!")
+                console.log("fail to log in")
+            }
+        })
+        .then(json => {
+            if (json.currentUser !== undefined) {
+                app.setState({ currentUser: json.currentUser, isAdmin: json.isAdmin, loginStatus:true });
+                //window.location.pathname = '/community'
+            }
+        })
         .catch(error => {
             console.log(error);
         });
