@@ -1,9 +1,13 @@
+const log = console.log
+
+/*********** Post API Calls for front-end */
+
 export const addPost = (newPostComp) => {
     // URL for the req
     const url = `/api/posts`;
     // the data to send in req
     const post = newPostComp.state;
-    console.log(post);
+    log(post);
 
     const request = new Request(url, {
         method: "post",
@@ -13,18 +17,19 @@ export const addPost = (newPostComp) => {
             "Content-Type": "application/json"
         }
     });
+    log(request)
 
     // send the request 
     fetch(request)
         .then((res) => {
             if (res.status === 200) {
                 // post added successfully
-                console.log("post added")
+                log("post added")
             } else {
-                console.log(res.status)
+                log(res.status)
             }
         }).catch(error => {
-            console.log(error)
+            log(error)
         });
 }
 
@@ -38,20 +43,16 @@ export const getPosts = async (community) => {
             postList: posts
         })
     } catch (error) {
-        console.log(error)
+        log(error)
     }
 }
 
 
-export const searchPost = (community) => {
-    // pointers
-    const kw = community.state.searchKeyWord;
-    const posts = community.state.postList;
-
+export const searchPost = (kw, posts) => {
     let result = []
     posts.forEach((post) => {
-        if (post.title.toLowerCase().search(kw) != -1 ||
-            post.content.toLowerCase().search(kw) != -1) {
+        if (post.title.toLowerCase().search(kw) !== -1 ||
+            post.content.toLowerCase().search(kw) !== -1) {
             result.push(post)
         }
     });
@@ -72,36 +73,68 @@ export const searchPost = (community) => {
             return result
         }
     } catch (error) {
-        console.log(error);
+        log(error);
     }
 
 }
 
 export const likePost = (postID) => {
     // URL for the req
-    const url = `/api/posts/:` + postID;
+    const url = `/api/posts/like/` + postID
     // the data to send in req
 
     const request = new Request(url, {
-        method: "patch",
-        body: null,
+        method: "post",
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"
         }
     });
-
-    // send the request 
     fetch(request)
         .then((res) => {
             if (res.status === 200) {
-                // post added successfully
-                console.log("post liekd!!")
+                log("post liked!!")
             } else {
-                console.log(res.status, "link front and back")
+                log(res.status, "link front and back")
             }
         }).catch(error => {
-            console.log(error)
+            log(error)
         });
-
 }
+
+export const deletePost = (postID) => {
+    const url = 'api/posts/' + postID;
+    const request = new Request(url, {
+        method: "delete",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    })
+    fetch(request).then((res) => {
+        if (res.status === 200) {
+            log(" post deleted!")
+        } else {
+            log(res.status)
+        }
+    }).catch(error => {
+        log(error)
+    })
+}
+
+
+/*********** comment API Calls for front-end */
+export const getComments = async (postComp) => {
+    const postID = postComp.props.post._id
+    try {
+        const url = "/api/posts?" + postID + "comments";
+        const resp = await fetch(url);
+        const comments = await resp.json()
+        postComp.setState({
+            comments: comments
+        })
+    } catch (error) {
+        log(error)
+    }
+}
+

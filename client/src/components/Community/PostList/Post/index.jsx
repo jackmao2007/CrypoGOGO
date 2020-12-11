@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import Divider from '@material-ui/core/Divider';
 import Button from "@material-ui/core/Button"
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import Reply from './Reply'
 import { Card, withStyles, CardContent } from '@material-ui/core';
 import moment from 'moment'
-import { likePost } from "../../actions/stack" 
+import { likePost, deletePost, getComments } from "../../actions/stack" 
+import CommentList from "./Comment/index"
+import Reply from './Comment/Reply';
+import "./styles.css";
 
 const useStyles = theme => ({
     root: {
@@ -41,6 +43,16 @@ const classes = useStyles();
 
 
 class Post extends Component{
+    state = {comments: [] }
+
+    async componentDidMount() {
+        await getComments(this);
+    }
+
+    async componentDidUpdate() {
+        await getComments(this)
+    }
+
     handellike = () => {
         const postID = this.props.post._id;
         likePost(postID)
@@ -71,32 +83,32 @@ class Post extends Component{
                         <div className={classes.content}>
                         <Divider />
                         <div className={classes.likebutton}>
-                        <Button onClick={this.handellike} variant="contained" color="secondary"
+                        <Button onClick={this.handellike} variant="contained" 
+                            color="secondary" className="like"
                             startIcon={<FavoriteIcon />}> 
                             Like! {this.props.post.like} </Button>
+                        <Reply postID={post._id} />
                         </div>
                         </div>
                     </CardContent>
                 </Card>
-                {/* <Card className={classes.comments} variant="outlined">
+                <Card className={classes.comments} variant="outlined">
                     <CardContent>
                         <div>
                         <p>Comments:</p>
                         <Divider/>
                         {
-                            (post.comments.length>0)? <CommentList comments={post.comments} stack={this}/>: null
+                            (post.comments.length>0)? <CommentList comments={post.comments.slice(0).reverse()} />: null
                         }
-                        
                         </div>
                     </CardContent>
-                </Card> */}
+                </Card>
 
-                <Reply/>
-                {/* use state to tell whether current user has permission to delete a post */}
-                {/* {permission && (
+                
+                {permission && (
                     <Button variant="contained"
-                        onClick={()=>removePost(stackComponent, post)}>Delete Post</Button>
-                )} */}
+                        onClick={()=>deletePost(post._id)}>Delete Post</Button>
+                )}
             </div>
         )
     }
