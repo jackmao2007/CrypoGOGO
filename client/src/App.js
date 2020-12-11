@@ -61,7 +61,7 @@ class App extends Component {
         <Route exact path='/profile' render={ props => 
                   (!this.state.loginStatus ? <Login {...props} app={this} /> : <Profile/>)}/>                
       </Switch>
-      <footer className="App-footer"> ©2020 Created by Team45 at <a ref="https://github.com/csc309-fall-2020/team45"> Github </a> </footer>
+      <footer className="App-footer"> ©2020 Created by Team45 at <a href="https://github.com/csc309-fall-2020/team45" target="_blank"> Github </a> </footer>
 
       </BrowserRouter>
      );
