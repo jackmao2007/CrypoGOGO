@@ -13,7 +13,7 @@ export const login = (loginComp, app) => {
     fetch(request)
         .then(res => {
             if (res.status === 200) {
-                window.location.pathname = '/dashboard'
+                window.location.pathname = '/'
                 return res.json();
             } else {
                 alert("Wrong Username or Password!")
