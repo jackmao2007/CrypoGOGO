@@ -28,6 +28,15 @@ router.post('/api/users', mongoChecker, async (req, res) => {
 	try {
 		// Save the user
 		const newUser = await user.save()
+		// Also create a new account for the user on signup
+		const account = new Account({
+			creator: newUser._id, // creator id from the authenticate middleware
+			cash: 100000, 
+			positions:[],
+			orders:[]
+		})
+		await account.save()	
+
 		res.send(newUser)
 	} catch (error) {
 		if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request.

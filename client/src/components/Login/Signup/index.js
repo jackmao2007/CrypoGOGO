@@ -58,6 +58,11 @@ class Signup extends Component {
                             <input type="password" onChange={(v)=>this.handleChange('passwordrep',v.target.value)} className="form-control" placeholder="Enter password again" />
                         </div>
 
+                        {/* <div className="form-group">
+                            <label>Admin Key</label>
+                            <input type="password" onChange={(v)=>this.handleChange('adminkey',v.target.value)} className="form-control" placeholder="(Optional)" />
+                        </div> */}
+
                     {/* <button type="submit" onClick={this.clickHandler} className="btn btn-primary btn-block">Sign Up</button> */}
                     <button type="button" onClick={this.clickHandler} className="btn btn-primary btn-block">Sign Up</button>
                     <p className="forgot-password text-right">
