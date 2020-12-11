@@ -14,7 +14,7 @@ class MyPost extends Component {
                 <div>
                     <h3 className='summary-fields'> Summary </h3>
                 </div>
-                <div className='summary-fields'> Manage My Post <a class="active" href="/Community">Manage Posts</a> </div>
+                <div className='summary-fields'> Manage My Post <a class="active" href="/community">Manage Posts</a> </div>
 
             </div>
 

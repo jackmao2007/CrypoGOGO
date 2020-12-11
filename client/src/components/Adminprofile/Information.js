@@ -99,7 +99,6 @@ class Information extends Component {
                 <div className='Information'>      
                     {this.generateInfoTable()}
 
-                <input className='information-button' onClick={this.sumbit} type="submit" value="Log out" />  
                 <input className='information-button' onClick={this.hidecomp} type="submit" value="Reset Password" /> 
                 </div>
 

@@ -29,6 +29,12 @@ class Activities extends Component {
 
     componentDidMount() {
         this.getActivities();
+        const varID = setInterval(()=>{this.getActivities()}, 5000) // periodically pull from server to check on orders
+        this.setState({varID:varID})
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.state.varID)
     }
 
     routeToActivity = (path) => {

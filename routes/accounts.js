@@ -99,17 +99,21 @@ router.delete('/api/accounts/:id', mongoChecker, authenticate, async (req, res) 
 
 	// Delete an account by their id
 	try {
-		const account = await Account.findOneAndRemove({_id: id, creator: req.user._id})
-		if (!account) {
-			res.status(404).send()
-		} else {   
-			res.send(account)
+		const accounts = await Account.find({creator: req.user._id}) // must have more than one account
+		if (accounts.length > 1){
+			const account = await Account.findOneAndRemove({_id: id, creator: req.user._id})
+			if (!account) {
+				res.status(404).send()
+			} else {   
+				res.send(account)
+			}
+		} else{
+			res.status(441).send("User must have at least one account")
 		}
 	} catch(error) {
 		log(error)
 		res.status(500).send() // server error, could not delete.
 	}
-
 })
 
 // NO UPDATE ROUTES SHOULD BE EXISTING FOR THIS RESOURCE.

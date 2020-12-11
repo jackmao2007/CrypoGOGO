@@ -22,6 +22,12 @@ class Trading extends Component {
             accountIds.push(acc._id)
         })
         this.setState({accounts: accountIds, currentAccount: accountIds[0], updatedTimestamp: Date.now()})
+        const varID = setInterval(()=>{this.setState({updatedTimestamp: Date.now()})}, 5000) // periodically pull from server to check on orders
+        this.setState({varID:varID})
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.state.idVar);
     }
 
     updateAccount = () => {
