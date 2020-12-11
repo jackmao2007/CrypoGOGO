@@ -48,11 +48,7 @@ export const getPosts = async (community) => {
 }
 
 
-export const searchPost = (community) => {
-    // pointers
-    const kw = community.state.searchKeyWord;
-    const posts = community.state.postList;
-
+export const searchPost = (kw, posts) => {
     let result = []
     posts.forEach((post) => {
         if (post.title.toLowerCase().search(kw) !== -1 ||
