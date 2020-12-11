@@ -1,18 +1,13 @@
 .ProfileCirclecontainer{
-    margin-left: 200px;
-    margin-top: 50px;
-  width: 300px;
-  height: 300px;
-    float: left;
-  position: fixed;
-
+  width: 400px;
 }
 
 .ProfileCircle{
-  margin-left: 100px;
+  margin-left: 300px;
   margin-top: 50px;
-  border-color: black;
-  border-width: 2px;
+  border-radius: 50%;
+  float: left;
+  position: fixed;
   width: 150px;
   height: 150px;
 }
@@ -33,18 +28,17 @@
   padding: 16px;
 }
 
-.right{
-  position: fixed;
-  margin-left: 100px;
-}
-
-.information-table{
-  border-collapse: collapse;
-  background-color: lightcyan;
-}
-.information-buttosn {
-  margin-top:10px;
-  margin-left: 50px;
+.side-button {
+    width: 100px;
+    height: 60px;
+    background-color: navy;
+    color: white;
+    position: relative;
+    top: 90px;
+    left: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-style: none;
 }
 
 .Information {
@@ -54,85 +48,11 @@
   height: 100px;
 }
 
-.list {
+.title {
   margin-top: 50px;
-  margin-left: 100px;
+  margin-left: 400px;
   width: 1000px;
   height: 100px;
 }
 
-table.user-table{
-    margin-top: 50px;
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 625px;
-    float: left;
-    margin-left: 5px;
-    background-color: lightblue;
-}
 
-table.search-table{
-   margin-top: 30px;
-    border-collapse: collapse;
-    width: 400px;
-    background-color: lightcyan;
-}
-.search{
-   margin-top: 40px;
-   width: 300px;
-   float: left;
-    margin-left: 60px;
-}
-  
-table.user-table, td, th {
-    text-align: left;
-    padding: 8px;
-}
-.wallet{
-  margin-top: 20px;
-    float: left;
-    margin-left: 300px;
-}
-table.wallet-table{
-  width: 800px;
-    margin-top: 30px;
-    border-collapse: collapse;
-    background-color: lightcyan;
-}
-table.bitcoins-table{
-  width: 400px;
-    margin-top: 30px;
-    border-collapse: collapse;
-    background-color: lightcyan;
-}
-
-.profile-account-summary-header {
-  font-weight: 1800;
-  font-size: 22px;
-}
-
-.profile-add-account-btn {
-  margin-left: 400px;
-  background: none!important;
-  border: none;
-  padding: 0!important;
-  font-family: arial, sans-serif;
-  color: #069;
-  text-decoration: underline;
-  cursor: pointer; 
-}
-
-.profile-delete-account-btn {
-  margin-left: 100px;
-  background: none!important;
-  border: none;
-  padding: 0!important;
-  font-family: arial, sans-serif;
-  color: red;
-  cursor: pointer; 
-}
-
-
-.profile-account-section {
-  margin-top: 50px;
-}
