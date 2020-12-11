@@ -1,7 +1,6 @@
 # team45 CryptoGoGo
 
-
-Third-Party Libraries: Material-UI, Bootstrap, Antd, React Quill, React, Chart.js
+Third-Party Libraries: Material-UI, Bootstrap, Antd, React Quill, React, Chart.js, moment.js, [Currents](https://currentsapi.services/en)
 
 ## Start
 ### First cd into ./client
