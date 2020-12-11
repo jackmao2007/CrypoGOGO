@@ -7,7 +7,7 @@ import Community from './components/Community';
 import Dashboard from './components/Dashboard';
 import Login from './components/Login';
 import Trading from './components/Trading';
-import Admin from './components/Profile'
+import Admin from './components/Profile';
 import Signup from'./components/Login/Signup';
 import Navbar from'./components/Navbar';
 
@@ -59,7 +59,7 @@ class App extends Component {
         <Route exact path={['/sign-in','/community']} render={ props => 
                   (!this.state.loginStatus ? <Login {...props} app={this} /> : <Community {...props} app={this} />)}/>
         <Route exact path='/profile' render={ props => 
-                  (!this.state.loginStatus ? <Login {...props} app={this} /> : <Admin/>)}/>                
+                  (!this.state.loginStatus ? <Login {...props} app={this} /> : <Profile/>)}/>                
       </Switch>
       <footer className="App-footer"> ©2020 Created by Team45 at <a ref="https://github.com/csc309-fall-2020/team45"> Github </a> </footer>
 
