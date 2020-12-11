@@ -45,9 +45,8 @@ class NewsSection extends Component {
 
     getNewsFromGoogleNews() {
         const apiKey = "b394b31e64e74e78bca68f9d8442cf00";
-        const url = "https://cors-anywhere.herokuapp.com/http://newsapi.org/v2/everything?q=crypto&sortBy=date&apiKey=" + apiKey;
-        const req = new Request(url)
-        return fetch(req)
+        const url = "http://newsapi.org/v2/everything?q=crypto&sortBy=date&apiKey=" + apiKey;
+        return fetch(url)
         .then(response => response.json())
         .then((data) => 
             {
