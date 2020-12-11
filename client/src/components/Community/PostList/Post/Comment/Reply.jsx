@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Button from "@material-ui/core/Button";
 import { TextField } from "@material-ui/core";
-import "./styles.css"
+import "../styles.css"
 
 
 
@@ -44,12 +44,13 @@ class Reply extends Component {
     render() {
         const { postID } = this.props
         return (
-            <div>
+            <div className="reply">
                 <TextField id="filled-secondary"
                     label="Reply"
                     variant="filled"
-                    onChange={this.handleInput} />
-                <Button variant="contained" color="primary" 
+                    onChange={this.handleInput} 
+                    className="input"/>
+                <Button variant="contained" color="primary" className="submmit"
                    onClick={() => this.handleClick(postID)}> Reply</Button>
             </div>
         )

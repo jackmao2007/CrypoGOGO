@@ -16,6 +16,17 @@
 }
 
 .reply .input{
-    height: 50px;
+    width: 500px;
 }
+
+.reply .submmit{
+    height: 55px;
+    margin-left: 5px;
+}
+
+.like {
+    height: 55px;
+}
+
+
   

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import "./styles.css"
+import "../styles.css"
 import Button from "@material-ui/core/Button";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
