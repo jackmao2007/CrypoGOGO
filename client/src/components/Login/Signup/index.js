@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles.css'
 
+import { signup } from '../../../actions/user'
 
 class Signup extends Component {
     constructor(props) {
@@ -20,7 +21,7 @@ class Signup extends Component {
         if (this.state.password === this.state.passwordrep) {
             if (this.state.email.indexOf("@") > 0 && this.state.email.indexOf(".com") > 0) {
                 //server call to add new User to backend database
-                window.location.pathname = '/sign-in'
+                signup(this)
             } else {
                 alert('Please enter correct email!')
             }

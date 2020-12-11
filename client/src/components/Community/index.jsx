@@ -6,6 +6,10 @@ import {addPost, searchByKeyWord} from "./PostList/actions/stack"
 import CreateTopicForm from './CreateTopicForm';
 
 class Community extends Component {
+    constructor(props) {
+        super(props);
+        this.props.history.push("/community");
+    }
     state = {
         topic: "",
         postAuthor: "",
