@@ -69,13 +69,13 @@ class Sidebar extends Component {
            finalComponent = <MyWallet/>;
         }
         if (this.state.curr === 2) {
-            window.location.href = '/Community'
+            window.location.href = '/community'
         }
         if (this.state.curr === 3) {
             finalComponent = <List/>;
         }
         if (this.state.curr === 4) {
-            window.location.href = '/Community'
+            window.location.href = '/community'
         }
        return(
             <div>
