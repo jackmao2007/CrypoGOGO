@@ -17,10 +17,7 @@ router.get('/api/activities', mongoChecker, authenticate, async (req, res) => {
 	// Get the accounts
 	try {
 		const activities = await Activity.find({creator: req.user._id})
-		res.send(activities.sort(function(a,b) {
-            return a.timestamp - b.timestamp;     
-        }
-        ));
+		res.send(activities.reverse());
 	} catch(error) {
 		log(error);
 		res.status(500).send("Internal Server Error");

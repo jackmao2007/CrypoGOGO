@@ -15,10 +15,10 @@ module.exports = {
 					next()
 				}
 			}).catch((error) => {
-				res.redirect('/sign-in')
+				res.status(400).redirect('/sign-in')
 			})
 		} else {
-			res.redirect('/sign-in')
+			res.status(400).redirect('/sign-in')
 		}
 	}
 }

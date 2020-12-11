@@ -2,6 +2,7 @@
 const { Account } = require('./models/accounts')
 const { Position } = require('./models/positions')
 const { Order } = require('./models/orders')
+const { Activity } = require('./models/activities')
 let supportedCurrencies = require('./marketData')
 
 
@@ -20,7 +21,14 @@ async function executeOrder(order) {
     if (order.mode.toLowerCase() == 'buy'){
         // Check existing position
         if (account.cash + order.cashOnHold - orderValue < 0){
-            // TODO: ADD FAILED ACITIVITY
+
+            let atvt = new Activity({
+                creator: order.creator,
+                timestamp: Date.now(),
+                type: 'trading',
+                content: `Order execution of ${order.quantity} ${order.symbol.toUpperCase()} at ${price} failed due to incifficient funds`,
+            })
+            await atvt.save()
             order.status = 'Failed'
             await order.save()
             return
@@ -44,17 +52,38 @@ async function executeOrder(order) {
         await position.save()
         order.status = "Executed"
         await order.save()
-        // TODO: ADD EXECUTE ACITIVITY
+
+        let atvt = new Activity({
+            creator: order.creator,
+            timestamp: Date.now(),
+            type: 'trading',
+            content: `Order - ${order.mode} ${order.quantity} ${order.symbol.toUpperCase()} at ${price} executed successfully`,
+        })
+        await atvt.save()
     } else if (order.mode.toLowerCase() == 'sell'){
         // position check
         if (!position){
-            // TODO: ADD FAILED ACITIVITY
+            
+            let atvt = new Activity({
+                creator: order.creator,
+                timestamp: Date.now(),
+                type: 'trading',
+                content: `Order - ${order.mode} ${order.quantity} ${order.symbol.toUpperCase()} at ${price} failed due to no position avaliable`,
+            })
+            await atvt.save()
             order.status = 'Failed'
             await order.save()
             return
         } else {
             if (position.quantity < order.quantity){
-                // TODO: ADD FAILED ACITIVITY
+                           
+                let atvt = new Activity({
+                    creator: order.creator,
+                    timestamp: Date.now(),
+                    type: 'trading',
+                    content: `Order - ${order.mode} ${order.quantity} ${order.symbol.toUpperCase()} at ${price} failed due to no position avaliable`,
+                })
+                await atvt.save()
                 order.status = 'Failed'
                 await order.save()
                 return
@@ -70,7 +99,30 @@ async function executeOrder(order) {
         await account.save()
         order.status = "Executed"
         await order.save()
-        // TODO: ADD EXECUTE ACITIVITY
+
+        let atvt = new Activity({
+            creator: order.creator,
+            timestamp: Date.now(),
+            type: 'trading',
+            content: `Order - ${order.mode} ${order.quantity} ${order.symbol.toUpperCase()} at ${price} executed successfully`,
+        })
+        await atvt.save()
+    }
+    // handle any other bracket orders
+    const brakets = await Order.find({parentOrder: order._id})
+    for (let i = 0; i < brakets.length; i++){
+        if (brakets[i].status == 'Pending'){
+            brakets[i].status = 'Accepted'
+            await brakets[i].save()
+        }
+    }
+    // cancel sibling orders
+    const sib = await Order.find({parentOrder: order.parentOrder})
+    for (let i = 0; i < sib.length; i++){
+        if (sib[i].status == 'Accepted'){
+            sib[i].status = 'Cancelled'
+            await sib[i].save()
+        }
     }
 }
 
@@ -116,9 +168,15 @@ async function serverDailyOrderExpireHandler () {
             continue
         }
         if (curOrder.duration.toUpperCase() == "DAY"){
-            order.status = "Cancelled"
-            order.save()
-            // TODO: ADD EXPIRE ACTIVITY
+            curOrder.status = "Cancelled"
+            curOrder = await curOrder.save()
+            let atvt = new Activity({
+                creator: curOrder.creator,
+                timestamp: Date.now(),
+                type: 'trading',
+                content: `Order - ${curOrder.mode} ${curOrder.quantity} ${curOrder.symbol.toUpperCase()} expired.`,
+            })
+            await atvt.save()
         }
     }
 

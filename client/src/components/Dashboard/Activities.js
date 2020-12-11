@@ -12,9 +12,19 @@ class Activities extends Component {
         ]
     }
 
-    getActivities() {
-        // servercall
-        // populate state
+    async getActivities() {
+        const result = await fetch("/api/activities")
+        const actvs = await result.json()
+        let newActitivies = []
+        for (let act of actvs){
+            newActitivies.push({
+                activityType: act.type,
+                content: act.content,
+                time: act.timestamp,
+                link: act.link
+            })
+        }
+        this.setState({activities: newActitivies})
     }
 
     componentDidMount() {
