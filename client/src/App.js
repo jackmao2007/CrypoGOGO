@@ -52,27 +52,15 @@ class App extends Component {
         {!this.state.loginStatus ? null: <Navbar app={this}/> }
       </div>
       <Switch>
-        <Route exact path='/dashboard' render={ props => (
-                        <div>
-                        {!this.state.loginStatus ? <Login {...props} app={this} /> : <Dashboard/>}
-                        </div>
-        )}/>
+        <Route exact path='/dashboard' render={ props => 
+                  (!this.state.loginStatus ? <Login {...props} app={this} /> : <Dashboard/>)}/>
         <Route exact path='/trading' render={ props => 
-                        (<div>
-                          {!this.state.loginStatus ? <Login {...props} app={this} /> : <Trading/>}
-                          </div>)}/>
+                  (!this.state.loginStatus ? <Login {...props} app={this} /> : <Trading/>)}/>
         <Route exact path={['/','/sign-in','/community']} render={ props => 
-                        (<div>
-                          {!this.state.loginStatus ? <Login {...props} app={this} /> : <Community {...props} app={this} />}
-                          </div>)}/>
+                  (!this.state.loginStatus ? <Login {...props} app={this} /> : <Community {...props} app={this} />)}/>
         <Route exact path='/adminprofile' render={ props => 
-                        (<div>
-                          {!this.state.loginStatus ? <Login {...props} app={this} /> : <Admin/>}
-                          </div>)}/>                
+                  (!this.state.loginStatus ? <Login {...props} app={this} /> : <Admin/>)}/>                
       </Switch>
-      <footer style={{ textAlign: 'center' }}>
-                        ©2020 Created by Team45
-                    </footer>
       </BrowserRouter>
      );
   }

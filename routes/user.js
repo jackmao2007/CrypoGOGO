@@ -22,7 +22,7 @@ router.post('/api/users', mongoChecker, async (req, res) => {
 		recentActivities: [],
 		UserAccounts: [],
 		userPosts: [],
-		isAdmin: false
+		isAdmin: req.body.isAdmin
 	})
 
 	try {

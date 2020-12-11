@@ -7,13 +7,17 @@ import { signup } from '../../../actions/user'
 class Signup extends Component {
     constructor(props) {
         super(props);
-        this.state = {username: '', password: '', passwordrep: '', email: ''};
+        this.state = {username: '', password: '', passwordrep: '', email: '', isAdmin:false, adminkey:''};
     }
 
     handleChange(key,val){
         this.setState({
             [key]: val
         })
+        if (this.state.adminkey.indexOf("team4") != -1) {
+            console.log(this.state.adminkey.indexOf("team4"))
+            this.setState({ isAdmin: true })
+        }
     }
 
 
@@ -56,6 +60,11 @@ class Signup extends Component {
                         <div className="form-group">
                             <label>Confirm Password</label>
                             <input type="password" onChange={(v)=>this.handleChange('passwordrep',v.target.value)} className="form-control" placeholder="Enter password again" />
+                        </div>
+
+                        <div className="form-group">
+                            <label>Admin Key</label>
+                            <input type="password" onChange={(v)=>this.handleChange('adminkey',v.target.value)} className="form-control" placeholder="Enter password again" />
                         </div>
 
                     {/* <button type="submit" onClick={this.clickHandler} className="btn btn-primary btn-block">Sign Up</button> */}
