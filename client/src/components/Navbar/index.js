@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import { logout } from '../../actions/user'
+
 import "./styles.css";
 
 
 class Navbar extends Component {
-    constructor(props) {
-        super(props);
-    }
-    state = {  }
+    logoutUser = (app) => {
+        logout(app);
+    };
+
     render() { 
+        const { app } = this.props
         return ( 
             <div >
                 <nav className='main-nav'>
@@ -25,13 +28,7 @@ class Navbar extends Component {
                     <Link to="/adminprofile">
                         <button className='main-nav-button'> AdminProfile </button>
                     </Link>
-                    {
-                        this.props.loginStatus?
-                        null
-                        :<Link to="/sign-in">
-                            <button className='right-nav-button'> Logout </button>
-                        </Link>
-                    }
+                    <button onClick={() => this.logoutUser(app)} className='right-nav-button'> Logout </button>
                 </nav>
             </div>
          );

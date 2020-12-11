@@ -6,20 +6,23 @@ import NewPostForm from './NewPost';
 
 
 class Community extends Component {
+    constructor(props) {
+        super(props);
+        this.props.history.push("/community");
+    }
+
     state = {
-        // permission used to tell whether the current user can delete a post
-        isAdmin: true,
         searched: false,
         filteredPost: [],
         postList: []
     };
 
 
+
     handleInput = (event) => {
         const kw = event.target.value.toLowerCase().trim();
         if (kw === "") {
-            this.setState({ searched: false }, ()=>{
-                console.log(this.state.searched)
+            this.setState({ searched: false })
             })
         } else {
             this.setState({ searched: true })
@@ -39,15 +42,17 @@ class Community extends Component {
     }
 
 
-    render() {
+    render() { 
+        const { app } = this.props
+
         return (
             <div>
-                <NewPostForm community={this} />
+                <NewPostForm community={ this }/> 
                 <SearchBox handleInput={this.handleInput} />
-                {!this.state.searched && (<PostList posts={this.state.postList}
-                    permission={this.state.isAdmin} />)}
-                {this.state.searched && (<PostList posts={this.state.filteredPost}
-                    permission={this.state.isAdmin} />)}
+                {!this.state.searched && (<PostList posts={this.state.postList} 
+                    permission={app.state.isAdmin}/>)}
+                {this.state.searched && (<PostList posts={this.state.filteredPost} 
+                    permission={app.state.isAdmin}/>)}
             </div>
         );
     }

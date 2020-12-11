@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles.css'
-
-//harcode users
-const users = [
-    {username: 'user', password: 'user', email: 'user@user.com'},
-    {username: 'admin', password: 'admin', email: 'admin@admin.com'}
-]
+import { login } from '../../actions/user'
+import { configConsumerProps } from 'antd/lib/config-provider';
 
 
 class Login extends Component {
     constructor(props) {
         super(props);
-        this.state = {users: users, username: '', password: ''};
+        this.state = {username: '', password: ''};
+        this.props.history.push("/sign-in");
     }
 
     handleChange(key,val){
@@ -21,27 +18,9 @@ class Login extends Component {
         })
     }
 
-    sumbit = () => {
-        // Will be modified to server call for authentication in Phase2
-        var i = 0;
-        var len = this.state.users.length;
-        var valid = false;
-        for (; i < len; i++) {
-            if (this.state.users[i].username === this.state.username && this.state.users[i].password === this.state.password) {
-                valid = true;
-            }
-        }
-        if (valid) {
-            alert("Log in successfully");
-            window.location.pathname = '/'
-        } else {
-            alert("Wrong username or password")
-        }
-    }
-
-
-
     render() { 
+        const { app } = this.props
+
         return (
             <div className="auth-wrapper">
                 <div className="auth-inner">
@@ -58,16 +37,17 @@ class Login extends Component {
                             <input type="password" onChange={(v)=>this.handleChange('password',v.target.value)} className="form-control" placeholder="Enter password" />
                         </div>
 
-                        <div className="form-group">
+                        {/* <div className="form-group">
                             <div className="custom-control custom-checkbox">
                                 <input type="checkbox" className="custom-control-input" id="customCheck1" />
-                                {/* Functionality will be implemented in Phase2 */}
                                 <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
                             </div>
-                        </div>
+                        </div> */}
 
-                        <button type="button" onClick={this.sumbit} className="btn btn-primary btn-block">Sign In</button>
-                        
+                        <button type="button" onClick={() => login(this, app)} className="btn btn-primary btn-block">Sign In</button>
+                        <p className="forgot-password text-right">
+                            New user you want to <a href="./sign-up">sign up?</a>
+                        </p>
                     </form>
                 </div>
             </div>

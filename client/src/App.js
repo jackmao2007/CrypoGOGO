@@ -11,8 +11,12 @@ import Admin from './components/Adminprofile'
 import Signup from'./components/Login/Signup';
 import Navbar from'./components/Navbar';
 
+import { checkSession } from './actions/user';
+
 class App extends Component {
   state = { 
+    currentUser: null,
+    isAdmin: false,
     loginStatus: false
   }
 
@@ -27,7 +31,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.checkLoginStatus();
+    // this.checkLoginStatus();
+    checkSession(this);
   }
 
   componentWillUnmount(){
@@ -41,22 +46,33 @@ class App extends Component {
     return ( 
       <BrowserRouter>
       <Switch>
-        <Route exact path='/sign-in' render={() => 
-                        (this.state.loginStatus? <Login/> : <Login/>)}/>
-        <Route exact path='/sign-up' render={() => 
-                        (this.state.loginStatus? <Signup/> : <Login/>)}/> 
+        <Route exact path='/sign-up'> <Signup/> </Route>
       </Switch>
-      <Navbar/>
+      <div>
+        {!this.state.loginStatus ? null: <Navbar app={this}/> }
+      </div>
       <Switch>
-        <Route exact path='/' render={() =>
-                        (this.state.loginStatus? <Dashboard/> : <Login/>)}/>
-        <Route exact path='/trading' render={() => 
-                        (this.state.loginStatus? <Trading/> : <Login/>)}/>
-        <Route exact path='/community' render={() => 
-                        (this.state.loginStatus? <Community/> : <Login/>)}/>
-        <Route exact path='/adminprofile' render={() => 
-                        (this.state.loginStatus? <Admin/> : <Login/>)}/>                
+        <Route exact path='/dashboard' render={ props => (
+                        <div>
+                        {!this.state.loginStatus ? <Login {...props} app={this} /> : <Dashboard/>}
+                        </div>
+        )}/>
+        <Route exact path='/trading' render={ props => 
+                        (<div>
+                          {!this.state.loginStatus ? <Login {...props} app={this} /> : <Trading/>}
+                          </div>)}/>
+        <Route exact path={['/','/sign-in','/community']} render={ props => 
+                        (<div>
+                          {!this.state.loginStatus ? <Login {...props} app={this} /> : <Community {...props} app={this} />}
+                          </div>)}/>
+        <Route exact path='/adminprofile' render={ props => 
+                        (<div>
+                          {!this.state.loginStatus ? <Login {...props} app={this} /> : <Admin/>}
+                          </div>)}/>                
       </Switch>
+      <footer style={{ textAlign: 'center' }}>
+                        ©2020 Created by Team45
+                    </footer>
       </BrowserRouter>
      );
   }

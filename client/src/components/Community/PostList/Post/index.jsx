@@ -72,7 +72,7 @@ class Post extends Component{
                 <Card className={classes.root} variant="outlined">
                     <CardContent className={classes.title}>
                         <div className={classes.author}>
-                            {post.author} posted on {this.dateToStr(post.createDate)}
+                            {post.username} posted on {this.dateToStr(post.createDate)}
                         </div>
                         <Divider />
                         {post.title}
