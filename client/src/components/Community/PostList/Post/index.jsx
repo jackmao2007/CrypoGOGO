@@ -98,7 +98,7 @@ class Post extends Component{
                         <p>Comments:</p>
                         <Divider/>
                         {
-                            (post.comments.length>0)? <CommentList comments={post.comments.slice(0).reverse()} />: null
+                            (post.comments.length>0)? <CommentList postID={post._id} comments={post.comments.slice(0).reverse()} permission={permission}/>: null
                         }
                         </div>
                     </CardContent>

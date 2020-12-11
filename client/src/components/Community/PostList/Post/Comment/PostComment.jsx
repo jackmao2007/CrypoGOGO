@@ -5,6 +5,8 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import moment from 'moment'
 
+import { deleteComment } from '../../../actions/stack'
+
 
 class PostComment extends Component {
   dateToStr = (date) => {
@@ -13,7 +15,7 @@ class PostComment extends Component {
   }
 
   render() {
-    const { comment } = this.props;
+    const { postID, comment, permission} = this.props;
 
     return (
       <TableRow className="comment" key={comment.author}>
@@ -28,17 +30,19 @@ class PostComment extends Component {
         <TableCell component="th" scope="row" align="right">
           {this.dateToStr(comment.commentDate)}
         </TableCell>
-        {/* <TableCell component="th" scope="row">
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={
-                  () => removeComment(stack, comment)
-                }
-              >
-                remove
-              </Button>
-            </TableCell> */}
+        {permission && (
+        <TableCell component="th" scope="row">
+          <Button
+            variant="contained"
+            onClick={
+              () => deleteComment(postID, comment._id)
+            }
+          >
+          Delete
+          </Button>
+        </TableCell>
+        )}
+
       </TableRow>
     )
   }

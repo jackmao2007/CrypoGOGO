@@ -142,3 +142,22 @@ export const getComments = async (postComp) => {
     }
 }
 
+export const deleteComment = (postID, commentID) => {
+    const url = 'api/posts/' + postID + '/' + commentID;
+    const request = new Request(url, {
+        method: "delete",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    })
+    fetch(request).then((res) => {
+        if (res.status === 200) {
+            log(" comment deleted!")
+        } else {
+            log(res.status)
+        }
+    }).catch(error => {
+        log(error)
+    })
+}
