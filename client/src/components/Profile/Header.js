@@ -9,7 +9,7 @@ class Header extends Component {
     render() { 
         return (
             <div className="ProfileCirclecontainer">             
-            	<img className='ProfileCircle' src="profile.jpeg"/>
+            	<img className='ProfileCircle'/>
             </div>
          );
     }
