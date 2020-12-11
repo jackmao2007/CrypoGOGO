@@ -7,6 +7,7 @@ const router = express.Router(); // Express Router
 
 // import the user mongoose model
 const { User } = require('../models/user')
+const { Account } = require('../models/accounts')
 
 // helpers/middlewares
 const { mongoChecker, isMongoError } = require("./helpers/mongo_helpers");
@@ -28,6 +29,15 @@ router.post('/api/users', mongoChecker, async (req, res) => {
 	try {
 		// Save the user
 		const newUser = await user.save()
+		// Also create a new account for the user on signup
+		const account = new Account({
+			creator: req.user._id, // creator id from the authenticate middleware
+			cash: 100000, 
+			positions:[],
+			orders:[]
+		})
+		await account.save()	
+
 		res.send(newUser)
 	} catch (error) {
 		if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request.
