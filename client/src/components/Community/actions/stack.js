@@ -131,7 +131,7 @@ export const deletePost = (postID) => {
 export const getComments = async (postComp) => {
     const postID = postComp.props.post._id
     try {
-        const url = "/api/posts?" + postID + "comments";
+        const url = "/api/posts/" + postID + "comments";
         const resp = await fetch(url);
         const comments = await resp.json()
         postComp.setState({
