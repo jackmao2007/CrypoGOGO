@@ -28,15 +28,16 @@ class NewsSection extends Component {
 
     populateNewsSection = () => {
         let newArticles = [];
-        const allArticles = this.state.articles.articles;
+        const allArticles = this.state.articles.news;
+        console.log(allArticles)
         for (let i = 0; i < this.state.maxArticles && i < allArticles.length; i++){
             let articleObj = {
-                site: allArticles[i].source.name,
+                site: allArticles[i].author,
                 title:  allArticles[i].title,
                 url:  allArticles[i].url,
-                text:  allArticles[i].content,
-                published:  allArticles[i].publishedAt,
-                image:  allArticles[i].urlToImage
+                text:  allArticles[i].description,
+                published:  allArticles[i].published,
+                image:  allArticles[i].image
             };
             newArticles.push(articleObj);
         }
@@ -44,12 +45,15 @@ class NewsSection extends Component {
     }
 
     getNewsFromGoogleNews() {
-        const apiKey = "b394b31e64e74e78bca68f9d8442cf00";
-        const url = "http://newsapi.org/v2/everything?q=crypto&sortBy=date&apiKey=" + apiKey;
+        const apiKey = "aSU8TpgLOVmu53r3SIbkEmoN6MdzmX-5ZpNa6BEjNZ28RAs1";
+
+        
+        const url = "https://api.currentsapi.services/v1/search?" + 'keywords=Cryptocurrency&language=en&' +  `apiKey=${apiKey}`;
         return fetch(url)
         .then(response => response.json())
         .then((data) => 
             {
+                console.log(data)
                 this.setState({articles: data, }, this.populateNewsSection);
             });
     }

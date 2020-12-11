@@ -31,7 +31,7 @@ router.post('/api/users', mongoChecker, async (req, res) => {
 		const newUser = await user.save()
 		// Also create a new account for the user on signup
 		const account = new Account({
-			creator: req.user._id, // creator id from the authenticate middleware
+			creator: newUser._id, // creator id from the authenticate middleware
 			cash: 100000, 
 			positions:[],
 			orders:[]
