@@ -25,7 +25,7 @@ class Navbar extends Component {
                     <Link to="/community">
                         <button className='main-nav-button'> Community </button>
                     </Link>
-                    <Link to="/profile">
+                    <Link to="/adminprofile">
                         <button className='main-nav-button'> AdminProfile </button>
                     </Link>
                     <button onClick={() => this.logoutUser(app)} className='right-nav-button'> Logout </button>
