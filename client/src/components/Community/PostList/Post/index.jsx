@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import Divider from '@material-ui/core/Divider';
 import Button from "@material-ui/core/Button"
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import Reply from './Reply'
 import { Card, withStyles, CardContent } from '@material-ui/core';
 import moment from 'moment'
-import { likePost, deletePost } from "../../actions/stack" 
+import { likePost, deletePost, getComments } from "../../actions/stack" 
+import CommentList from "./Comment/index"
+import Reply from './Comment/Reply';
 
 const useStyles = theme => ({
     root: {
@@ -41,6 +42,16 @@ const classes = useStyles();
 
 
 class Post extends Component{
+    state = {comments: [] }
+
+    async componentDidMount() {
+        await getComments(this);
+    }
+
+    async componentDidUpdate() {
+        await getComments(this)
+    }
+
     handellike = () => {
         const postID = this.props.post._id;
         likePost(postID)
@@ -74,24 +85,23 @@ class Post extends Component{
                         <Button onClick={this.handellike} variant="contained" color="secondary"
                             startIcon={<FavoriteIcon />}> 
                             Like! {this.props.post.like} </Button>
+                        <Reply postID={post._id}/>
                         </div>
                         </div>
                     </CardContent>
                 </Card>
-                {/* <Card className={classes.comments} variant="outlined">
+                <Card className={classes.comments} variant="outlined">
                     <CardContent>
                         <div>
                         <p>Comments:</p>
                         <Divider/>
                         {
-                            (post.comments.length>0)? <CommentList comments={post.comments} stack={this}/>: null
+                            (post.comments.length>0)? <CommentList comments={post.comments} />: null
                         }
-                        
                         </div>
                     </CardContent>
-                </Card> */}
+                </Card>
 
-                <Reply/>
                 
                 {permission && (
                     <Button variant="contained"

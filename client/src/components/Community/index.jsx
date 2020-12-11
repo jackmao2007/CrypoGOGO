@@ -30,12 +30,12 @@ class Community extends Component {
     };
 
 
-    componentDidMount() {
-        getPosts(this);
+    async componentDidMount() {
+        await getPosts(this);
     }
 
-    componentDidUpdate() {
-        getPosts(this);
+    async componentDidUpdate() {
+        await getPosts(this);
     }
 
 
