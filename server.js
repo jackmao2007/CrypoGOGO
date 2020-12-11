@@ -62,11 +62,22 @@ app.use(require('./routes/tradingApi'))
 
 
 // 404 route at the bottom for anything not found.
-app.get('*', (req, res) => {
-  res.status(404).send("404 Error: We cannot find the page you are looking for.");
-  // you could also send back a fancy 404 webpage here.
-});
 
+// Serve the build
+app.use(express.static(path.join(__dirname, "/client/build")));
+
+// All routes other than above will go to index.html
+app.get("*", (req, res) => {
+    // check for page routes that we expect in the frontend to provide correct status code.
+    const goodPageRoutes = ["/", "/sign-up","/sign-in", "/trading, /community, /profile, /adminprofile"];
+    if (!goodPageRoutes.includes(req.url)) {
+        // if url not in expected page routes, set status to 404.
+        res.status(404).send("404 Error: We cannot find the page you are looking for.");
+    }
+
+    // send index.html
+    res.sendFile(path.join(__dirname, "/client/build/index.html"));
+});
 
 // ********** SPINNING SERVER JOBS ****************
 setInterval(serverTickOrderHandler, 5000) // loops over orders and excecute.
