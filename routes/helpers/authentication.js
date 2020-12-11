@@ -15,10 +15,10 @@ module.exports = {
 					next()
 				}
 			}).catch((error) => {
-				res.status(401).send("Unauthorized")
+				res.status(400).redirect('/sign-in')
 			})
 		} else {
-			res.status(401).send("Unauthorized")
+			res.status(400).redirect('/sign-in')
 		}
 	},
 	

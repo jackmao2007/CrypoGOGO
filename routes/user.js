@@ -7,6 +7,7 @@ const router = express.Router(); // Express Router
 
 // import the user mongoose model
 const { User } = require('../models/user')
+const { Account } = require('../models/accounts')
 
 // helpers/middlewares
 const { mongoChecker, isMongoError } = require("./helpers/mongo_helpers");
