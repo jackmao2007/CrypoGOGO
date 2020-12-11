@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button"
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { Card, withStyles, CardContent } from '@material-ui/core';
 import moment from 'moment'
-import { likePost, deletePost, getComments } from "../../actions/stack"
+import { likePost, deletePost } from "../../actions/stack"
 import CommentList from "./Comment/index"
 import Reply from './Comment/Reply';
 import "./styles.css";
@@ -49,13 +49,19 @@ const classes = useStyles();
 class Post extends Component {
     state = { comments: [] }
 
-    async componentDidMount() {
-        await getComments(this);
-    }
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     return nextState !== this.state
+    // }
+    
+    // componentDidMount() {
+    //     setInterval(() => {getComments(this)}, 3000)
+    // }
 
-    async componentDidUpdate() {
-        await getComments(this)
-    }
+    // componentDidUpdate(prevpProps, prevState) {
+    //     if (this.state !== prevState) {
+    //         setInterval(() => {getComments(this)}, 3000)
+    //     }
+    // }
 
     handellike = () => {
         const postID = this.props.post._id;

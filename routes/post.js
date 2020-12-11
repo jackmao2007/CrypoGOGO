@@ -19,7 +19,8 @@ const { mongoChecker, isMongoError } = require("./helpers/mongo_helpers");
 const { authenticate } = require("./helpers/authentication");
 
 // to validate object IDs
-const { ObjectID } = require('mongodb')
+const { ObjectID } = require('mongodb');
+const authentication = require('./helpers/authentication');
 
 /*** Post API Routes  ************************************/
 
@@ -91,7 +92,7 @@ router.post('/api/posts/like/:id', mongoChecker, async (req, res) => {
 
 
 // a GET route to get all posts
-router.get('/api/posts', mongoChecker, async (req, res) => {
+router.get('/api/posts', authenticate, mongoChecker, async (req, res) => {
 	// Get the posts
 	try {
 		const posts = await Post.find()
