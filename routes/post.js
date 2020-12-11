@@ -7,6 +7,7 @@ const router = express.Router(); // Express Router
 
 // import the Post and Comment mongoose model
 const { Post } = require('../models/post')
+const { User } = require("../models/user")
 
 // body parser
 const bodyParser = require('body-parser')
@@ -18,7 +19,8 @@ const { mongoChecker, isMongoError } = require("./helpers/mongo_helpers");
 const { authenticate } = require("./helpers/authentication");
 
 // to validate object IDs
-const { ObjectID } = require('mongodb')
+const { ObjectID } = require('mongodb');
+const authentication = require('./helpers/authentication');
 
 /*** Post API Routes  ************************************/
 
@@ -29,7 +31,7 @@ router.post('/api/posts', mongoChecker, authenticate, async (req, res) => {
 	// Create a new post using the Post mongoose model
 	const post = new Post({
 		username: req.user.username,
-        author: req.user._id, // creator id from the authenticate middleware
+        author: req.user._id, 
         title: req.body.title,
         content: req.body.content,
         comments:[],
@@ -51,6 +53,16 @@ router.post('/api/posts', mongoChecker, authenticate, async (req, res) => {
 			res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
 		}
 	}
+	// User.findById(req.user._id).then((user) => {
+	// 	if(!user){
+	// 		res.status(404).send()
+	// 	}else{
+	// 		user.userPosts.push(post)
+	// 	}
+	// 	user.save().then((result) => {
+	// 		console.log(result+"saving user")
+	// 	})
+	// })
 })
 
 // a POST route to like a post
@@ -80,7 +92,7 @@ router.post('/api/posts/like/:id', mongoChecker, async (req, res) => {
 
 
 // a GET route to get all posts
-router.get('/api/posts', mongoChecker, async (req, res) => {
+router.get('/api/posts', authenticate, mongoChecker, async (req, res) => {
 	// Get the posts
 	try {
 		const posts = await Post.find()
@@ -159,7 +171,7 @@ router.delete('/api/posts/:id', mongoChecker, async (req, res) => {
 /*** Comment API Routes  ************************************/
 
 // a POST route to create an comment
-router.post('/api/posts/comments/:id', mongoChecker, async (req, res) => {
+router.post('/api/posts/comments/:id', authenticate, mongoChecker, async (req, res) => {
 
     const postID = req.params.id
 
@@ -171,7 +183,8 @@ router.post('/api/posts/comments/:id', mongoChecker, async (req, res) => {
     // Create a new post using the Post mongoose model
 	const comment = {
 		postBelongTo: postID,
-		author: 111,
+		username: req.user.username,
+		author: req.user._id,
 		commentContent: req.body.commentContent
 	}
 
@@ -238,27 +251,31 @@ router.get('/api/comments/:cid', mongoChecker, async (req, res) => {
 
 
 /// a DELETE route to remove a comment by their id.
-router.delete('/api/comments/:cid', mongoChecker, authenticate, async (req, res) => {
-    const cid = req.params.cid
+router.delete('/api/posts/:pid/:cid', mongoChecker, authenticate, async (req, res) => {
+	const postID = req.params.pid;
+	const commentID = req.params.cid;
 
-	// // Validate id
-	// if (!ObjectID.isValid(cid)) {
-	// 	res.status(404).send('Resource not found')
-	// 	return;
-	// }
+	// Validate id
+	if (!ObjectID.isValid(postID) || !ObjectID.isValid(commentID)) {
+		res.status(404).send('Resource not found')
+		return;
+	}
 
-	// // Delete a comment by their id
-	// try {
-    //     const comment = await Comment.findOneAndRemove({_id: cid, author: req.user._id})
-	// 	if (!comment) {
-	// 		res.status(404).send()
-	// 	} else {   
-	// 		res.send(comment)
-	// 	}
-	// } catch(error) {
-	// 	log(error)
-	// 	res.status(500).send() // server error, could not delete.
-	// }
+	Post.findById(postID).then((post) => {
+		if(!post){
+			res.status(404).send()
+		}else{
+			const commentDeleted = post.comments.id(commentID)
+			if(!commentDeleted){
+				res.status(404).send()
+			}else{
+				post.comments.pull(commentID)
+			}
+			post.save().then((result) => {
+				res.send(post)
+			})
+		}
+	})
 
 })
 

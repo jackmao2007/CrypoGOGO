@@ -7,7 +7,7 @@ import PostComment from "./PostComment";
 
 class CommentList extends React.Component {
     render() {
-      const { comments } = this.props;
+      const { postID, comments, permission } = this.props;
   
       /* Our student list.  We use the state to iterate through the 
          student list and make an <li> for each one. */
@@ -16,10 +16,9 @@ class CommentList extends React.Component {
           <TableBody>
             {comments.map(comment => (
               <PostComment
-                key={uid(
-                  comment
-                )} /* unique id required to help React render more efficiently when we modify the students list. */
+                postID={postID}
                 comment={comment}
+                permission={permission}
               />
             ))}
           </TableBody>

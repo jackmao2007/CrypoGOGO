@@ -6,7 +6,7 @@ import "../styles.css"
 
 
 class Reply extends Component {
-    state = { commentContent: ""};
+    state = { commentContent: "", username: "" };
 
     async handleClick(postID) {
         const url = '/api/posts/comments/' + postID;
@@ -23,7 +23,7 @@ class Reply extends Component {
         await fetch(request)
             .then((res) => {
                 if (res.status === 200) {
-                    console.log("post added")
+                    console.log("comment added")
                 } else {
                     console.log(res.status)
                     return;
@@ -48,6 +48,7 @@ class Reply extends Component {
                 <TextField id="filled-secondary"
                     label="Reply"
                     variant="filled"
+                    autoComplete="off"
                     onChange={this.handleInput} 
                     className="input"/>
                 <Button variant="contained" color="primary" className="submmit"

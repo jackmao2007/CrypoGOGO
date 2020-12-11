@@ -94,7 +94,7 @@ class NewPostForm extends Component {
   };
 
   handleSubmit = () => {
-    if (this.state.title !== "" && this.state.content !== "") {
+    if (this.state.title.trim() !== "" && this.state.content.trim() !== "") {
       addPost(this)
       this.setState({
         title: "",
