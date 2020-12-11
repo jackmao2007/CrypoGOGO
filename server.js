@@ -19,6 +19,9 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const cors = require('cors');
+app.use(cors());
+
 /*** Session handling **************************************/
 // express-session for managing user sessions
 const session = require('express-session')

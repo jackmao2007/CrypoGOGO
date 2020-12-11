@@ -26,7 +26,7 @@ module.exports = {
 	// an active user on the session cookie (indicating a logged in user.)
     sessionChecker: (req, res, next) => {		
 	    if (req.session.user) {
-	        res.redirect('/dashboard'); // redirect to dashboard if logged in.
+	        res.redirect('/'); // redirect to dashboard if logged in.
 	    } else {
 	        next(); // next() moves on to the route.
 	    }    
