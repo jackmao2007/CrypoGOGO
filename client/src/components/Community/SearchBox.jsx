@@ -14,7 +14,7 @@ const classes = useStyles();
 class SearchBox extends Component {
 
     render() {
-        const { classes , handleSearchInput} = this.props;
+        const { classes , handleInput} = this.props;
 
         return (
             <div>
@@ -23,7 +23,8 @@ class SearchBox extends Component {
                 id="filled-secondary"
                 label="Search Post"
                 variant="filled"
-                onChange={handleSearchInput}
+                autoComplete='off'
+                onChange={(handleInput)}
                 />               
             </div>
         )
