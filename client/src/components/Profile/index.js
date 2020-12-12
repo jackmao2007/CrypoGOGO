@@ -3,8 +3,10 @@ import Navbar from "../Navbar/index";
 import './Profile.css';
 import Sidebar from './Content'
 import Information from './Information'
+// import Header from './Header'
+// import List from './List'
 
-class Profile extends Component {
+class Admin extends Component {
     state = {  }
     render() { 
         return (
@@ -15,4 +17,4 @@ class Profile extends Component {
     }
 }
  
-export default Profile;
+export default Admin;

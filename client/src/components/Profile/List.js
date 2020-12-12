@@ -1,84 +1,67 @@
  import React, { Component } from 'react';
 import './Profile.css';
 import { Redirect } from "react-router";
+import { getUsers, deleteAccount } from "./actions/user" 
 
 class List extends Component {
-    constructor(props) {
-      super(props);
-    this.state = { 
-      users: [
-      {userid: 1, username: 'AA', show: false},
-      {userid: 2, username: 'BB', show: false},
-      {userid: 3, username: 'CC', show: false}
-      ],
-      searchid: 1,
+    // constructor(props) {
+    //   super(props);
+    state = {
+      userList: [],
+      accountList: [],
+      searchname: '',
       tableshow: false
-      //Will be the Values from the Admins in the backend
-      }
-      this.deleteAccount = this.deleteAccount.bind(this);
-      
     }
 
-    // searchAccount = (id) => {
-    //   const usersinfo = this.state.users
-    //   let found = this.state.users.filter(s => {
-    //     return s.userid === id });
-    //   this.setState({ usersinfo: found});
-    // }
-    deleteAccount = (user)  => {
-      let removed = this.state.users.filter(user => {
-        return user !== user});
-      this.setState({ usersinfo: removed});
+    componentDidMount() {
+        getUsers(this);
     }
+
+
+   setAdmin = (isAdmin) => {
+      isAdmin = !isAdmin;
+   }
+
+
 
     generateUserTableRows = () => {
-      const usersinfo = this.state.users
       let tableRows = [];
       tableRows.push(
        <tr>
-          <th> UserId </th>
+          <th> UserEmail </th>
           <th> UserName </th>
           <th> AddAdmin </th>
           <th> ManageAccount </th>
       </tr>
       );
-      for (let i = 0; i < usersinfo.length; i++){
+      {this.displayUsers(this.state.userList)};
+      if (!this.state.tableshow) {
+        return <table className="user-table"> {tableRows.map(tableRows => tableRows)} </table>;
+      }
+    }
+
+    generateSearchTableRows = (id) => {
+      const usersinfo = this.state.userList;
+      let tableRows = [];
+      tableRows.push(
+       <tr>
+          <th> UserEmail </th>
+          <th> UserName </th>
+          <th> AddAdmin </th>
+          <th> ManageAccount </th>
+      </tr>
+      );
+      for (let i = 0; i < this.state.userList.length; i++){
+        if (usersinfo[i].username === this.state.searchname) {
           tableRows.push(
           <tr> 
-            <td> {usersinfo[i].userid} </td>
+            <td> {usersinfo[i].email} </td>
             <td> {usersinfo[i].username} </td>
             <td> {<button className='AddAdmin'>Set Administrator</button>} </td>
-            <td> {<button className='Delete' onClick={() => this.deleteAccount(usersinfo[i])}>Delete Account</button>}  </td>
+            <td> {<button className='Delete' onClick={() => this.deleteAccount(usersinfo[i].username, this.props)}>Delete Account</button>}  </td>
           </tr>
         );
       }
-      if (!this.state.tableshow) {
-      return <table className="user-table"> {tableRows.map(tableRows => tableRows)} </table>;
-        }
-      }
-
-    generateSearchTableRows = (id) => {
-      const usersinfo = this.state.users
-      let tableRows = [];
-      tableRows.push(
-       <tr>
-          <th> UserId </th>
-          <th> UserName </th>
-          <th> AddAdmin </th>
-          <th> ManageAccount </th>
-      </tr>
-      );
-      for (let i = 0; i < usersinfo.length; i++){
-        if (usersinfo[i].userid === id) {
-          tableRows.push(
-          <tr> 
-            <td> {usersinfo[i].userid} </td>
-            <td> {usersinfo[i].username} </td>
-            <td> {<button className='AddAdmin'>Set Administrator</button>} </td>
-            <td> {<button className='Delete' onClick={() => this.deleteAccount(usersinfo[i])}>Delete Account</button>}  </td>
-          </tr>
-          )
-        }
       }
       if (this.state.tableshow) {
         return <table className="search-table"> {tableRows.map(tableRows => tableRows)} </table>;
@@ -89,11 +72,25 @@ class List extends Component {
     onClick = () => {
         this.setState({ tableshow: !this.props.tableshow });
     }
+
     inputChange = (e) => {
       this.setState({
-            [this.state.searchid]: e.target.value
+            [this.state.searchname]: e.target.value
       });
     }
+
+    displayUsers = (users) => {
+      const { dashboard } = this.props;
+      return users.map((user) => (
+            <tr>
+            <td> {user.email} </td>
+            <td> {user.username} </td>
+            <td> {<button className='AddAdmin' onClick={() => this.setAdmin(user.isAdmin)}>Set Administrator</button>} </td>
+            <td> {<button className='Delete' onClick={() => deleteAccount(user.username, this.props)}>Delete Account</button>}  </td> 
+            </tr>
+      ))
+    }
+    
 
     render() { 
         return ( 
@@ -109,6 +106,7 @@ class List extends Component {
                                     </div>
                   {this.generateUserTableRows ()}
                 </div>
+                      
         );
     }
 }

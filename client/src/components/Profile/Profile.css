@@ -1,11 +1,22 @@
 .ProfileCirclecontainer{
-    margin-left: 200px;
+    margin-left: 80px;
     margin-top: 50px;
-  width: 300px;
+  width: 800px;
   height: 300px;
     float: left;
   position: fixed;
+}
+.image-form {
+  text-align: center;
+}
 
+.image-form_field {
+  display: inline-block;
+  padding-right: 20px;
+}
+
+.profile-account-section {
+  margin-top: 50px;
 }
 
 .ProfileCircle{
@@ -132,7 +143,3 @@ table.bitcoins-table{
   cursor: pointer; 
 }
 
-
-.profile-account-section {
-  margin-top: 50px;
-}

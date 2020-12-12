@@ -5,67 +5,21 @@ import Sidebar from './Content'
 import Information from './Information'
 import Header from './Header'
 import { Tag } from 'antd';
+import { getAccounts , deleteAccount } from "./actions/user" 
 
 class MyWallet extends Component {
     state = {
-      accountList: [
-        { 
-          accountNumber: 10000000,
-          cash: 2000,
-          marketValue: 123123,
-          totoalEquity: 23123
-        },
-        { 
-          accountNumber: 10000001,
-          cash: 2000,
-          marketValue: 223123,
-          totoalEquity: 123123
-        },
-        { 
-          accountNumber: 10000002,
-          cash: 2000,
-          marketValue: 23123,
-          totoalEquity: (77887)
-        }
-      ]
+      accountList: []
     }
 
-    async getAccountInfo() {
-      let accounts = []
-      const resilt = await fetch("/api/accounts")
-      const accs = await resilt.json()
-      for (let acc of accs){
-        const resBal = await fetch("/api/trading/accountCurrentBalance/" + acc._id)
-        const balance = await resBal.json()
-        accounts.push({
-          accountNumber: acc._id,
-          cash: Math.round(balance.cash * 100) / 100,
-          marketValue: Math.round(balance.marketValue * 100) / 100,
-          totoalEquity: Math.round(balance.totalEquity * 100) / 100
-        })
-        this.setState({accountList: accounts})
-      }
-    }
 
-    componentDidMount() {
-      this.getAccountInfo();
-    }
 
-    async handleAddAccount(){
-      // server call
-      await fetch('/api/accounts', {
-        method: 'POST'
-      })
-      this.getAccountInfo();
-    }
+  componentDidMount() {
+  }
 
-    async handleDeleteAccount(account) {
+    handleDeleteAccount(account) {
       console.log(account.accountNumber)
-      await fetch('/api/accounts/' + account.accountNumber, {
-        method: 'DELETE'
-      })
       // server call
-      this.getAccountInfo();
     }
 
     renderAccountSection = () => {
@@ -73,23 +27,19 @@ class MyWallet extends Component {
         <div className="profile-account-section">
         <div>
           <span className="profile-account-summary-header"> Accounts </span> 
-          <button className="profile-add-account-btn" onClick={() => this.handleAddAccount()}> Add Account</button> 
+          <button className="profile-add-account-btn"> Add Account</button> 
         </div>
         <table>
           <tbody>
               <tr>
                 <th> Account Number </th>
                 <th>Cash</th>
-                <th>Market Value</th>
-                <th>Total Equity</th>
               </tr>
-              {this.state.accountList.map((account) => { return (
+              {this.state.accountList.map((account, index) => { return (
                   <tr>
-                    <td>{account.accountNumber}</td>
+                    <td>{index}</td>
                     <td>{account.cash}</td>
-                    <td>{account.marketValue}</td>
-                    <td>{account.totoalEquity}</td>
-                    <td><button className="profile-delete-account-btn" onClick={() => this.handleDeleteAccount(account)}> delete </button></td>
+                    <td><button className="profile-delete-account-btn" onClick={() => this.deteleAccount(account.creator, this.props)}> delete </button></td>
                   </tr>
               )
               })}

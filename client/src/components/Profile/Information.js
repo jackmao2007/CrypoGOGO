@@ -1,28 +1,24 @@
 import React, { Component } from 'react';
 import './Profile.css';
 import Header from './Header'
+import { getUserbyUsername, checkSession } from "./actions/user" 
+import App from '../../App'
+
 
 class Information extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            hide: true,
-            password: 'aaaaaa', 
-            //Will be the Values from the users in the backend
-            reset: false
+        checkSession(this);
+    }
+     state = {
+            reset: true,
+            show: false,
+            user: [],
+            password: '',
+            AddressShow: false,
+            professionShow: false,
+            currentUser: null
         };
-        this.handlechange = this.handlechange.bind(this);
-        this.toggleshow = this.toggleshow.bind(this);
-    }
-
-    sumbit = () => {
-        if (window.confirm('DO YOU WANT TO LOG OUT?')){
-            alert('Sign out success');
-            window.location="/sign-in";
-        } else {
-            alert('Sign out fail');
-        } 
-    }
 
     handlechange = (event) => {
         this.setState({password: event.target.value});
@@ -33,6 +29,7 @@ class Information extends Component {
     }
 
     componentDidMount() {
+        getUserbyUsername(this, this.state.currentUser);
         if (!this.props.hide) {
             this.setState({ password: this.props.password });
         }
@@ -40,6 +37,38 @@ class Information extends Component {
 
     hidecomp = () => {
         this.setState({ reset: !this.props.reset });
+    }
+
+    inputChange = (e) => {
+      this.setState({
+            [this.state.searchid]: e.target.value
+      });
+    }
+
+
+    onClick = () => {
+        this.setState({ show: !this.props.show });
+    }
+
+    
+    Resetpasswordbox = () => {
+        if (!this.state.show) {
+        return <table className="user-table">          
+               <input name="ResetPassword"
+                        onChange= {(e) => this.inputChange(e)}
+                        label="Student Name"
+               /> 
+               <button name="password" onClick={(e) => this.updatePassword(this, e.target)}>Show</button>
+               </table>;
+      }
+    }
+
+    onClickAddressButton = () => {
+        this.setState({ AddressShow: !this.props.AddressShow });
+    }
+
+    onClickProfessionButton = () => {
+        this.setState({ professionShow: !this.props.professionShow });
     }
 
     generateInfoTable = () => {
@@ -53,53 +82,51 @@ class Information extends Component {
         table.push(
         <tr> 
           <td> UserName </td>
-          <td> jjjjj123</td>
+          <td> {this.state.user.username}</td>
         </tr>
         );
         table.push(
         <tr>
           <td> E-mail </td>
-          <td> jjjjj123@gmail.com</td>
+          <td> {this.state.user.email}</td>
         </tr>
                 );
-        table.push(
-        <tr>
-          <td> Password </td>
-          <td> <input type={this.state.hide ? 'password' : ''} 
-                    value={this.state.password} 
-                    onChange = {this.handlechange}
-                /> <button onClick={this.toggleshow}>Show</button></td>
-        </tr>
-                );
-        table.push(
-        <tr>
-          <td> Profession </td>
-          <td> Teacher</td>
-        </tr>
-                );
+        if (!this.AddressShow) {
         table.push(
         <tr>
           <td> Address </td>
-          <td> 40 Willcocks Street</td>
+          <td> <button name="password" onClick={(e) => this.onClickAddressButton()}>Add Address</button> </td>
         </tr>
                 );
+        } else {
+            table.push(
+             <tr>
+          <td> Profession </td>
+          <td> {this.state.user.email}</td>
+        </tr>
+            );
+        }
+        table.push(
+             <tr>
+          <td> Profession </td>
+          <td> <button name="password" onClick={(e) => this.onClickProfessionButton()}>Add Professtion</button> </td>
+        </tr>
+            );
         table.push(
         <tr>
           <td> Posts Number </td>
-          <td> 156</td>
+          <td> {this.state.user.userPosts}</td>
         </tr>
         );
         return <table className="information-table"> {table.map(table => table)} </table>;
     }
 
     render() { 
-        const reset = this.state.reset;
+        const { currentUser } = this.state;
         let button;
         return (
                 <div className='Information'>      
                     {this.generateInfoTable()}
-
-                <input className='information-button' onClick={this.sumbit} type="submit" value="Log out" />  
                 <input className='information-button' onClick={this.hidecomp} type="submit" value="Reset Password" /> 
                 </div>
 
