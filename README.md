@@ -28,4 +28,4 @@ For Profile part of the webpage, you can see your user information. If login as 
 (Phase 2) Under my wallet, the user will be able to create new account and delete accounts. The user must have at least one account at ALL TIMES.
 
 
-Edited by Siyuan Chen, Gancheng Luo, Zizhuang Fan, Deng Juan
+Edited by Zizhuang Fan, Siyuan Chen, Gancheng Luo, Deng Juan
